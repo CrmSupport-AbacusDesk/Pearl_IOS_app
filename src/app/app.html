@@ -1,0 +1,67 @@
+<ion-menu [content]="content" side="start" id="first" [swipeEnabled]="(user_logged_in) ? true : false">
+
+	
+	<ion-content>
+		
+		<div class="home-list" (click)="!userLoggedDisplayName ? Login(): ''">
+			<button ion-item>
+				<div class="thumb" *ngIf="userLoggedDisplayName!=undefined || userName!=undefined">
+					<div class="outer">
+						<div class="innear">
+							<p *ngIf="userLoggedDisplayName!=undefined">{{userLoggedDisplayName[0]}}</p>
+							<p *ngIf="userName!=undefined">{{userName[0]}}</p>
+
+						</div>
+					</div>
+				</div>
+
+				
+				<div class="description">
+					<div class="outer">
+						<div class="innear">
+							<h2 *ngIf="userLoggedDisplayName!=undefined">{{userLoggedDisplayName}}</h2>
+							<h2 *ngIf="userName!=undefined">{{userName}}</h2>
+
+							<h2 *ngIf="!userLoggedDisplayName">Catologue</h2>
+							<p *ngIf="userLoggedRole">{{userLoggedRole}}</p>
+							<ion-icon name="ios-arrow-forward-outline"></ion-icon>
+						</div>
+					</div>
+				</div>
+			</button>
+		</div>
+
+		<span *ngFor="let p of pages">
+			<div *ngIf="p.show" class="option" menuClose (click)="((userRoleId != '' || userRoleId != undefined) && this.userType == 'MARKET') ?  openPage(p): openPage1(p)">
+				<div class="outer">
+					<div class="innear">
+						<i class="material-icons">{{p.icon}}</i>
+						<a href="#">{{p.title}}</a>
+					</div>
+				</div>
+			</div>
+		</span>
+	</ion-content>
+
+	<ion-footer>
+		<div *ngIf="!user_logged_in" class="login-btn m16 mt0" menuClose  (click)="Login()">
+			<div class="outer">
+				<div class="innear">
+					<button ion-button round block>LOGIN</button>
+				</div>
+			</div>
+		</div>
+		<div class="login-btn m16 mt0" *ngIf="user_logged_in" menuClose  (click)="logout()">
+			<div class="outer">
+				<div class="innear">
+					<button ion-button round block><i class="material-icons mr20">power_settings_new</i>LOGOUT</button>
+				</div>
+			</div>
+		</div>
+	</ion-footer>
+	
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

@@ -1,0 +1,97 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			<h1>{{product_detaildata.product_name}}</h1>
+		</ion-title>
+		<ion-buttons end class="search-icon">
+			<button ion-button icon-only (click)="whatsappShare()"> 
+				<ion-icon name="share"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<!-- <img alt="" src="assets/imgs/main-imgs/no-image-available.png"> -->
+
+<ion-content padding>
+	<div *ngIf="!val">
+		<div>
+			<div class="product-slide">
+				<ul>
+					<li *ngFor="let data of pro_image;let j=index" [ngClass]=" (j==show_index) ? 'active' : ''">
+						<div class="thumb">
+							<div class="outer">
+								<div class="innear">
+									<img alt="" [src]="data.image ? upload_url+data.image :  'assets/imgs/main-imgs/no-image-available.png'">
+								</div>
+							</div>
+						</div>
+					</li>
+				
+				</ul>
+			</div>
+			<div class="product-thumb-slide" *ngIf="pro_image.length">
+				<ul>
+					<li *ngFor="let data of images_data;let i=index" [ngClass]=" (i==show_index) ? 'active' : ''" (click)="make_active(i)">
+						<div class="icon">
+							<div class="outer">
+								<div class="innear">
+									<img alt="" [src]="upload_url+data.image">
+								</div>
+							</div>
+						</div>
+					</li>
+				
+				</ul>
+			</div>
+		</div>
+		<div class="cs-description">
+			
+			<h1>{{product_detaildata.product_name}}<span class="cs-point font13" style="margin: 0px 5px !important;" *ngIf="product_type">{{product_detaildata.scheme_value_points}} Point</span></h1>
+			<!-- <h4 *ngIf="!product_detaildata.cat_no==''"><span>CAT Code : {{product_detaildata.cat_no}}</span></h4> -->
+			<!-- <h4 *ngIf="product_detaildata.cat_no==''"><span></span></h4> -->
+			<h3 *ngIf="product_detaildata.price != 0 && login_user_state!=''"><span>&#8377; {{product_detaildata.price | number : '1.2-2'}}</span></h3>
+			<table>
+				
+				<tr>
+					<td class="w100">Category</td>
+					<td>{{product_detaildata.category}}</td>
+				</tr>
+				
+				<tr *ngIf="product_detaildata.sub_category">
+					<td>Sub Category</td>
+					<td>{{product_detaildata.sub_category}}</td>
+				</tr>
+				
+				<tr>
+					<td>Cat No.</td>
+					<td>{{product_detaildata.cat_no}}</td>
+				</tr>
+				
+				<tr *ngIf="brand_data != ''">
+					<td>Brand</td>
+					<td>{{brand_data | uppercase}}</td>
+				</tr>
+				
+				<tr *ngIf="extra_field_data != ''">
+					<td>Extra Field</td>
+					<td>{{extra_field_data}}</td>
+				</tr>
+				
+				<tr *ngIf="color_data">
+					<td >Color</td>
+					<td>{{color_data}}</td>
+					<!-- <td><span *ngFor="let data of color_data;let i=index" class="color" [ngStyle]="{'background-color': data}"></span></td> -->
+				</tr>
+			</table>
+			<h5 *ngIf="product_detaildata.description">Description</h5>
+			<p *ngIf="product_detaildata.description">{{product_detaildata.description}}</p>
+			
+		</div>
+	</div>	
+</ion-content>
+<ion-footer padding *ngIf="!product_type">
+	<div class="cs-btn">
+		<button ion-button color="theme" class="mt0" (click)="enquiry(product_detaildata.id)">ENQUIRY NOW</button>
+	</div>
+</ion-footer>

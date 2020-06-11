@@ -1,0 +1,7 @@
+{
+  "name": "P-Product",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <h1>Ledger</h1>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  
+  <div class="nothing-here" *ngIf="ledgerData.length == '0'">
+    <div class="outer">
+      <div class="innear">
+        <img src="assets/imgs/nothing.svg" alt="">
+        <p>Data Not Found</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="list-outer ordlist" *ngIf="ledgerData.length != '0'">
+    
+    <div class="list-inner" *ngFor="let data of ledgerData">
+      <div style="padding: 0px 16px;">
+        <div class="min-heading">
+          <div class="cs-l">
+            <h2 *ngIf="data.invoice_no">INVOICE NO</h2>
+            <p *ngIf="data.invoice_no"># {{data.invoice_no}}</p>
+          </div>
+          <div class="cs-r">
+            <p>{{data.date_created | date:'d MMM, y'}}</p>
+          </div>
+        </div>
+        <div class="oneinfo first-fw">
+          <div class="figure">
+            <p>PAYMENT</p>
+            <p style="white-space: normal;">
+              <span *ngIf="data.payment_type">MODE:</span> {{data.payment_type}} 
+              <span *ngIf="data.cheque_bank"> BANK:</span> {{data.cheque_bank}} 
+              <span *ngIf="data.cheque_no"> CHEQUE NO:</span> {{data.cheque_no}} 
+              <span *ngIf="data.cheque_date != '0000-00-00' "> DATE: {{data.cheque_date}}</span>
+              <span *ngIf="data.transaction_id"> Transaction Id:</span> {{data.transaction_id}}
+            </p>
+          </div>
+          <div class="figure">
+            <p>AMOUNT</p>
+            <p>&#x20B9; {{data.amount}}</p>
+          </div>
+          <div class="figure">
+            <p>BALANCE</p>
+            <p>&#x20B9; {{data.balance}}</p>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</ion-content>

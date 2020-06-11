@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.799 19.799">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #68208a;
+      }
+    </style>
+  </defs>
+  <path id="erase-input-ic" class="cls-1" d="M19,13H13v6H11V13H5V11h6V5h2v6h6Z" transform="translate(9.9 -7.071) rotate(45)"/>
+</svg>

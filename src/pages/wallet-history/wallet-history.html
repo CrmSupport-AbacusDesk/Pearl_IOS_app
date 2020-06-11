@@ -1,0 +1,55 @@
+<ion-header>  
+  <ion-navbar>
+    <ion-title>Transaction</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content >
+  
+  <div class="my-wallet">
+    <p>Total Amount Receive</p>
+    <h2>Rs. {{total_redeem_amount}}</h2>
+    <!-- <span>Last Update 14 min ago</span> -->
+  </div>
+  
+  <div padding>
+    <div class="history-list" *ngFor="let data of txn_data">
+      <div class="payment-status" *ngIf="data.status == 'Pending'">
+        <p>Requset Pending</p>
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+      </div>
+      
+      <div class="flex-list">
+        <div class="cs-date">
+          <p>{{data.date_created | date:'dd'}}</p>
+          <span>{{data.date_created | date:'MMM'}}</span>
+        </div>
+        <div class="cs-content">
+          <p *ngIf="data.id">Request Id : {{data.id}}</p>
+        </div>
+        <div class="cs-amount">
+          <p>Payment Amount</p>
+          <span>&#x20B9; {{data.redeem_amount}}</span>
+        </div>
+      </div>
+      <div class="lwr-section" *ngIf="data.paytm_order_id">
+        <p><span>Paytm Txn Id</span>{{data.paytm_order_id}}</p>
+      </div>
+    </div>
+
+     <!-- infinite scroll -->
+    
+     <ion-infinite-scroll threshold="100px" (ionInfinite)="txn_history_scroll($event)"  *ngIf="flag!=1">
+      <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <!-- infinite scroll end -->
+  </div>
+  
+  
+</ion-content>

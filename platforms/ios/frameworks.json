@@ -1,0 +1,14 @@
+{
+    "CoreLocation.framework": 4,
+    "SystemConfiguration.framework": 2,
+    "AudioToolbox.framework": 2,
+    "AVFoundation.framework": 3,
+    "libsqlite3.dylib": 1,
+    "ImageIO.framework": 1,
+    "WebKit.framework": 1,
+    "libz.tbd": 1,
+    "CoreTelephony.framework": 1,
+    "Social.framework": 1,
+    "MessageUI.framework": 1,
+    "PushKit.framework": 1
+}

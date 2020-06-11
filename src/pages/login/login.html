@@ -1,0 +1,43 @@
+<ion-content>
+	
+	<div class="cs-hedaer2">
+		<button class="cross-btn" ion-button><i class="material-icons back-ic" (click)="homePage()">clear</i></button>
+		<img class="logo" src="assets/imgs/pearl_logo-2.png" alt="">
+	</div>
+	<!-- <div class="logo">
+		<div class="outer">
+			<div class="innear">
+				<img src="assets/imgs/main-imgs/main-logo.svg">
+			</div>
+		</div>
+	</div> -->
+	<form [formGroup]="validations_form" (ngSubmit)="login_submit()" autocomplete="off">		
+		<div class="cs-form">
+			
+			<div class="heading">
+				<p>LOGIN</p>
+			</div>
+			<ion-list class="mb80">
+				<ion-item>
+					<ion-label><img src="assets/imgs/main-imgs/phone-call.svg"></ion-label>
+					<ion-input type="tel" minlength="10" maxlength="10" [(ngModel)]="form.phone" placeholder="*Mobile Number" formControlName="phone" ></ion-input>
+				</ion-item>	
+				
+				<p class="error-left relative" *ngIf="validations_form.get('phone').hasError('required') && validations_form.get('phone').touched">*Required</p>
+				<p class="error-left relative" *ngIf="(validations_form.get('phone').hasError('minlength') || validations_form.get('phone').hasError('maxlength')) && validations_form.get('phone').touched">*Mobile No. not valid</p>		
+			</ion-list>
+			<div class="cs-btn">
+				<button ion-button [disabled]="loading == '1'">LOGIN <i class="material-icons pl30">trending_flat</i></button>
+			</div> 
+		</div>
+	</form>
+
+	<div class="purpel-box" *ngIf="register_type == undefined">
+	</div>
+	
+	<div class="purpel-box" *ngIf="register_type != undefined">
+		<h1 *ngIf="register_type.id != '4' ">Don't have an account ? <a (click)="register()">Register</a></h1>
+	</div>
+</ion-content>
+
+

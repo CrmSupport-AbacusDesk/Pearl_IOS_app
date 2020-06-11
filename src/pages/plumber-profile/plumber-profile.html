@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="profile">
+    <div class="profile-detail">
+      <div class="profile-pic">
+        <div class="text-center">
+          <p>{{name_first_letter}}</p>
+        </div>
+      </div>
+      
+      <div class="name">
+        <p>{{plumber_detail.name | titlecase}}</p>
+        <a class="">
+          <i class="material-icons Verified" *ngIf="plumber_detail.status == 'Approved'">check_circle </i>
+          {{plumber_detail.status}}
+        </a>
+      </div>
+      
+      
+      <div class="rating-area mt16">
+        <div class="border-box">
+          <div class="boxs">
+            <p>Mobile No.</p>
+            <h4>{{plumber_detail.mobile}}</h4>
+          </div>
+          
+          <div class="boxs">
+            <p>Paytm No.</p>
+            <h4>{{plumber_detail.paytm_mobile_no}}</h4>
+          </div>
+        </div> 
+        
+        <div class="border-box">
+          <div class="boxs">
+            <p>Date of Birth</p>
+            <h4 *ngIf="plumber_detail.dob!='0000-00-00'">{{plumber_detail.dob | date:'d MMM y'}}</h4>
+            <h4 *ngIf="plumber_detail.dob=='0000-00-00'">N A</h4>
+          </div>
+          
+          <div class="boxs">
+            <p>Date of Anniversary</p>
+            <h4 *ngIf="plumber_detail.anniversry_dob!='0000-00-00'">{{plumber_detail.anniversry_dob | date:'d MMM y'}}</h4>
+            <h4 *ngIf="plumber_detail.anniversry_dob=='0000-00-00'">N A</h4>
+          </div>
+        </div>
+        
+        <div class="border-box">
+          <div class="boxs">
+            <p>Dealer</p>
+            <h4>{{plumber_detail.dealer_name}}</h4>
+          </div>
+          
+          <div class="boxs">
+            <p>Dealer Mobile No.</p>
+            <h4>{{plumber_detail.dealer_mobile}}</h4>
+          </div>
+        </div>
+        
+        <div class="border-box">
+          <div class="boxs">
+            <p>WhatsApp No.</p>
+            <h4>{{plumber_detail.whatsapp_no ? plumber_detail.whatsapp_no : 'N A'}}</h4>
+          </div>
+          
+          <div class="boxs">
+            <p>Distributor</p>
+            <h4>{{plumber_detail.distributor_name ? plumber_detail.distributor_name : 'N A'}}</h4>
+          </div>
+        </div>
+        
+        <div class="border-box">
+          <div class="boxs">
+            <p>Email Id</p>
+            <h4>{{plumber_detail.email ? plumber_detail.email : 'N A'}}</h4>
+          </div>
+        </div>
+        
+        <div class="ratings">
+          <h3>Address</h3>
+          <p>{{plumber_detail.city}} {{plumber_detail.district}} {{plumber_detail.state}} {{plumber_detail.pincode}}</p>
+        </div>
+      </div>
+      
+    </div>
+    <div class="profile-point">
+      <h4>Document information</h4>
+    </div>
+    
+    <div class="document-upload">
+      <div class="doc-img" *ngIf="plumber_detail.document_image">
+        <img src="{{plumber_detail.document_image}}">
+      </div>
+      <div class="doc-info">
+        <h3>{{plumber_detail.document_name}} No.</h3>
+        <p>{{plumber_detail.document_number}}</p>
+      </div>
+    </div>
+
+    <div class="anker-btn">
+      <a class="black-clr" href='tel:{{contact_detail}}'>Contact Us</a>
+  </div>
+  </div>
+</ion-content>

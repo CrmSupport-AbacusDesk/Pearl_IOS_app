@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.015 14.015">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #6B6B6B;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Group_6" data-name="Group 6" transform="translate(3003.015 -321.984)">
+    <path id="ic_search_24px" class="cls-1" d="M13.006,11.805h-.632l-.224-.216a5.211,5.211,0,1,0-.56.56l.216.224v.632l4,3.994L17,15.807Zm-4.8,0a3.606,3.606,0,1,0-.006,0Z" transform="translate(-3006 319)"/>
+    <path id="ic_search_24px-2" data-name="ic_search_24px" class="cls-2" d="M9.4,9.043a3.686,3.686,0,0,0-.288-5.081,3.63,3.63,0,0,0-5.056.1,3.686,3.686,0,0,0-.1,5.088,3.63,3.63,0,0,0,5.049.29Z" transform="translate(-3004.374 320.54)"/>
+  </g>
+</svg>

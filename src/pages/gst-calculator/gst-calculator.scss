@@ -1,0 +1,37 @@
+page-gst-calculator {
+    input
+    {
+        height: 28px;
+    }
+
+
+    textarea
+    {
+        height: 100px;
+    }
+
+    ion-item.select-cs 
+    {
+        border: 1px solid #d5d5d5 !important;
+        margin-top: 16px;
+    }
+
+    ion-label.select-label
+    {
+        margin: 0px !important;
+    }
+
+    .edit 
+    {
+        ion-list 
+        {
+            ion-item 
+            {
+                .item-inner ion-select
+                {
+                    border: 0px;
+                }
+            }
+        }
+    }
+}

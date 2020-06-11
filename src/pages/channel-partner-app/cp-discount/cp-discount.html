@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Discount</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+<div class="cs-catlist">
+        <ion-list>
+            <ion-item>
+                <div class="cs-item" *ngFor="let data of discountData">
+                    <div class="left-item">
+                        <p>{{data.category}}<p>
+                    </div>
+                    <div class="right-item">
+                        <p>{{data.discount}} %</p>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+    </div>
+</ion-content>

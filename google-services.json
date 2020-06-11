@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "542170843839",
+    "firebase_url": "https://pearl-f3a1f.firebaseio.com",
+    "project_id": "pearl-f3a1f",
+    "storage_bucket": "pearl-f3a1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542170843839:android:a722d837b27c68d0",
+        "android_client_info": {
+          "package_name": "com.abacusdesk.pearls"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542170843839-c4jk5fu6uc8smboiu7djd6pc161k0ev1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0gHDbFyGV6ceu8mf6YFEOiN9EabRj6zY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542170843839-c4jk5fu6uc8smboiu7djd6pc161k0ev1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

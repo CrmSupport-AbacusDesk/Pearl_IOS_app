@@ -1,0 +1,55 @@
+page-add-checkin {
+    .text-input-md
+    {
+        height: 29px;
+    }
+    .grid-radio
+    {
+        flex-wrap: wrap;
+        display: flex;
+        margin-bottom: 0px;
+        
+        ion-item
+        {
+            width: 50%;
+            
+            .item-inner
+            {
+                flex-direction: row-reverse;
+                border-bottom: 0px !important;
+                
+                ion-label
+                {
+                    color: #000000 ;
+                }
+            }
+        }
+    }
+    
+    // ion-list
+    // {
+        //     ion-item
+        //     {
+            //         padding-left: 0px !important;
+            
+            //         .item-inner
+            //         {
+                //             padding-right: 0px !important;
+                //             padding-left: 16px !important;
+                //         }
+                
+                //         &.item-input-has-focus
+                //         {
+                    //             border-bottom: 1px solid #dedede !important;
+                    //             box-shadow: none !important;
+                    
+                    //             ion-label
+                    //             {
+                        //                 color: #000000 !important;
+                        //             }
+                        //         }
+                        //     }
+                        // }
+                        
+                    }
+                    

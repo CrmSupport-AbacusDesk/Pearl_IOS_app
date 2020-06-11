@@ -1,0 +1,221 @@
+<ion-header>    
+    <ion-navbar>
+        <ion-title>
+            <h1>Sign Up</h1>
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>   
+    
+    <form [formGroup]="validateForm" (ngSubmit)="submitDetail()">
+        <div class="edit">
+            
+            <ion-list>
+            
+            <div class="field-heading">
+                <h1 *ngIf="data.registerType.name=='Distributor'">Channel Partner</h1>
+                <h1 *ngIf="data.registerType.name=='Dealer'">Dealer</h1>
+                <h1 *ngIf="data.registerType.name=='Plumber'">Plumbing Man</h1>
+                <h1 *ngIf="data.registerType.name=='Consumer'">Consumer</h1>
+                <h1 *ngIf="data.registerType.name=='Staff Login'">Employee Login</h1>
+            </div>
+            
+            <div *ngIf="data.registerType?.name">
+                
+                <ion-item *ngIf="data.registerType.name=='Distributor' || data.registerType.name=='Dealer'">
+                    <ion-label floating><span>Company Name</span></ion-label>
+                    <ion-input type="text" formControlName="companyName" [(ngModel)]="data.companyName" [required]="data.registerType.name=='Distributor' || data.registerType.name=='Dealer'"></ion-input>
+                </ion-item>
+                <p *ngIf="validateForm.get('companyName').hasError('required') && validateForm.get('companyName').touched" class="error-left relative">Company Name is required!</p>
+                
+                <ion-item>
+                    <ion-label floating><span>Name</span></ion-label>
+                    <ion-input type="text"formControlName="name" [(ngModel)]="data.name" required></ion-input>
+                </ion-item>
+                <p *ngIf="validateForm.get('name').hasError('required') && validateForm.get('name').touched" class="error-left relative">Name is required!</p>
+                
+                <ng-container *ngIf="data.registerType.name=='Distributor' || data.registerType.name=='Dealer'">
+                    <ion-item>
+                        <ion-label floating><span>GST No </span></ion-label>
+                        <ion-input type="text" min="15" max="15" formControlName="gst"   [(ngModel)]="data.gst" [required]="data.registerType.name=='Distributor' || data.registerType.name=='Dealer'"></ion-input>
+                    </ion-item>
+                    
+                    <!-- <p *ngIf="check_gst == 1"  class="error-left relative">GST No Already Exists!!</p> -->
+                    
+                    
+                    <p *ngIf="validateForm.get('gst').hasError('required') && validateForm.get('gst').touched"  class="error-left relative">GST No is required!</p>
+                    
+                    <p *ngIf="(validateForm.get('gst').hasError('minlength') || validateForm.get('gst').hasError('maxlength')) && validateForm.get('gst').touched"  class="error-left relative">GST No must be 15 digit!</p>
+                </ng-container>
+                
+                <ion-item class="call">
+                    <ion-label floating><span>Mobile No</span></ion-label>
+                    <ion-input type="tel" minlength="10" maxlength="10" formControlName="mobile"  [(ngModel)]="data.mobile" required></ion-input>
+                </ion-item>
+                
+                <p *ngIf="validateForm.get('mobile').hasError('required') && validateForm.get('mobile').touched"  class="error-left relative">Mobile is required!</p>
+                
+                <p *ngIf="(validateForm.get('mobile').hasError('minlength') || validateForm.get('mobile').hasError('maxlength')) && validateForm.get('mobile').touched"  class="error-left relative">Mobile must be 10 digit!</p>
+
+                <!-- [required]="data.registerType.name=='Distributor'" -->
+                
+                <ion-item class="whtapp">
+                    <ion-label floating><span>WhatsApp No</span></ion-label>
+                    <ion-input type="tel" minlength="10" maxlength="10" formControlName="whatsapp"  [(ngModel)]="data.whatsapp" ></ion-input>
+                </ion-item>
+                
+                <p *ngIf="validateForm.get('whatsapp').hasError('required') && validateForm.get('whatsapp').touched"  class="error-left relative">WhatsApp No is required!</p>
+                
+                <p *ngIf="(validateForm.get('whatsapp').hasError('minlength') || validateForm.get('whatsapp').hasError('maxlength')) && validateForm.get('whatsapp').touched"  class="error-left relative">WhatsApp No must be 10 digit!</p>
+                
+                <ng-container *ngIf="data.registerType.name=='Plumber'">
+                    <ion-item class="paytm">
+                        <ion-label floating><span>Paytm Mobile No</span></ion-label>
+                        <ion-input type="tel" minlength="10" maxlength="10" formControlName="paytm_mobile_no"  [(ngModel)]="data.paytm_mobile_no" required></ion-input>
+                    </ion-item>
+                    
+                    <p *ngIf="validateForm.get('paytm_mobile_no').hasError('required') && validateForm.get('paytm_mobile_no').touched"  class="error-left relative">Paytm Mobile No is required!</p>
+                    
+                    <p *ngIf="(validateForm.get('paytm_mobile_no').hasError('minlength') || validateForm.get('paytm_mobile_no').hasError('maxlength')) && validateForm.get('paytm_mobile_no').touched"  class="error-left relative">Paytm Mobile No must be 10 digit!</p>
+                </ng-container>
+                
+                <ion-item *ngIf="data.registerType.name!='Plumber'">
+                    <ion-label floating><span>Email</span></ion-label>
+                    <ion-input type="email" formControlName="email" [(ngModel)]="data.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"></ion-input>
+                </ion-item>
+                <p *ngIf="data.email && validateForm.get('email').hasError('pattern') && validateForm.get('email').touched"  class="error-left relative">Email invalid!</p>
+                
+                <ion-item>
+                    <ion-label floating><span>Address</span></ion-label>
+                    <ion-input type="text"formControlName="address" [(ngModel)]="data.address" required></ion-input>
+                </ion-item>
+                <p *ngIf="validateForm.get('address').hasError('required') && validateForm.get('address').touched" class="error-left relative">Address is required!</p>
+                
+                <ion-item>
+                    <ion-label floating><span>Pincode</span></ion-label>
+                    <ion-input type="number" formControlName="pincode" [(ngModel)]="data.pincode" (input)="get_pincode_area_name(data.pincode)" required ></ion-input>
+                </ion-item>
+                
+                <!-- <p>{{city_name}}</p> -->
+                
+                <p *ngIf="validateForm.get('pincode').hasError('required') && validateForm.get('pincode').touched" class="error-left relative">Pincode is required!</p>
+                
+                <div class="csslecttype mt20">
+                    <ion-item>
+                        <ion-label class="pl15">State</ion-label>
+                        <ionic-selectable
+                        item-content 
+                        [(ngModel)]="data.state"
+                        [items]="state_list"
+                        itemValueField="state_name"
+                        itemTextField="state_name"
+                        (onChange)="getDistrict(data.state.state_name)"
+                        formControlName="stateName"
+                        [canSearch]="true">
+                    </ionic-selectable>
+                </ion-item>
+                <p *ngIf="validateForm.get('stateName').hasError('required') && validateForm.get('stateName').touched"  class="error-left relative">State is required!</p>
+            </div>
+            
+            <div class="csslecttype mt20">
+                <ion-item>
+                    <ion-label class="pl15">District</ion-label>
+                    <ionic-selectable
+                    item-content 
+                    [(ngModel)]="data.district"
+                    [items]="city_list"
+                    itemValueField="district_name"
+                    itemTextField="district_name"
+                    formControlName="districtName"
+                    (onChange)="getCity(data.state.state_name,data.district.district_name)"
+                    [canSearch]="true">
+                </ionic-selectable>
+            </ion-item>
+            <p *ngIf="validateForm.get('districtName').hasError('required') && validateForm.get('districtName').touched"  class="error-left relative">District is required!</p>
+        </div>
+        
+        
+        <div class="csslecttype mt20" >
+            <ion-item>
+                <ion-label class="pl15">City</ion-label>
+                <ionic-selectable
+                item-content 
+                [(ngModel)]="data.city"
+                [items]="city_list"
+                itemValueField="city"
+                itemTextField="city"
+                formControlName="city"
+                [canSearch]="true">
+            </ionic-selectable>
+        </ion-item>
+        <p *ngIf="validateForm.get('city').hasError('required') && validateForm.get('city').touched"  class="error-left relative">City is required!</p>
+    </div>
+    
+    
+    
+    
+    
+    <ion-item>
+        <ion-label floating><span>Date of Birth</span></ion-label>
+        <ion-datetime display-format="MMM DD, YYYY" formControlName="dob" [(ngModel)]="data.dob"></ion-datetime>
+    </ion-item>
+    <p *ngIf="validateForm.get('dob').hasError('required') && validateForm.get('dob').touched" class="error-left relative">Date of Birth is required!</p>
+    
+    <ion-item>
+        <ion-label floating><span>Date of Anniversary</span></ion-label>
+        <ion-datetime display-format="MMM DD, YYYY" formControlName="anniversary_date" [(ngModel)]="data.anniversary_date"></ion-datetime>
+    </ion-item>
+    
+    
+    <ng-container *ngIf="data.registerType.name=='Plumber'">
+        <ion-item>
+            <ion-label floating><span>Dealer Firm Name</span></ion-label>
+            <ion-input type="text"formControlName="dealer_name" [(ngModel)]="data.dealer_name" [required]="data.registerType.name=='Plumber'"></ion-input>
+        </ion-item>
+        <p *ngIf="validateForm.get('dealer_name').hasError('required') && validateForm.get('dealer_name').touched" class="error-left relative">Dealer Name is required!</p>
+        
+        <ion-item>
+            <ion-label floating><span>Dealer Mobile No</span></ion-label>
+            <ion-input type="tel" minlength="10" maxlength="10" formControlName="dealer_mobile"  [(ngModel)]="data.dealer_mobile" [required]="data.registerType.name=='Plumber'"></ion-input>
+        </ion-item>
+        
+        <p *ngIf="validateForm.get('dealer_mobile').hasError('required') && validateForm.get('dealer_mobile').touched"  class="error-left relative">Dealer Mobile is required!</p>
+        
+        <p *ngIf="(validateForm.get('dealer_mobile').hasError('minlength') || validateForm.get('dealer_mobile').hasError('maxlength')) && validateForm.get('dealer_mobile').touched"  class="error-left relative">Mobile must be 10 digit!</p>
+        
+        <ion-item>
+            <ion-label floating><span>Distributor Name</span></ion-label>
+            <ion-input type="text"formControlName="distributor_name" [(ngModel)]="data.distributor_name"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+            <ion-label floating><span>Select Document</span></ion-label>
+            <ion-select class="h43" name="doc_type" [(ngModel)]="data.doc_type" formControlName="doc_type" [required]="data.registerType.name=='Plumber'">
+                <ion-option value="Aadhaar Card">Aadhaar Card</ion-option>
+                <ion-option value="Pan Card">Pan Card</ion-option>
+                <ion-option value="Driving Licence">Driving Licence</ion-option>
+            </ion-select>
+        </ion-item>
+        <p *ngIf="validateForm.get('doc_type').hasError('required') && validateForm.get('doc_type').touched" class="error-left relative">Document Type is required!</p>
+        
+        <div class="doc-upload" (click)="presentActionSheet()">
+            <span >Upload {{data.doc_type}}</span>
+        </div>
+        
+        <ion-item>
+            <ion-label floating><span>{{data.doc_type}} Number</span></ion-label>
+            <ion-input type="text" name="doc_number" formControlName="doc_number" [(ngModel)]="data.doc_number" [required]="data.registerType.name=='Plumber'"></ion-input>
+        </ion-item>
+        <p *ngIf="validateForm.get('doc_number').hasError('required') && validateForm.get('doc_number').touched" class="error-left relative">Document Number is required!</p>
+    </ng-container>
+</div>
+
+</ion-list>
+<div *ngIf="data.registerType?.name" class="refbtn mt40">
+    <button ion-button block round>Save</button>
+</div>
+</div>
+
+</form>
+</ion-content>

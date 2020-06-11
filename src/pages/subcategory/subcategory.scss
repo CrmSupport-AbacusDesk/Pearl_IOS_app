@@ -1,0 +1,15 @@
+page-subcategory {
+    
+    .sub-cat
+    {
+        color: #ffffff;
+        // text-decoration: underline;
+        font-size: 16px;
+        background: $theme1 !important;
+        // background: #ed3237;
+        padding:15px !important;
+        @extend.regular;
+        // letter-spacing: 2px;
+    }
+    
+}

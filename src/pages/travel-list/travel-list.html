@@ -1,0 +1,108 @@
+<ion-header>    
+    <ion-navbar>
+        <ion-title>Travel List</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding style="background: #f8f8f8;">
+    
+    <!-- <div class="month-calander">
+        <button (click)="previousDate()"><i class="material-icons">keyboard_arrow_left</i></button>
+        <p>{{selected_date | date:'d MMM, y' }}</p>
+        <button (click)="nextDate()"><i class="material-icons">keyboard_arrow_right</i></button>
+    </div> -->
+    
+    <div class="nothing-here" *ngIf="!travel_list.length">
+        <div class="outer">
+            <div class="innear">
+                <img src="assets/imgs/nothing.svg" alt="">
+                <p>No Travel Plan</p>
+            </div>
+        </div>
+    </div>
+    
+    <div padding-vertical *ngIf="travel_list.length">
+        <!-- <div *ngFor="let row of travel_list;let i=index">
+            
+            <ng-container *ngIf="row.travel_type=='Channel Partner Visit'">
+                <div class="travel-list" *ngFor="let val of row.travelDetail" [ngClass]="row.flag =='1'?'visit-done':''">
+                    <div class="content">
+                        <div class="icon">{{val.company_name ? val.company_name.substring(0,1).toUpperCase() : ''}}</div>
+                        <div class="info">
+                            <P>{{val.company_name}}</P>
+                            <p>{{val.drState}} / {{val.drDistrict}}</p>
+                        </div>
+                    </div>
+                    <div class="action" *ngIf="selected_date >= today_date">
+                        <button (click)="deleteTravelPlan(row.id,i,row.flag)"><i class="material-icons">delete_sweep</i></button>
+                    </div>
+                </div>
+            </ng-container>
+            
+            <ng-container *ngIf="row.travel_type=='Area Visit'">
+                <div class="travel-list" *ngFor="let val of row.travelDetail" [ngClass]="row.flag =='1'?'visit-done':''">
+                    <div class="content">
+                        <div class="info">
+                            <p>{{val.state}} / {{val.district}}</p>
+                        </div>
+                    </div>
+                    <div class="action" *ngIf="selected_date >= today_date">
+                        <button (click)="deleteTravelPlan(row.id,i,row.flag)"><i class="material-icons">delete_sweep</i></button>
+                    </div>
+                </div>
+            </ng-container>
+        </div> -->
+        
+        
+        <div class="list-box" *ngFor="let row of travel_list;let i=index">
+            <div class="upper">
+                <div class="date-section">
+                    <p>{{row.travel_date}}</p>
+                    <span>Travel Date</span>
+                </div>
+                <!-- <div class="date-section">
+                    <p>{{row.travel_end_date}}</p>
+                    <span>End Date</span>
+                </div> -->
+                <div class="del-icon">
+                    <a (click)="deleteTravelPlan(row.id, i, row.flag)"><i class="material-icons">delete_sweep</i></a>
+                </div>
+            </div>
+            
+            <ng-container *ngIf="row.travel_type=='Channel Partner Visit'">
+                <div class="mid" *ngFor="let val of row.travelDetail">
+                    <div class="content-info">
+                        <div class="left-info">
+                            <div class="circle">{{val.company_name ? val.company_name.substring(0,1).toUpperCase() : ''}}</div>
+                        </div>
+                        <div class="right-info">
+                            <p>{{val.company_name}}</p>
+                            <span>{{val.drState}} / {{val.drDistrict}}</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            
+            <ng-container *ngIf="row.travel_type=='Area Visit'">
+                <div class="mid" *ngFor="let val of row.travelDetail">
+                    <div class="content-info">
+                        <div class="left-info">
+                            <div class="circle"><i class="material-icons">room</i></div>
+                        </div>
+                        <div class="right-info">
+                            <p>{{val.state}} / {{val.district}}</p>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    
+    
+    <div class="h50"></div>
+    
+    
+    <ion-fab right bottom >
+        <button ion-fab color="danger" (click)="goOnAddTravel()" ><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+</ion-content>

@@ -1,0 +1,97 @@
+
+		<div class="table">
+			<table>
+				<tbody><tr>
+					<th>Date</th>
+					<th>Created By</th>
+					<th>Order No</th>
+					<th>Dealer Name</th>
+					<th>Distributor Name</th>
+					<th>Total Item</th>
+					<th>Order Value</th>
+				</tr>
+				
+				<!-- ngRepeat: row in secondary_order_excel_data --><tr ng-repeat="row in secondary_order_excel_data" class="ng-scope" style="">
+					<td class="ng-binding">16-Feb-2020</td>
+					<td class="ng-binding">Rachit Sood</td>
+					<td class="ng-binding">#OZONE-4827</td>
+					<td class="ng-binding">Mohan J K Sutar And Company</td>
+					<td class="ng-binding">Mahalaxmi Marketing-[HW]</td>
+					<td class="ng-binding">1</td>
+					<td class="ng-binding">9375</td>
+				</tr><!-- end ngRepeat: row in secondary_order_excel_data --><tr ng-repeat="row in secondary_order_excel_data" class="ng-scope">
+					<td class="ng-binding">15-Feb-2020</td>
+					<td class="ng-binding">Rachit Sood</td>
+					<td class="ng-binding">#OZONE-4760</td>
+					<td class="ng-binding">Hanuman Glass Plywood &amp; Hardware</td>
+					<td class="ng-binding">Sun View-[HW]</td>
+					<td class="ng-binding">5</td>
+					<td class="ng-binding">17525</td>
+				</tr><!-- end ngRepeat: row in secondary_order_excel_data --><tr ng-repeat="row in secondary_order_excel_data" class="ng-scope">
+					<td class="ng-binding">13-Feb-2020</td>
+					<td class="ng-binding">Rachit Sood</td>
+					<td class="ng-binding">#OZONE-4711</td>
+					<td class="ng-binding">Pragathi Concepts</td>
+					<td class="ng-binding">Sun View-[HW]</td>
+					<td class="ng-binding">7</td>
+					<td class="ng-binding">19240</td>
+				</tr><!-- end ngRepeat: row in secondary_order_excel_data --><tr ng-repeat="row in secondary_order_excel_data" class="ng-scope">
+					<td class="ng-binding">11-Feb-2020</td>
+					<td class="ng-binding">Rachit Sood</td>
+					<td class="ng-binding">#OZONE-4580</td>
+					<td class="ng-binding">Shishago Spaces</td>
+					<td class="ng-binding">Mahalaxmi Marketing-[HW]</td>
+					<td class="ng-binding">8</td>
+					<td class="ng-binding">18105</td>
+				</tr><!-- end ngRepeat: row in secondary_order_excel_data --><tr ng-repeat="row in secondary_order_excel_data" class="ng-scope">
+					<td class="ng-binding">10-Feb-2020</td>
+					<td class="ng-binding">Rachit Sood</td>
+					<td class="ng-binding">#OZONE-4527</td>
+					<td class="ng-binding">Hanuman Glass Plywood &amp; Hardware</td>
+					<td class="ng-binding">Sun View-[HW]</td>
+					<td class="ng-binding">1</td>
+					<td class="ng-binding">4900</td>
+				</tr><!-- end ngRepeat: row in secondary_order_excel_data --><tr ng-repeat="row in secondary_order_excel_data" class="ng-scope">
+					<td class="ng-binding">10-Feb-2020</td>
+					<td class="ng-binding">Rachit Sood</td>
+					<td class="ng-binding">#OZONE-4526</td>
+					<td class="ng-binding">Mohan J K Sutar And Company</td>
+					<td class="ng-binding">Mahalaxmi Marketing-[HW]</td>
+					<td class="ng-binding">1</td>
+					<td class="ng-binding">5252</td>
+				</tr><!-- end ngRepeat: row in secondary_order_excel_data --><tr ng-repeat="row in secondary_order_excel_data" class="ng-scope">
+					<td class="ng-binding">08-Feb-2020</td>
+					<td class="ng-binding">Rachit Sood</td>
+					<td class="ng-binding">#OZONE-4496</td>
+					<td class="ng-binding">A2Z Glass &amp; Interiors</td>
+					<td class="ng-binding">Mahalaxmi Marketing-[HW]</td>
+					<td class="ng-binding">1</td>
+					<td class="ng-binding">9990</td>
+				</tr><!-- end ngRepeat: row in secondary_order_excel_data --><tr ng-repeat="row in secondary_order_excel_data" class="ng-scope">
+					<td class="ng-binding">05-Feb-2020</td>
+					<td class="ng-binding">Rachit Sood</td>
+					<td class="ng-binding">#OZONE-4351</td>
+					<td class="ng-binding">A2Z Glass &amp; Interiors</td>
+					<td class="ng-binding">Mahalaxmi Marketing-[HW]</td>
+					<td class="ng-binding">8</td>
+					<td class="ng-binding">51067.5</td>
+				</tr><!-- end ngRepeat: row in secondary_order_excel_data --><tr ng-repeat="row in secondary_order_excel_data" class="ng-scope">
+					<td class="ng-binding">05-Feb-2020</td>
+					<td class="ng-binding">Rachit Sood</td>
+					<td class="ng-binding">#OZONE-4350</td>
+					<td class="ng-binding">A2Z Glass &amp; Interiors</td>
+					<td class="ng-binding">Sun View-[HW]</td>
+					<td class="ng-binding">10</td>
+					<td class="ng-binding">104042.5</td>
+				</tr><!-- end ngRepeat: row in secondary_order_excel_data --><tr ng-repeat="row in secondary_order_excel_data" class="ng-scope">
+					<td class="ng-binding">04-Feb-2020</td>
+					<td class="ng-binding">Rachit Sood</td>
+					<td class="ng-binding">#OZONE-4325</td>
+					<td class="ng-binding">Akshara Art</td>
+					<td class="ng-binding">Mahalaxmi Marketing-[HW]</td>
+					<td class="ng-binding">1</td>
+					<td class="ng-binding">2112</td>
+				</tr><!-- end ngRepeat: row in secondary_order_excel_data -->
+			</tbody></table>
+		</div>
+	

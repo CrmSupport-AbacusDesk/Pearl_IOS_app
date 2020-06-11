@@ -1,0 +1,24 @@
+<!--
+  Generated template for the ProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>profile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <p *ngIf="profile_data.user_location != ''"></p>
+
+    <div class="refbtn mt40" *ngIf="profile_data.user_location == ''">
+        <button color="theme" ion-button block round (click)="point_location()">Update Home Location</button>
+      </div>
+
+</ion-content>

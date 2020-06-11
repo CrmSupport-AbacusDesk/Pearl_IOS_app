@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Calculator</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+  <div class="after-upload pl16 mt20">
+    <p>INCLUSIVE</p>
+  </div>
+
+  <div class="edit">
+    <ion-list>
+      <div>
+        
+        <ion-item>
+          <ion-label floating><span>MRP</span></ion-label>
+          <ion-input type="text" name="mrp" #mrp="ngModel" [(ngModel)]="data.mrp"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label floating><span>Discount %</span></ion-label>
+          <ion-input type="text" name="discount" #discount="ngModel" [(ngModel)]="data.discount"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label floating><span>GST %</span></ion-label>
+          <ion-input type="text" name="gst" #gst="ngModel" [(ngModel)]="data.gst"></ion-input>
+        </ion-item>
+      </div>
+    </ion-list>
+    
+    <div class="gst-calculater">
+      <div class="calculator-value">
+        <table>
+          <tr>
+            <td class="text-left">GST Paid</td>
+            <td class="text-right">{{data.saleOnMktPricePerentage ? data.saleOnMktPricePerentage : '0'}} %</td>
+          </tr>
+        </table>
+      </div>
+      
+      <div class="cs-btn">
+        <button ion-button color="theme"  round  (click)="submit('Inclusive')">Save</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="after-upload pl16 mt20">
+    <p>EXCLUSIVE</p>
+  </div>
+
+  <div class="edit">
+    <ion-list>
+      <div>
+        
+        <ion-item>
+          <ion-label floating><span>MRP</span></ion-label>
+          <ion-input type="text" name="excMrp" #excMrp="ngModel" [(ngModel)]="data.excMrp"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label floating><span>Dealer Discount (Inclusive GST) %</span></ion-label>
+          <ion-input type="text" name="excDiscount" #excDiscount="ngModel" [(ngModel)]="data.excDiscount"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label floating><span>GST %</span></ion-label>
+          <ion-input type="text" name="excGst" #excGst="ngModel" [(ngModel)]="data.excGst"></ion-input>
+        </ion-item> 
+      </div>
+    </ion-list>
+    
+    <div class="gst-calculater">
+      <div class="calculator-value">
+        <table>
+          <tr>
+            <td class="text-left">Less Exclusive GST</td>
+            <td class="text-right">{{data.lessExclusiveGst ? data.lessExclusiveGst : '0'}} %</td>
+          </tr>
+        </table>
+      </div>
+      
+      <div class="cs-btn">
+        <button ion-button  round color="theme"  (click)="submit('Exclusive')">Save</button>
+      </div>
+    </div>
+  </div>
+  <div class="h30"></div>
+</ion-content>

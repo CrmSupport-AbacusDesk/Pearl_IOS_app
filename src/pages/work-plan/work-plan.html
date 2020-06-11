@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Work Plan</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="edit">
+    <ion-list>
+      <div>
+        
+        <ion-item>
+          <ion-label floating><span>Date</span></ion-label>
+          <ion-datetime display-format="MMM DD, YYYY" type="text" class="calander" name="date" [(ngModel)]="data.date" (ngModelChange)="checkWorkPlan()"></ion-datetime>
+        </ion-item>
+        
+        <!-- <ng-container>
+          
+          <ion-item>
+            <ion-label floating><span>Order Amount</span></ion-label>
+            <ion-input type="text" name="orderAmt" [(ngModel)]="data.orderAmt" [readonly]="show"></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label floating><span>Plan No. Of Counter By Co</span></ion-label>
+            <ion-input type="text" name="visitOldCounter" [(ngModel)]="data.visitOldCounter" [readonly]="show"></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label floating><span>Plan New Counter</span></ion-label>
+            <ion-input type="text" name="visitNewCounter" [(ngModel)]="data.visitNewCounter" [readonly]="show"></ion-input>
+          </ion-item>
+          
+        </ng-container> -->
+        
+      </div>
+    </ion-list>
+    
+    <!-- <div block class="text-right" *ngIf="show == false">
+      <button ion-button color="secondary" round class="h45 mt15" (click)="submitWorkPlan()">Save</button>
+    </div> -->
+    
+    <div class="gst-calculater">
+      <div class="calculator-value mr0">
+        <table class="table2 column-padding">
+          <tr>
+            <th></th>
+            <th class="w70">Plan</th>
+            <th class="w70">Actual</th>
+            <th class="w40">%</th>
+          </tr>
+
+          <tr>
+            <td>Existing Counter</td>
+            <td>&#8377; {{workPlanData.visitOldCounter ? workPlanData.visitOldCounter : '0'}}</td>
+            <td>&#8377; {{workPlanData.OldDrcheckInCount ? workPlanData.OldDrcheckInCount : '0'}}</td>
+            <td>{{workPlanData.oldDrCheckInPer ? workPlanData.oldDrCheckInPer : '0'}} %</td>
+          </tr>
+
+          <tr>
+            <td>New Counter</td>
+            <td>&#8377; {{workPlanData.visitNewCounter ? workPlanData.visitNewCounter : '0'}}</td>
+            <td>&#8377; {{workPlanData.NewDrcheckInCount ? workPlanData.NewDrcheckInCount : '0'}}</td>
+            <td>{{workPlanData.newDrCheckInPer ? workPlanData.newDrCheckInPer : '0'}} %</td>
+          </tr>
+
+          <tr>
+            <td>Primary Order</td>
+            <td>&#8377; {{workPlanData.primaryOrderAmt ? workPlanData.primaryOrderAmt : '0'}}</td>
+            <td>&#8377; {{workPlanData.priOrderAmt ? workPlanData.priOrderAmt : '0'}}</td>
+            <td>{{workPlanData.priOrderPer ? workPlanData.priOrderPer : '0'}} %</td>
+          </tr>
+
+          <tr>
+            <td>Secondary Order</td>
+            <td>&#8377; {{workPlanData.secondaryOrderAmt ? workPlanData.secondaryOrderAmt : '0'}}</td>
+            <td>&#8377; {{workPlanData.secOrderAmt ? workPlanData.secOrderAmt : '0'}}</td>
+            <td>{{workPlanData.secOrderPer ? workPlanData.secOrderPer : '0'}} %</td>
+          </tr>
+        </table>
+      </div>
+      
+      
+      
+    </div>
+    
+    
+  </div>
+  
+</ion-content>

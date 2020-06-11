@@ -1,0 +1,46 @@
+<ion-header no-border>
+	<ion-navbar>
+		<ion-title>
+			<h1>Product</h1>
+		</ion-title>
+	</ion-navbar>
+	<ion-toolbar>
+		<ion-searchbar (ionInput)="getOfferProduct()" name="product_name" [(ngModel)]="search.product_name"></ion-searchbar>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div class="cs-header" style="display:flex;">
+		<h2 *ngIf="!product_data.length==''">{{product_data.length?product_data.length:'0'}} Products found</h2>
+	</div>
+	
+	<div class="main-container" [ngClass]="{'active': listView}">
+		<div class="figure"  (click)="goToProductDetailPage(pro.id)"  *ngFor="let pro of product_data">
+			
+			<div class="pcl">
+				<div class="thumb">
+					<div class="outer">
+						<div class="innear">
+							<img alt="" [src]="pro.image ? upload_icon_url+pro.image : 'assets/imgs/main-imgs/no-image-available.png'">
+						</div>
+					</div>
+				</div>
+				<div class="discriptions">
+					<h1>{{pro.product_name | uppercase}}</h1>
+					<h2 *ngIf="pro.cat_no !=''">{{pro.cat_no}}</h2>
+					<h2 *ngIf="pro.cat_no==''">-</h2>
+					<h3 class="cs-point" *ngIf="pro.scheme_value_points != 0">{{pro.scheme_value_points}} Point</h3>						
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="nothing-here" *ngIf="product_data.length==0">
+		<div class="outer">
+			<div class="innear">
+				<img src="assets/no-found/not-found-data.gif" alt="">
+				<p>No data found</p>
+			</div>
+		</div>
+	</div>
+	
+</ion-content>

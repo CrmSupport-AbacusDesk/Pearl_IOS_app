@@ -1,0 +1,102 @@
+ion-menu
+{
+    background: rgba(0, 0, 0, 0.4);
+    
+    ion-header
+    {
+        text-align: center;
+        img
+        {
+            margin: 15px 0px 4px 0px;
+            height: 110px;
+        }
+        
+        // .toolbar-background
+        // {
+            //     background: #000 !important;
+            // }
+        }
+        ion-content
+        {
+            .option
+            {
+                height: 55px;
+                border-bottom: 1px solid $theme3;
+                .material-icons
+                {
+                    float: left;
+                    margin: -4px 20px 0px 30px;
+                    color: $theme1;
+                    font-size: 18px;
+                }
+                a
+                {
+                    float: left;
+                    color: #000;
+                    font-size: 14px;
+                    text-transform: capitalize;
+                    text-decoration: none;
+                    @extend.regular;
+                }
+            }
+            //    .option:first-child(){ margin-top: 12px;}
+            // .option:last-child(){ border-bottom: inherit;}
+            
+            .home-list
+            {
+                button
+                {
+                    background: $gradient;
+                    height: 90px;
+                    
+                    .thumb
+                    {
+                        background: #ffffff;
+                        height: 50px;
+                        width: 50px;
+                        border-radius: 100px;
+                        overflow: hidden;
+                        top: 50%;
+                        transform: translatey(-50%);
+                        p
+                        {
+                            text-transform: uppercase;
+                            color: #000000;
+                            font-size: 18px;
+                            @extend.semibold;
+                        }
+                    }
+                    
+                    .description
+                    {
+                        color: #ffffff;
+                        
+                        h2
+                        {
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                            font-size: 16px;
+                            @extend.semibold;
+                        }
+                        
+                        ion-icon
+                        {
+                            font-size: 30px !important;
+                            color: #ffffff !important;
+                            top: 18px !important;
+                        }
+                    }
+                }
+                
+            }
+        }
+        ion-footer
+        {
+            button
+            {
+                background-image: linear-gradient(#6F0EAB, #642B73);
+                font-size: 14px !important;
+                letter-spacing: 2px;
+            }
+        }
+    }

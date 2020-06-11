@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="36.154" viewBox="0 0 40 36.154">
+  <g id="Group_8" data-name="Group 8" transform="translate(-106 -143)">
+    <g id="Group_7" data-name="Group 7">
+      <g id="open" transform="translate(106 118.385)">
+        <g id="Group_2" data-name="Group 2" transform="translate(15 46.153)">
+          <g id="Group_1" data-name="Group 1" transform="translate(0 0)">
+            <path id="Path_1" data-name="Path 1" d="M193.923,300.308h-1.538a.385.385,0,0,0-.385.385v1.923h1.923a.385.385,0,0,0,.385-.385v-1.538A.385.385,0,0,0,193.923,300.308Z" transform="translate(-192 -300.308)" fill="#fff"/>
+          </g>
+        </g>
+        <g id="Group_4" data-name="Group 4" transform="translate(7.308 46.153)">
+          <g id="Group_3" data-name="Group 3" transform="translate(0 0)">
+            <path id="Path_2" data-name="Path 2" d="M95.462,300.308H93.924a.385.385,0,0,0-.385.385v6.154a.385.385,0,0,0,.385.385h1.538a.385.385,0,0,0,.385-.385v-6.154A.385.385,0,0,0,95.462,300.308Z" transform="translate(-93.539 -300.308)" fill="#fff"/>
+          </g>
+        </g>
+        <g id="Group_6" data-name="Group 6" transform="translate(0 24.615)">
+          <g id="Group_5" data-name="Group 5" transform="translate(0 0)">
+            <path id="Path_3" data-name="Path 3" d="M36.538,38.461H32.693l-9.345-7.033a4.231,4.231,0,1,0-6.7,0L7.306,38.461H3.462A3.465,3.465,0,0,0,0,41.923V57.307a3.465,3.465,0,0,0,3.462,3.462H36.538A3.465,3.465,0,0,0,40,57.307V41.923A3.466,3.466,0,0,0,36.538,38.461Zm-17.927-5.62a4.216,4.216,0,0,0,2.777,0l7.467,5.62H11.144ZM11.923,52.692a2.7,2.7,0,0,1-2.692,2.692H7.692A2.7,2.7,0,0,1,5,52.692V46.538a2.7,2.7,0,0,1,2.692-2.692H9.231a2.7,2.7,0,0,1,2.692,2.692Zm7.692-4.615a2.7,2.7,0,0,1-2.692,2.692H15V54.23a1.154,1.154,0,1,1-2.308,0V46.538a2.7,2.7,0,0,1,2.692-2.692h1.538a2.7,2.7,0,0,1,2.692,2.692v1.538Zm5,.385a1.154,1.154,0,1,1,0,2.308H22.692v2.308h3.462a1.154,1.154,0,0,1,0,2.308H21.538a1.154,1.154,0,0,1-1.154-1.154V45a1.154,1.154,0,0,1,1.154-1.154h4.615a1.154,1.154,0,0,1,0,2.308H22.692v2.308h1.923ZM35,54.23a1.154,1.154,0,0,1-2.186.516l-2.43-4.859V54.23a1.154,1.154,0,1,1-2.308,0V45a1.154,1.154,0,0,1,2.186-.516l2.43,4.859V45A1.154,1.154,0,0,1,35,45Z" transform="translate(0 -24.615)" fill="#fff"/>
+          </g>
+        </g>
+      </g>
+      <rect id="Rectangle_1" data-name="Rectangle 1" width="33" height="14" transform="translate(110 161)" fill="#fff"/>
+    </g>
+    <text id="Point" transform="translate(111 172)" font-size="14" font-family="TimesNewRomanPSMT, Times New Roman"><tspan x="0" y="0">Point</tspan></text>
+  </g>
+</svg>

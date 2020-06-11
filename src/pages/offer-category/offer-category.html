@@ -1,0 +1,32 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			<h1>Category</h1>
+		</ion-title>
+	</ion-navbar>
+	<ion-toolbar>
+		<ion-searchbar (ionInput)="getOfferCategory()" name="cat_name" [(ngModel)]="search.cat_name"></ion-searchbar>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div class="listing" *ngIf="category_data.length!=0">
+		<ion-list>
+			<button ion-item (click)="goToSubCategoryPage(row.offer_group,row.sub_category_length)" *ngFor="let row of category_data">
+				<div class="description">
+					<h2>{{row.offer_group | uppercase}}</h2>
+					<!-- <p *ngIf="row.sub_category_length == '1'">{{row.scheme_value_points}} Point</p> -->
+					<ion-icon name="ios-arrow-forward-outline"></ion-icon>
+				</div>
+			</button>
+		</ion-list>
+	</div>
+	<div class="nothing-here" *ngIf="category_data.length==0">
+		<div class="outer">
+			<div class="innear">
+				<img src="assets/no-found/not-found-data.gif" alt="">
+				<p>No data found</p>
+			</div>
+		</div>
+	</div>
+</ion-content>

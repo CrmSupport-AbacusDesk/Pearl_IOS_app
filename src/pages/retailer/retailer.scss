@@ -1,0 +1,120 @@
+page-retailer {
+    .stockist-list
+    {
+        button
+        {
+            position: relative;
+            padding-left: 80px;
+            
+            .item-inner 
+            {
+                background-image: none !important;
+                padding-right: 8px;
+                border-bottom: inherit !important;
+            }
+            
+            ion-label
+            {
+                margin: 0px;
+                height: 80px;
+                
+                .thumb
+                {
+                    position: absolute;
+                    background: #fff;
+                    box-shadow: 2px 3px 10px #ededed;
+                    height: 45px;
+                    width: 45px !important;
+                    border-radius: 100%;
+                    left: 22px;
+                    top: 22px;
+                    
+                    h1
+                    {
+                        color: $theme1;
+                        font-size: 16px;
+                        @extend.semibold;
+                    }
+                }
+                
+                .description
+                {
+                    border-bottom: 1px solid $theme1;
+                    height: 80px;
+                    width: 100%;
+                    position: relative;
+                    
+                    .innear
+                    {
+                        text-align: left;
+                        
+                        h2, p
+                        {
+                            padding-right: 50px !important;
+                        }
+                        
+                        h2
+                        {   
+                            font-size: 14px;
+                            position: relative;
+                            line-height: 27px;
+                            @extend.semibold;
+                        }
+                        
+                        p
+                        {
+                            font-size: 12px;
+                            @extend.regular;
+                            white-space: normal;
+                            span
+                            {
+                                color: #a1b2e4;
+                            }
+                        }
+                        
+                        ion-icon
+                        {
+                            font-size: 17px;
+                            color: $theme1;
+                            position: absolute;
+                            top: 36px;
+                            right: 24px;
+                        }
+                    }
+                }
+            }
+        }
+        button:last-child .description{ border-bottom: none; }
+    }
+    .fake-screen
+    {
+        .list-option
+        {
+            padding: 16px;
+            .circle
+            {
+                margin-top: 4px;
+                height: 45px;
+                width: 50px;
+                border-radius: 100%;
+                @include background-gradient;
+                animation: shine-lines $animation-duration infinite linear;
+            }
+            .fake-data
+            {
+                width: 100%;
+                padding-left: 10px;
+                position: relative;
+                h2,p
+                {
+                    margin-top: 10px !important;
+                    height: 10px;
+                    border-radius: 10px;
+                    width: 95%;
+                    @include background-gradient;
+                    animation: shine-lines $animation-duration infinite linear;
+                }
+            }
+        }
+    }
+}

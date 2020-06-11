@@ -1,0 +1,110 @@
+<ion-header no-border>
+	<ion-navbar>
+		<ion-title>
+			<h1>Product</h1>
+		</ion-title>
+		<!-- <ion-buttons end class="search-icon" (click)="goToSearch()">
+			<button ion-button icon-only>
+				<ion-icon name="search"></ion-icon>
+			</button>
+		</ion-buttons> -->
+	</ion-navbar>
+	<ion-toolbar>
+		<ion-searchbar (ionInput)="getItems()" name="type" [(ngModel)]="search.type"></ion-searchbar>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div class="cs-header" style="display:flex;">
+		<h2 *ngIf="!productlist.length==''">{{productlist.length?productlist.length:'0'}} Products found</h2>
+		<ion-buttons end class="filter-icon">
+			<ion-fab top right edge>
+				<button ion-fab mini ><img src="assets/imgs/main-imgs/icon-filter.svg"  alt=""></button>
+				
+				<ion-fab-list>
+					<div class="clcsd">
+						<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+							
+							<li (click)="BrandActivated()" class="{{value}}">
+								<div class="collapsible-header">Brand</div>
+								<div class="collapsible-body" >
+									<ion-item *ngFor="let data of brandlist;let i = index" >
+										<ion-label>{{data.brand_name}}</ion-label>
+										<ion-checkbox color="light"  checked="true" [(ngModel)]="data.checked" (ionChange)="brandRelatedData('brand',data.brand_name,'','',data.checked,i )"  ></ion-checkbox>
+									</ion-item>
+								</div>
+							</li>
+							<li (click)="CategoryActivated()" class="{{value2}}">
+								<div class="collapsible-header">Category</div>
+								<div class="collapsible-body" >
+									<ion-item *ngFor="let data of categoryList;let i = index">
+										<ion-label>{{data.category}}</ion-label>
+										
+										<ion-checkbox color="light"  checked="true" [(ngModel)]="data.checked" (ionChange)
+										="brandRelatedData('category',data.brand,data.category,'',data.checked,i)"  ></ion-checkbox>
+									</ion-item>
+								</div>
+							</li>
+							
+							<li (click)="subCategoryActivated()" class="{{value3}}" >
+								<div class="collapsible-header">Sub category</div>
+								<div class="collapsible-body">
+									<ion-item *ngFor="let data of subcategoryList; let i = index">
+										<ion-label>{{data.sub_category}}</ion-label>
+										<ion-checkbox color="light" checked="true" [(ngModel)]="data.checked" (ionChange)="brandRelatedData('sub_category',data.brand,data.category, data.sub_category, data.checked,i)" ></ion-checkbox>
+									</ion-item>
+								</div>
+							</li> 
+							
+							<li>
+								<div (click)="togglePopUp()" class="clear-btn">Clear</div>
+							</li>
+						</ul> 
+					</div>
+				</ion-fab-list>
+			</ion-fab>
+		</ion-buttons>
+		<ion-buttons end class="list-icon" [ngClass]="{'active': listView}">
+			<button ion-button>
+				<img   src="assets/imgs/main-imgs/icon-list.svg" (click)="toggleListView()" alt="">
+			</button>
+		</ion-buttons>
+	</div>
+	<div class="main-container" [ngClass]="{'active': listView}">
+		<div class="figure"  (click)="goToProductDetailPage(pro.id)"  *ngFor="let pro of productlist">
+			
+			<div class="pcl">
+				<div class="thumb">
+					<div class="outer">
+						<div class="innear">
+							<img alt="" [src]="pro.image ? upload_icon_url+pro.image : 'assets/imgs/main-imgs/no-image-available.png'">
+						</div>
+					</div>
+				</div>
+				<div class="discriptions">
+					<h1>{{pro.product_name | uppercase}}</h1>
+					<!-- <h2 >{{ pro.cat_no == ''? '-':pro.cat_no}}</h2> -->
+					<h2 *ngIf="pro.cat_no !=''">{{pro.cat_no}}</h2>
+					<h2 *ngIf="pro.cat_no==''">-</h2>
+					<h3 *ngIf="pro.state_price != 0 && login_user_state!=''"><span>&#8377; {{pro.state_price}}.00</span></h3>						
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="nothing-here" *ngIf="productlist.length==0 && load_data == '1'">
+		<div class="outer">
+			<div class="innear">
+				<img src="assets/no-found/not-found-data.gif" alt="">
+				<p>No data found</p>
+			</div>
+		</div>
+	</div>
+	
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="pagingEnabled" >
+		<ion-infinite-scroll-content  loadingSpinner="bubbles" loadingText="Loading more data..." >></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+	
+</ion-content>
+<!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)" loadingSpinner="bubbles" loadingText="Loading More Data..." class="home-loading">
+	<ion-infinite-scroll-content *ngIf="pagingEnabled"></ion-infinite-scroll-content>
+</ion-infinite-scroll> -->

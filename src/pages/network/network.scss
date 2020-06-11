@@ -1,0 +1,26 @@
+page-network {
+   
+    .no-connection
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 100%;
+
+        img
+        {
+            height: 80px;
+
+        }
+
+        h2
+        {
+            color: #626262;
+            font-size: 15px;
+            text-align: center;
+            margin-top: 32px !important;
+        }
+    
+    }
+}

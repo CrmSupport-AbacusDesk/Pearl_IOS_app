@@ -1,0 +1,41 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			<h1>followup</h1>
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	
+	<div class="calendar">
+		<div><button ion-button (click)="red_date();getFollowupList(search.search_by_date)"><ion-icon name="arrow-back"></ion-icon></button></div>
+		<div>{{formatDate(search.search_by_date)  | date:  'MMMM dd, y'}}</div>
+		<div><button ion-button class="right" float-right (click)="ad_date();getFollowupList(search.search_by_date)"><ion-icon name="arrow-forward"></ion-icon></button></div>
+	</div>
+
+
+	<div class="nothing-here" *ngIf="followup_list.length==0">
+		<div class="outer">
+			<div class="innear">
+				<img src="assets/imgs/nothing.svg" alt="">
+				<p>Data not found</p>
+			</div>
+		</div>
+	</div>
+<!-- 	
+	<div class="box call">
+		<div class="dflex">
+			<div class="name-number">
+				<a class="cust-name">Vijayalaxmi traders</a>
+				<p class="mobile">+91 9857458695</p>
+			</div>
+			<div class="call-d dflex"><i class="material-icons">phone</i> <p>Call</p></div>
+			<div class="meeting-d dflex"><img src="assets/imgs/main-imgs/hand-shake.svg" alt=""> <p style="margin-left: 38px !important;">{{val.next_followup_type}}</p></div>
+		</div>
+		<p class="paragraph"><strong>Remark</strong>  :  {{val.remark}}</p>
+	</div> -->
+
+	
+	
+</ion-content>

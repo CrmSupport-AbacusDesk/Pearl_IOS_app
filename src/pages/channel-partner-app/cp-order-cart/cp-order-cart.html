@@ -1,0 +1,132 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Order Summary</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="stable">
+    <div class="head-table">
+      <table>
+        <tr>
+          <th>Brand Name</th>
+          <th class="text-center">Qty</th>
+          <th class="text-right">Amount</th>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="body-table">
+      <table>
+        <tr *ngFor="let value of this.brandWise"> 
+          <td>{{value.brand}}</td>
+          <td class="text-center">{{value.qty}}</td>
+          <td class="text-right">&#x20B9; {{value.amount | number:'1.2-2'}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  
+  <div class="sngtable">
+    <table>
+      <tr>
+        <td>Subtotal</td>
+        <th>&#x20B9; {{orderSubtotal}}</th>
+      </tr>
+      <tr>
+        <td>Discount</td>
+        <th>&#x20B9; {{orderDiscount}}</th>
+      </tr>
+      <tr>
+        <td>GST</td>
+        <th>&#x20B9; {{orderGst}}</th>
+      </tr>
+      <tr>
+        <th class="text-left">Net Amount</th>
+        <th>&#x20B9; {{orderAmount}}</th>
+      </tr>
+    </table>
+  </div>
+  
+  <div class="csnninput pt0" padding>
+    <h1>Remark</h1>
+    <textarea name="remark" [(ngModel)]="data.remark"></textarea>
+  </div>
+  
+  <div class="sticky">
+    <div class="pl-orde pt0 pb0">
+      <button (click)="placeOrder()">Place Order</button>
+    </div>
+    
+    <div class="pl-orde1">
+      <button (click)="deleteOrder()">Remove Order</button>
+    </div>
+  </div>
+  
+  <div class="list-outer ordlist">
+    
+    <div class="list-inner" *ngFor="let data of cpOrderItem;let i = index;">
+      <div style="padding: 0px 16px;">
+        <div class="min-heading">
+          <div class="cs-l">
+            <h2>{{data.product_name | titlecase}}</h2>
+          </div>
+          <div class="cs-r" (click)="removeItemFromCart(i)">
+            <p>DELETE</p>
+          </div>
+        </div>
+        
+        <div class="data-table">
+          <table>
+            <tr *ngIf="data.cat_no != ''">
+              <th>CAT No</th>
+              <td>{{data.cat_no}}</td>
+            </tr>
+            <tr *ngIf="data.brand != ''">
+              <th>Brand</th>
+              <td>{{data.brand | titlecase}}</td>
+            </tr>
+            <tr>
+              <th>Category</th>
+              <td>{{data.category | titlecase}}</td>
+            </tr>
+            <tr *ngIf="data.sub_category != ''">
+              <th>Sub Category</th>
+              <td>{{data.sub_category | titlecase}}</td>
+            </tr>
+            <tr *ngIf="data.color != '' && data.color != undefined">
+              <th>Color</th>
+              <td>{{data.color | titlecase}}</td>
+            </tr>
+            <tr>
+              <th>Price</th>
+              <td>&#x20B9; {{data.price}}</td>
+            </tr>
+          </table>
+        </div>
+        
+        <div class="oneinfo">
+          <div class="figure">
+            <p>Qty</p>
+            <p>{{data.qty}}</p>
+          </div>
+          <div class="figure">
+            <p>Discount</p>
+            <p>&#x20B9; {{data.discount_amount}}</p>
+          </div>
+          <div class="figure">
+            <p>GST</p>
+            <p>&#x20B9; {{data.gst_amount}}</p>
+          </div>
+          <div class="figure">
+            <p>Amount</p>
+            <p>&#x20B9; {{data.amount |number:'1.2-2'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+  
+</ion-content>

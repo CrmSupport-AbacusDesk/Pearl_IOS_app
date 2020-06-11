@@ -1,0 +1,45 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			<h1>Distributor</h1>
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	
+	<div class="fakeScreenShow" *ngIf="show_fake_screen">
+		<div class="fake-screen">
+			<div class="list-option">
+				<div class="dflex">
+					<div class="circle"></div>
+					<div class="fake-data">
+						<h2></h2><p></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="stockist-list" *ngIf="!show_fake_screen">
+		<button ion-item (click)="RetailerDetail()" *ngFor="let val of dist_data">
+			<div class="thumb">
+				<div class="outer">
+					<div class="innear">
+						<h1>{{val.first_char | uppercase}}</h1>
+					</div>
+				</div>
+			</div>
+			<div class="description">
+				<div class="outer">
+					<div class="innear">
+						<h2>{{val.company_name | titlecase}}</h2>
+						<!-- <p><span>{{val.gst_no}}</span></p> -->
+						<ion-icon name="ios-arrow-forward-outline"></ion-icon>
+					</div>
+				</div>
+			</div>
+		</button>
+	</div>
+</ion-content>

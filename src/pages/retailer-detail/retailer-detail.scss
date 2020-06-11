@@ -1,0 +1,104 @@
+page-retailer-detail {
+    .info
+    {
+        position: relative;
+        .name-tag
+        {
+            width: 55px;
+            height: 40px;
+            margin: 4px 0px 0px -16px;
+            background: $theme1;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            color: #fff;
+            line-height: 40px;
+            text-align: right;
+            padding-right: 16px;
+            position: absolute;
+        }
+        .description
+        {
+            .name-number
+            {
+                padding-left: 55px;
+                h2
+                { 
+                    font-size: 13px;
+                    line-height: 28px;
+                    @extend.bold;
+                }
+                p
+                {
+                    font-size: 13px;
+                    @extend.regular;
+                    white-space: normal;
+                    span
+                    {
+                        color: #0044FF;
+                    }
+                }
+            }
+            ul
+            {
+                list-style: none;
+                margin-top: 16px !important;
+                li
+                {
+                    padding: 16px 16px 0px 0px !important;
+                    h2
+                    {   
+                        font-size: 12px;
+                        line-height: 18px;
+                        @extend.regular;
+                        color: #cccccc;
+                        text-transform: capitalize;
+                        letter-spacing: 1px;
+                    }
+                    p
+                    {
+                        font-size: 13px;
+                        @extend.regular;
+                        white-space: normal;
+                        letter-spacing: 1px;
+                        line-height: 22px;
+                        span
+                        {
+                            color: #0044FF;
+                        }
+                    }
+                    .dflex
+                    {
+                        .material-icons
+                        {
+                            font-size: 17px;
+                            color: $theme1;
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+            
+        }
+        .other
+        {
+            padding: 10px 16px 16px 0px;
+            
+            table
+            {
+                table-layout: fixed;
+                width: 100%;
+                tr
+                {               
+                    td
+                    {
+                        padding: 5px 0px;
+                        font-size: 10px;
+                        letter-spacing: 1px;
+                        @extend.regular;
+                    }
+                }
+            }
+        }
+    }
+}
+

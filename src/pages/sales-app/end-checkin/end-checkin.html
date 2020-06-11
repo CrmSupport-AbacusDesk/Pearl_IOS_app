@@ -1,0 +1,102 @@
+<ion-header>
+    
+    <ion-navbar>
+        <ion-title>End Checkin</ion-title>
+    </ion-navbar>
+    
+</ion-header>
+
+
+<ion-content>
+    
+    <div class="prlist">
+        <div class="box light-red-bg relative" *ngIf="checkin_data.other_name == ''">
+            <h1 class="font14 mb10">{{checkin_data.dr_name}}</h1>
+            <div class="heading border-none">
+                <div class="dist-name dflex">
+                    <div class="first-leter w50">{{checkin_data.dr_name | slice:0:1}}</div>
+                    <div class="name-number">
+                        <p>{{checkin_data.name}}</p>
+                        
+                        <div class="text-with-ic dflex mb0" *ngIf="checkin_data.dr_mobile_no">
+                            <i class="material-icons text-relat-icon">call</i>
+                            <p>{{checkin_data.dr_mobile_no}}</p>
+                        </div>
+                        <div class="text-with-ic dflex mb0" *ngIf="!checkin_data.dr_mobile_no">
+                            <i class="material-icons text-relat-icon">call</i>
+                            <p>N A</p>
+                        </div>
+                        
+                        <!-- <div class="text-with-ic dflex mb0">
+                            <i class="material-icons text-relat-icon">forum</i>
+                            <p>{{distributor_detail.whatsapp_no}}</p>
+                        </div> -->
+                        
+                        <div class="text-with-ic dflex mb0" *ngIf="checkin_data.email">
+                            <i class="material-icons text-relat-icon">email</i>
+                            <a class="f14 underline mt8">{{checkin_data.email}}</a>
+                        </div>
+                        <div class="text-with-ic dflex mb0" *ngIf="!checkin_data.email">
+                            <i class="material-icons text-relat-icon">email</i>
+                            <a class="f14 underline mt8">N A</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="detail">
+                <p class="mt10"><strong>ADDRESS</strong></p>
+                <p class="f13" *ngIf="checkin_data.district || checkin_data.state || checkin_data.pincode">{{checkin_data.address | titlecase}} {{checkin_data.city}} {{checkin_data.district}} {{checkin_data.state}} {{checkin_data.pincode}}</p>
+                <p class="f13" *ngIf="!checkin_data.district && !checkin_data.state && !checkin_data.pincode">N A</p>
+                <div class="cs-table-list" style="margin: 3px -10px;">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="box light-red-bg relative" *ngIf="checkin_data.other_name != ''">
+            <div class="heading border-none">
+                <div class="dist-name dflex">
+                    <div class="first-leter w50">O</div>
+                    <div class="name-number">
+                        <p>{{checkin_data.other_name}}</p>
+                        
+                        <div class="text-with-ic dflex mb0" *ngIf="checkin_data.mobile">
+                            <i class="material-icons text-relat-icon">call</i>
+                            <p>{{checkin_data.mobile}}</p>
+                        </div>
+                        <div class="text-with-ic dflex mb0" *ngIf="!checkin_data.mobile">
+                            <i class="material-icons text-relat-icon">call</i>
+                            <p>N A</p>
+                        </div>
+                        
+                      
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    
+    <form [formGroup]="checkinForm" novalidate (ngSubmit)="end_visit(checkin_data.checkin_id,checkin.description)"  padding>
+        
+        <div class="vstime">
+            <p>Start Time</p>
+            <p>{{checkin_data.visit_start | date: 'h:mm a'}}</p>
+        </div>
+        
+        
+        <div class="csnninput">
+            <h1>Description</h1>
+            <textarea formControlName="description" [(ngModel)]="checkin.description"></textarea>
+				<p *ngIf="checkinForm.get('description').hasError('required') && checkinForm.get('description').touched"  class="error-left relative">Description is required!</p>
+
+        </div>
+        
+        <div class="refbtn mt40">
+            <button color="theme"  ion-button block round >End Visit</button>
+        </div>  
+        
+    </form>
+    
+</ion-content>

@@ -1,0 +1,204 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            <h1>Add Order</h1>
+        </ion-title>
+        
+        <div class="cart" (click)="goToCart()" *ngIf="itemCart.length > 0">
+            <span>{{itemCart.length}}</span>
+            <i class="material-icons">shopping_cart</i>
+        </div>
+        
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    
+    
+    <div class="edit">
+        
+        <div class="csslecttype">
+            <ion-item>
+                <ion-label>Product Code</ion-label>
+                <select-searchable
+                item-content
+                [(ngModel)]="data.cat_no"
+                [items]="cat_no"
+                itemValueField="cat_no"
+                itemTextField="cat_no"
+                name="cat_no"
+                value="cat_no"
+                [canSearch]="true"
+                [hasVirtualScroll]="true"
+                (onChange)="selectProductCode($event)"
+                >
+            </select-searchable>
+        </ion-item>
+    </div>
+    
+    <ion-list>
+        <div class="cs-box-radio  mt16" *ngIf="brandFlag == true">
+            <ion-list radio-group (ionChange)="brandSelected(data.brand)" name="brand" [(ngModel)]="data.brand">
+                <ion-item *ngFor="let data of brands">
+                    <ion-label>{{data}}</ion-label>
+                    <ion-radio value="{{data}}"></ion-radio>
+                </ion-item>
+            </ion-list>
+        </div>
+        
+        
+        <ion-item class="cs-select mt16" *ngIf="colorFlag == true">
+            <ion-label>Color</ion-label>
+            <ion-select placeholder="Select Color" name="color" (ionChange)="colorSelected(data.color)" [(ngModel)]="data.color">
+                <ion-option *ngFor="let data of colors" value="{{data.color_name}}">{{data.color_name}}</ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+    
+</div>
+
+<!-- <div class="pr-info mt16" *ngIf="productDetail.length != '0' && showProductDetailDiv == true">
+    <div class="header">Product Information {{productDetail.length}}</div>
+    
+    <div class="data-table">
+        <table>
+            <tr>
+                <th>Name</th>
+                <td>{{productDetail.product_name | titlecase}}</td>
+            </tr>
+            
+            <tr *ngIf="brandFlag == true">
+                <th>Brand</th>
+                <td>{{productDetail.brand | titlecase}}</td>
+            </tr>
+            
+            <tr *ngIf="colorFlag == true">
+                <th>Color</th>
+                <td>{{productDetail.color | titlecase}}</td>
+            </tr>
+            
+            <tr>
+                <th>Category</th>
+                <td>{{productDetail.category | titlecase}}</td>
+            </tr>
+            
+            <tr>
+                <th>Sub Category</th>
+                <td>{{productDetail.sub_category | titlecase}}</td>
+            </tr>
+            
+            <tr *ngIf="productDetail.secondary_packing">
+                <th>Small Packing</th>
+                <td>{{productDetail.secondary_packing}}</td>
+            </tr>
+            
+            <tr *ngIf="productDetail.master_packing">
+                <th>Master Packing</th>
+                <td>{{productDetail.master_packing}}</td>
+            </tr>
+        </table>
+    </div>
+    
+    
+    <div class="data-table pt0">
+        <table>
+            <tr>
+                <th>Mrp</th>
+                <td>&#x20B9; {{productDetail.price}}</td>
+            </tr>
+            
+            <tr>
+                <th>Dis (%)</th>
+                <td>{{productDetail.discount}}</td>
+            </tr>
+            
+            <tr>
+                <th>Gst (%)</th>
+                <td>{{productDetail.gst}}</td>
+            </tr>
+            
+            <tr>
+                <th>Qty</th>
+                <td><input class="wp50" type="number" (input)="calculate()" name="qty" #qty="ngModel" [(ngModel)]="productDetail.qty" required></td>
+            </tr>
+            
+            <tr>
+                <th>Amount</th>
+                <td>&#x20B9; {{productDetail.amount}}</td>
+            </tr>
+            
+            <tr>
+                <td colspan="2">
+                    <button class="wp100" (click)="addToCart()"><i class="material-icons">add</i></button>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+</div> -->
+
+<div class="cs-heading1 pb10 mt16" *ngIf="productDetail.length != '0' && showProductDetailDiv == true">
+    <p>PRODUCT INFORMATION</p>
+</div>
+
+<div class="pd-left-right16" *ngIf="productDetail.length != '0' && showProductDetailDiv == true">
+    <div class="list-box1">
+        <div class="mid mt0">
+            <div class="content-info">
+                <div class="right-info">
+                    <p>{{productDetail.product_name | titlecase}}</p>
+                    <p>{{productDetail.category | titlecase}} / {{productDetail.sub_category | titlecase}}</p>
+                </div>
+            </div>
+            <div class="tag-info amount-view" *ngIf="productDetail.color">
+                <p>{{productDetail.color | titlecase}}</p>
+                <p>Color</p>
+            </div>
+        </div>
+        
+        <div class="three_boxes">
+            <div class="lower">
+                <p>Brand</p>
+                <p>{{productDetail.brand | titlecase}}</p>
+            </div>
+            <div class="lower">
+                <p>Small Packing</p>
+                <p>{{productDetail.secondary_packing}}</p>
+            </div>
+            <div class="lower">
+                <p>Master Packing</p>
+                <p>{{productDetail.master_packing}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="time_show amount-listing">
+        <p>Mrp</p>
+        <p>₹ {{productDetail.price}}</p>
+    </div>
+
+    <div class="time_show amount-listing">
+        <p>Dis ({{productDetail.discount}} %)</p>
+        <p>{{productDetail.discount_amount ? productDetail.discount_amount : '0'}}</p>
+    </div>
+
+    <div class="time_show amount-listing">
+        <p>GST ({{productDetail.gst}} %)</p>
+        <p>{{productDetail.gst_amount ? productDetail.gst_amount : '0'}}</p>
+    </div>
+
+    <div class="time_show amount-listing">
+        <p>Qty</p>
+        <input type="number" (input)="calculate()" name="qty" #qty="ngModel" [(ngModel)]="productDetail.qty" required>
+    </div>
+
+    <div class="time_show amount-listing border-none">
+        <p>Amount</p>
+        <p>₹ {{productDetail.amount ? productDetail.amount : '0'}}</p>
+    </div>
+
+    <button class="cs-button mt20 radius-4" (click)="addToCart()">Add To Cart</button> 
+</div>
+
+
+</ion-content>
