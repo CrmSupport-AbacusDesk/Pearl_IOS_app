@@ -19,7 +19,7 @@
             <div class="csheader spbr" >
                 <div class="cs-left" style="width: 100%;">
                     <p>Start : <span>{{val.visit_start | amLocal | amDateFormat: 'h:mm a'}}</span></p>
-                    <p *ngIf="val.description != ''">End : <span>{{val.visit_end | amLocal | amDateFormat: 'h:mm a'}}</span></p>
+                    <p *ngIf="val.description != ''">End : <span>{{val.visit_end  | amLocal | amDateFormat: 'h:mm a'}}</span></p>
                 </div>
                 <div class="cs-right" *ngIf="val.total_time != ''" style="width: 130px; text-align: right;">
                     <p >Time : <span>{{val.total_time}} </span></p>
@@ -35,7 +35,7 @@
                         <p style="width: 100%;"><i class="material-icons">call</i>{{val.mobile_no ? val.mobile_no : '--'}}</p>
                     </div>
                 </div>
-                <p class="create-by space-margin" *ngIf="val.creator"><strong>Created By:</strong>{{val.creator}}</p>
+                <p class="create-by" *ngIf="val.creator"><strong>Created By:</strong>{{val.creator}}</p>
             </div>
             
             
@@ -44,8 +44,8 @@
                     <div class="csicon">O</div>
                     <div class="csheader spbr" >
                         <div class="cs-left">
-                            <p>Start : <span>{{val.visit_start  | amLocal | amDateFormat: 'h:mm a'}}</span></p>
-                            <p *ngIf="val.visit_end != '0000-00-00 00:00:00'">End : <span>{{val.visit_end  | amLocal | amDateFormat: 'h:mm a'}}</span></p>
+                            <p>Start : <span>{{val.visit_start | amLocal | amDateFormat: 'h:mm a'}}</span></p>
+                            <p *ngIf="val.visit_end != '0000-00-00 00:00:00'">End : <span>{{val.visit_end | amLocal | amDateFormat: 'h:mm a'}}</span></p>
                         </div>
                         <div class="cs-right" *ngIf="val.remark != ''">
                             <p >Time : <span>{{val.total_time}} min</span></p>
@@ -96,7 +96,7 @@
                         <p style="width: 100%;"><i class="material-icons">call</i>{{val.mobile_no ? val.mobile_no : '--'}}</p>
                     </div>
                 </div>
-                <p class="create-by space-margin" *ngIf="val.creator"><strong>Created By: </strong>{{val.creator}}</p>
+                <p class="create-by" *ngIf="val.creator"><strong>Created By:</strong>{{val.creator}}</p>
             </div>
             
             <div *ngIf="val.dr_id == 0">
@@ -109,7 +109,7 @@
                         <p style="width: 100%;"><i class="material-icons">call</i>{{val.mobile_no ? val.mobile_no : '--'}}</p>
                     </div>
                 </div>
-                <p class="create-by" *ngIf="val.creator"><strong>Created By: </strong>{{val.creator}}</p>
+                <p class="create-by" *ngIf="val.creator"><strong>Created By:</strong>{{val.creator}}</p>
             </div>
         </a>
         

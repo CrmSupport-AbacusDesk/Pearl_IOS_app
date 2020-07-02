@@ -6226,9 +6226,18 @@ ion-tabs .tab-button[aria-selected=true] .ion-ios-cs-dist-net {
   min-height: 45px;
 }
 
+.csslecttype ion-item .item-inner {
+  border-bottom: 0px !important;
+}
+
 .csslecttype ion-item .item-inner .input-wrapper ion-label {
   margin-top: 13px !important;
   padding-left: 15px;
+  font-size: 13px;
+}
+
+.csslecttype ion-item .item-inner .input-wrapper ionic-selectable .ionic-selectable-value span .ionic-selectable-value-item {
+  font-size: 13px;
 }
 
 .search-blog {
@@ -7575,7 +7584,7 @@ ion-tabs .tab-button[aria-selected=true] .ion-ios-cs-dist-net {
 }
 
 .csm-footer-tabs .ftabs button:nth-child(2) {
-  margin-left: 8px;
+  margin-right: 8px;
 }
 
 .cs-status {
@@ -8942,6 +8951,11 @@ ion-menu ion-content .option .material-icons {
 
 .cs-box-radio ion-list ion-item.item-radio-checked .item-inner .input-wrapper ion-label {
   color: #fff !important;
+}
+
+.cs-box-radio ion-list ion-item.item-radio-checked .item-inner ion-radio .radio-checked .radio-inner {
+  background: transparent;
+  border-color: #fff;
 }
 
 .cs-box-radio ion-list ion-item .item-inner .input-wrapper ion-label {
@@ -11084,6 +11098,53 @@ button.cs-button {
 
 .no-white-space {
   white-space: inherit !important;
+}
+
+ion-list.cs-ion-radio {
+  margin: 5px 0px 5px 0px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+ion-list.cs-ion-radio ion-list-header {
+  background: #e4e4e4;
+  border: 1px solid #e4e4e4;
+  border-top: 0px;
+  min-width: 50px;
+  max-width: 50px;
+}
+
+ion-list.cs-ion-radio ion-list-header.list-header {
+  margin-bottom: 0px !important;
+  padding-left: 0px !important;
+  min-height: 2rem;
+  font-size: 12px;
+  text-align: center;
+  color: #000000;
+  font-weight: 700;
+}
+
+ion-list.cs-ion-radio ion-list-header.list-header ion-label {
+  margin: 0px;
+}
+
+ion-list.cs-ion-radio ion-item {
+  min-height: 2em !important;
+  border-bottom: 0px !important;
+}
+
+ion-list.cs-ion-radio ion-item .item-inner {
+  border-bottom: 0px !important;
+}
+
+ion-list.cs-ion-radio ion-item .item-inner ion-radio {
+  margin: 8px 0px 8px 0px;
+}
+
+ion-list.cs-ion-radio ion-item ion-label {
+  margin: 0px 8px 0px 0 !important;
 }
 
 .error-right {
@@ -50918,12 +50979,6 @@ page-cart-detail .sngtable table tr td, page-cart-detail .sngtable table tr th {
   padding-right: 0;
 }
 
-page-cart-detail .sngtable table tr td input, page-cart-detail .sngtable table tr th input {
-  width: 80px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
 page-cart-detail .sngtable table tr th {
   text-align: right;
   font-weight: 600;
@@ -51562,8 +51617,8 @@ page-dashboard .dscscounter a .icon img {
 }
 
 page-dashboard .dscscounter a h1 {
-  font-size: 18px;
-  margin-top: 8px !important;
+  font-size: 16px;
+  margin: 5px 0px 0px 0px !important;
   color: #ff0000;
 }
 
@@ -51848,6 +51903,7 @@ page-login .cs-form ion-list ion-item {
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
   height: 45px;
+  padding-left: 10px;
 }
 
 page-login .cs-form ion-list ion-item .item-inner {
@@ -51860,10 +51916,11 @@ page-login .cs-form ion-list ion-item .item-inner input {
   letter-spacing: 1px;
   font-size: 12px;
   margin-left: 0;
+  margin-right: 0px;
 }
 
 page-login .cs-form ion-list ion-item ion-label {
-  margin: 0px 15px 0px 0px;
+  margin: 0px 10px 0px 0px;
 }
 
 page-login .cs-form ion-list ion-item ion-label img {
@@ -51911,7 +51968,7 @@ page-login .purpel-box {
 page-login .purpel-box h1 {
   color: #fff;
   font-size: 15px;
-  margin-top: 130px !important;
+  margin-top: 85px !important;
   font-weight: 600;
 }
 

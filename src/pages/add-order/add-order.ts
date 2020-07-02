@@ -52,6 +52,7 @@ export class AddOrderPage {
   
   categoryList:any=[];
   user_type : any;
+  gstObj:any={};
   
   
   constructor(public navCtrl: NavController,
@@ -63,7 +64,7 @@ export class AddOrderPage {
     private alertCtrl: AlertController, public storage: Storage, public modal: ModalController, public platform: Platform, public appCtrl: App) {
       
       
-      
+      this.gstObj.gstType = 'With GST';
       
       this.data.cat_no = '';
       console.log(this.data.cat_no);
@@ -631,7 +632,6 @@ export class AddOrderPage {
               console.log(this.data.brand);
               this.order_qty = "1";
             }
-            
             this.extraField=result['extra_field']
             this.productList=result['data'];
             this.value=result['data'][0];
@@ -819,11 +819,11 @@ export class AddOrderPage {
               console.log(this.data.sub_total);
               this.data.order_total=this.data.order_total+parseFloat(this.value.amount);
               // this.data.order_discount=0;
-              this.data.order_gst=0;
+              this.data.order_gst=this.value.gstAmt;
               this.data.order_item=this.data.order_item+parseInt(this.value.qty);
               
               this.data.order_after_discount=parseFloat(this.after_discount_amt);
-              this.data.order_gst_percent=this.gst_percent;
+              this.data.order_gst_percent=this.value.gst.gst;
               this.data.order_discount_percent=this.discount_percent;
               
               console.log("hello order");
@@ -863,7 +863,7 @@ export class AddOrderPage {
                 "brand":this.data.brand,
                 "color":this.data.color,
                 "extrafield":this.value.extrafield,
-                "gst":this.gst_amount,
+                "gst":this.data.order_gst,
                 "discount":this.discounted_amt,
                 "pro_id":this.value.id,
                 "sub_total":this.subTotal,
@@ -871,6 +871,7 @@ export class AddOrderPage {
                 "gst_percent":this.data.order_gst_percent,
                 "discount_percent":this.data.order_discount_percent
               }
+              console.log(this.orderArray);
               
             }
             
@@ -888,7 +889,7 @@ export class AddOrderPage {
                 "brand":this.data.brand,
                 "color":this.data.color,
                 "extrafield":this.value.extrafield,
-                "gst":this.gst_amount,
+                "gst":this.data.order_gst,
                 "discount":this.discounted_amt,
                 "pro_id":this.value.id,
                 "sub_total":this.subTotal,
@@ -896,7 +897,7 @@ export class AddOrderPage {
                 "gst_percent":this.data.order_gst_percent,
                 "discount_percent":this.data.order_discount_percent
               }
-              
+              console.log(this.orderArray);
             }
             
             if(this.value1 == undefined && this.user_type == '3')
@@ -916,9 +917,11 @@ export class AddOrderPage {
                 "sub_total": this.value.dealer_rate ? this.value.amount : this.subTotal,
                 "after_discount_amount": this.value.dealer_rate ? this.value.amount : this.data.order_after_discount,
                 "gst_percent":this.data.order_gst_percent,
-                "discount_percent": this.value.dealer_rate ? '0' : this.data.order_discount_percent
-                
+                "gst":this.data.order_gst,
+                "discount_percent": this.value.dealer_rate ? '0' : this.data.order_discount_percent,
+                "gstType" : this.value.gstType
               }
+              console.log(this.orderArray);
             }
             
             if(this.value1 == undefined && this.user_type != '3')
@@ -933,14 +936,14 @@ export class AddOrderPage {
                 "sub_category":this.value.sub_category,
                 "brand":this.data.brand,
                 "color":this.data.color,
-                
                 "pro_id":this.value.id,
                 "sub_total":this.subTotal,
                 "after_discount_amount":this.data.order_after_discount,
                 "gst_percent":this.data.order_gst_percent,
-                "discount_percent":this.data.order_discount_percent
-                
+                "gst":this.data.order_gst,
+                "discount_percent":this.data.order_discount_percent 
               }
+              console.log(this.orderArray);
             }
             
             console.log(this.orderArray);
@@ -965,62 +968,6 @@ export class AddOrderPage {
             
             this.store_in_cart();
             
-            
-            
-            // var getRow = this.tmp_array.filter(x => (x.pro_id === this.orderArray.pro_id ))[0];
-            // console.log(getRow);
-            
-            // if(getRow !=  undefined)
-            // {
-            //   var TempIndex = this.tmp_array.indexOf(getRow);
-            
-            //   var getRow_color = this.tmp_array.filter(x => (x.color === this.orderArray.color ))[0];
-            
-            //   console.log(getRow_color);
-            
-            //   if(getRow_color ==  undefined)
-            //   {
-            //     TempIndex = undefined;
-            //   }
-            
-            
-            //   var getRow_brand = this.tmp_array.filter(x => (x.brand === this.orderArray.brand ))[0];
-            
-            //   console.log(getRow_brand);
-            
-            //   if(getRow_brand ==  undefined)
-            //   {
-            //     TempIndex = undefined;
-            //   }
-            
-            //   console.log(TempIndex);
-            
-            // }
-            
-            // console.log(TempIndex);
-            
-            // if(TempIndex != undefined)
-            // {
-            //   console.log('repeated add');
-            
-            //   this.tmp_array[TempIndex].qty = parseInt(this.tmp_array[TempIndex].qty) + parseInt(this.orderArray.qty);
-            //   this.tmp_array[TempIndex].gst =  parseFloat(this.tmp_array[TempIndex].gst) + parseFloat(this.orderArray.gst);
-            //   this.tmp_array[TempIndex].discount = parseFloat(this.tmp_array[TempIndex].discount) + parseFloat(this.orderArray.discount);
-            //   this.tmp_array[TempIndex].amount = parseFloat(this.tmp_array[TempIndex].amount) + parseFloat(this.orderArray.amount);
-            
-            //   this.tmp_array[TempIndex].discount = this.tmp_array[TempIndex].amount.toFixed(2);
-            //   this.store_in_cart();
-            
-            // }
-            // else
-            // {
-            //   console.log('add');
-            //   this.tmp_array.push(this.orderArray);
-            
-            //   this.store_in_cart();
-            
-            // }
-            
             this.orderArray={};
             this.value={};
             this.value.gst="";
@@ -1035,9 +982,17 @@ export class AddOrderPage {
             this.brand = "0";
             this.color = "0";
             this.order_qty = "0";
+            this.data.order_after_discount = 0;
+            this.data.order_discount = 0;
+            this.data.order_discount_percent = 0;
+            this.data.order_discounted_amt = 0;
+            this.data.order_gst = 0;
+            this.data.order_gst_percent = 0;
+            this.data.order_item = 0;
+            this.data.order_total = 0;
+            this.data.sub_total = 0;
           }
         }
-        
         
         let toast = this.toastCtrl.create({
           message: 'Item added to cart successfully!',
@@ -1083,9 +1038,13 @@ export class AddOrderPage {
           for (let i = 0; i < this.tmp_array.length; i++) {
             
             this.data.order_discount= parseFloat(this.data.order_discount)+parseFloat(this.tmp_array[i].discount);
+
+            this.data.gst= parseFloat(this.data.gst)+parseFloat(this.tmp_array[i].gst);
           }
           
         }
+
+        console.log(this.tmp_array);
         
         for(var i=0; i<this.categoryList.length; i++)
         {
@@ -1097,26 +1056,24 @@ export class AddOrderPage {
             }
           }
         }
+
+        console.log(this.data);
         
         setTimeout(()=>{
           this.storage.set('order_item_array', this.tmp_array);
           this.storage.set('order_item_length',this.globalVar);
           this.storage.set('order_details',this.data);
-          // this.data.order_after_discount=0;
         },1000)
-        
       }
+
+      console.log(this.data);
       
       if(this.order_item_array == '')
       {
-        
         this.storage.set('order_item_array', this.tmp_array);
         this.storage.set('order_item_length',this.globalVar);
         this.storage.set('order_details',this.data);
       }
-      
-      // this.storage_data();
-      
     }
     
     getCategoryList()
@@ -1389,12 +1346,13 @@ export class AddOrderPage {
       console.log(qty);
       console.log(this.value);
       console.log(this.value1);
-
+      console.log(this.data);
+      
+      
       if(this.value1.discount == null) this.value1.discount = 0;
       if(this.value1.gst == null) this.value1.gst = 0;
-
+      
       let subTotal = (this.value.net_price)*(qty);
-      console.log(subTotal);
       this.subTotal = subTotal;
       
       
@@ -1403,25 +1361,17 @@ export class AddOrderPage {
       let discount = (this.value.net_price*this.value1.discount)/100;
       this.discount_amt = discount;
       this.after_discount_amt = this.value.net_price - discount;
-      console.log(this.after_discount_amt);
-      console.log(this.discount_amt);
       
       this.after_discount_amt = this.after_discount_amt.toFixed(2);
       this.discount_amt = this.discount_amt.toFixed(2);
-      console.log(this.discount_amt);
       
       this.gst_percent = this.value1.gst;
       let gst = ((this.value1.gst*(this.value.net_price-this.after_discount_amt))/100);
-      console.log(gst);
       this.gst = gst;
-      console.log(this.gst);
       this.gst = this.gst.toFixed(2)
-      console.log(this.gst);
-      
       
       this.discounted_amt = parseFloat(this.discount_amt)*qty;
       this.discounted_amt = this.discounted_amt.toFixed(2);
-      console.log(this.discounted_amt);
       
       
       this.after_discount_amt = this.after_discount_amt*qty;
@@ -1436,6 +1386,10 @@ export class AddOrderPage {
       
       this.value.amount = this.value.amount.toFixed(2);
       console.log(this.value.amount);
+
+      console.log(this.value);
+      console.log(this.data);
+      
     }
     
     
@@ -1443,9 +1397,13 @@ export class AddOrderPage {
     
     ord_subTotal:any=0;
     discount_amount:any=0;
+    gstAmt:any=0;
     
     calculateAmount1(qty,dealer_discount)
     {
+      console.log(this.value);
+      this.gstAmt = 0;
+      this.value.gstAmt = 0;
       // if(this.value.dealer_discount)
       // {
       //   this.discount_amount = ((this.value.net_price*this.value.dealer_discount)/100)*this.value.qty;
@@ -1468,21 +1426,63 @@ export class AddOrderPage {
       
       // console.log(this.value);
       
-      
       if(dealer_discount && qty)
       {
-        this.discount_percent = dealer_discount;
-        this.gst_percent = 0;
-        
-        this.discounted_amt = ((this.value.net_price*dealer_discount)/100)*qty;
-        this.discounted_amt = this.discounted_amt.toFixed(2);
-        
-        this.after_discount_amt = this.discounted_amt;
-        
-        console.log(this.discounted_amt);
-        this.data.order_discount = this.discounted_amt;
-        this.value.amount = qty*this.value.net_price - qty*((this.value.net_price*dealer_discount)/100);
-        this.value.amount = this.value.amount.toFixed(2);
+        if(this.value.gstType == 'With GST' && this.user_type == '3')
+        {
+          this.discount_percent = dealer_discount;
+          this.gst_percent = 0;
+          
+          this.discounted_amt = ((this.value.net_price*dealer_discount)/100)*qty;
+          this.discounted_amt = this.discounted_amt.toFixed(2);
+          
+          this.after_discount_amt = this.discounted_amt;
+          
+          this.data.order_discount = this.discounted_amt;
+          this.value.amount = qty*this.value.net_price - qty*((this.value.net_price*dealer_discount)/100);
+          
+          
+          this.gstAmt = (this.value.amount * this.value.gst.gst)/(parseInt('100') + parseInt(this.value.gst.gst));
+          this.value.gstAmt = parseFloat(this.gstAmt).toFixed(2);
+          
+          this.value.amount = parseFloat(this.value.amount).toFixed(2);
+        }
+        else if(this.value.gstType == 'Extra GST' && this.user_type == '3')
+        {
+          this.discount_percent = dealer_discount;
+          this.gst_percent = 0;
+          
+          this.discounted_amt = ((this.value.net_price*dealer_discount)/100)*qty;
+          this.discounted_amt = this.discounted_amt.toFixed(2);
+          
+          this.after_discount_amt = this.discounted_amt;
+          
+          this.data.order_discount = this.discounted_amt;
+          this.value.amount = qty*this.value.net_price - qty*((this.value.net_price*dealer_discount)/100);
+          
+          this.gstAmt = (this.value.amount * this.value.gst.gst)/100;
+          
+          this.value.gstAmt = parseFloat(this.gstAmt).toFixed(2);
+          
+          this.value.amount = parseFloat(this.value.amount) + parseFloat(this.value.gstAmt);
+          
+          this.value.amount = parseFloat(this.value.amount).toFixed(2);
+        }
+        else
+        {
+          this.discount_percent = dealer_discount;
+          this.gst_percent = 0;
+          
+          this.discounted_amt = ((this.value.net_price*dealer_discount)/100)*qty;
+          this.discounted_amt = this.discounted_amt.toFixed(2);
+          
+          this.after_discount_amt = this.discounted_amt;
+          
+          this.data.order_discount = this.discounted_amt;
+          this.value.amount = qty*this.value.net_price - qty*((this.value.net_price*dealer_discount)/100);
+          
+          this.value.amount = parseFloat(this.value.amount).toFixed(2);
+        }
         
         this.subTotal = qty*this.value.net_price;
       }
@@ -1492,9 +1492,35 @@ export class AddOrderPage {
     calculateAmount2(qty,dealer_rate)
     {
       if(dealer_rate && this.value.qty)
-      this.value.amount = dealer_rate * this.value.qty;
-      
-      console.log(this.value);
+      {
+        if(this.value.gstType == 'With GST' && this.user_type == '3')
+        {
+          this.value.amount = dealer_rate * this.value.qty;
+          
+          this.gstAmt = (this.value.amount * this.value.gst.gst)/(parseInt('100') + parseInt(this.value.gst.gst));
+          
+          this.value.gstAmt = parseFloat(this.gstAmt).toFixed(2);
+          
+          this.value.amount = parseFloat(this.value.amount).toFixed(2);
+        }
+        else if(this.value.gstType == 'Extra GST' && this.user_type == '3')
+        {
+          this.value.amount = dealer_rate * this.value.qty;
+          
+          this.gstAmt = (this.value.amount * this.value.gst.gst)/100;
+          this.value.gstAmt = parseFloat(this.gstAmt).toFixed(2);
+          
+          this.value.amount = parseFloat(this.value.amount) + parseFloat(this.value.gstAmt);
+          
+          this.value.amount = parseFloat(this.value.amount).toFixed(2);
+        }
+        else
+        {
+          this.value.amount = dealer_rate * this.value.qty;
+
+          this.value.amount = parseFloat(this.value.amount).toFixed(2);
+        }
+      }
     }
     
     
@@ -1643,6 +1669,11 @@ export class AddOrderPage {
     {
       console.log(ev);
       console.log(this.autocompleteItems);
+    }
+    
+    selectSecondaryGstType(gstType)
+    {
+      this.value.gstType = gstType;
     }
   }
   

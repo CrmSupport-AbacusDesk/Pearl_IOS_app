@@ -72,7 +72,7 @@ var OfferProductDetailPage = /** @class */ (function () {
     };
     OfferProductDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-offer-product-detail',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/avtar/pearl/pearlJuneUpdate/pearl-App/src/pages/offer-product-detail/offer-product-detail.html"*/'<!--\n  Generated template for the OfferProductDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>offer_product_detail</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/avtar/pearl/pearlJuneUpdate/pearl-App/src/pages/offer-product-detail/offer-product-detail.html"*/,
+            selector: 'page-offer-product-detail',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/offer-product-detail/offer-product-detail.html"*/'<!--\n  Generated template for the OfferProductDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>offer_product_detail</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/offer-product-detail/offer-product-detail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]])
     ], OfferProductDetailPage);

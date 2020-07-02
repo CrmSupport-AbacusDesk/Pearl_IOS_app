@@ -66,6 +66,8 @@ export class LoginPage {
     { 
       if(this.register_type == undefined || (this.register_type.name == "Plumber" && this.register_type.id == "4"))
       {
+        console.log("aaaaaaaaaaaa");
+        
         this.lodingPersent();
         
         if(this.validations_form.invalid) 
@@ -133,6 +135,8 @@ export class LoginPage {
       
       if(this.register_type != undefined && (this.register_type.name != "Plumber" && this.register_type.id != "4") && (this.register_type.name == "Distributor" && this.register_type.id == "1"))
       { 
+        console.log("bbbbbbbbbbbbbb");
+        
         if(this.validations_form.invalid) 
         {  
           this.validations_form.get('phone').markAsTouched();
@@ -189,6 +193,7 @@ export class LoginPage {
       
       if(this.register_type != undefined && (this.register_type.name != "Plumber" && this.register_type.id != "4") && (this.register_type.name != "Distributor" && this.register_type.id != "1"))
       {
+        console.log("cccccccccccccc");
         
         console.log("222");
         

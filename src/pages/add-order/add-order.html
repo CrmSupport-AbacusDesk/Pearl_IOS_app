@@ -220,7 +220,28 @@
 			
 			<tr *ngIf="value.master_packing">
 				<th>Master Packing</th>
-				<td>{{value.master_packing }}</td>
+				<td>{{value.master_packing}}</td>
+			</tr>
+			
+			<tr *ngIf="user_type == '3'">
+				<td colspan="2">
+					<div class="cs-box-radio table-btn-transparent">
+						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">
+							<ion-list-header>
+								<ion-label>GST</ion-label>
+							</ion-list-header>
+							<ion-item>
+								<ion-label>GST Paid</ion-label>
+								<ion-radio value="With GST" checked></ion-radio>
+							</ion-item>
+							
+							<ion-item>
+								<ion-label>GST Extra</ion-label>
+								<ion-radio value="Extra GST"></ion-radio>
+							</ion-item>
+						</ion-list>
+					</div>
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -260,6 +281,27 @@
 			<tr *ngIf="value.master_packing">
 				<th>Master Packing</th>
 				<td>{{value.master_packing }}</td>
+			</tr>
+			
+			<tr *ngIf="user_type == '3'">
+				<td colspan="2">
+					<div class="cs-box-radio table-btn-transparent">
+						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">
+							<ion-list-header>
+								<ion-label>GST</ion-label>
+							</ion-list-header>
+							<ion-item>
+								<ion-label>GST Paid</ion-label>
+								<ion-radio value="With GST" checked></ion-radio>
+							</ion-item>
+							
+							<ion-item>
+								<ion-label>GST Extra</ion-label>
+								<ion-radio value="Extra GST"></ion-radio>
+							</ion-item>
+						</ion-list>
+					</div>
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -301,6 +343,27 @@
 				<th>Master Packing</th>
 				<td>{{value.master_packing }}</td>
 			</tr>
+			
+			<tr *ngIf="user_type == '3'">
+				<td colspan="2">
+					<div class="cs-box-radio table-btn-transparent">
+						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">
+							<ion-list-header>
+								<ion-label>GST</ion-label>
+							</ion-list-header>
+							<ion-item>
+								<ion-label>GST Paid</ion-label>
+								<ion-radio value="With GST" checked></ion-radio>
+							</ion-item>
+							
+							<ion-item>
+								<ion-label>GST Extra</ion-label>
+								<ion-radio value="Extra GST"></ion-radio>
+							</ion-item>
+						</ion-list>
+					</div>
+				</td>
+			</tr>
 		</table>
 	</div>
 	
@@ -341,6 +404,27 @@
 				<th>Master Packing</th>
 				<td>{{value.master_packing }}</td>
 			</tr>
+			
+			<tr *ngIf="user_type == '3'">
+				<td colspan="2">
+					<div class="cs-box-radio table-btn-transparent">
+						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">
+							<ion-list-header>
+								<ion-label>GST</ion-label>
+							</ion-list-header>
+							<ion-item>
+								<ion-label>GST Paid</ion-label>
+								<ion-radio value="With GST" checked></ion-radio>
+							</ion-item>
+							
+							<ion-item>
+								<ion-label>GST Extra</ion-label>
+								<ion-radio value="Extra GST"></ion-radio>
+							</ion-item>
+						</ion-list>
+					</div>
+				</td>
+			</tr>
 		</table>
 	</div>
 	
@@ -377,6 +461,27 @@
 				<th>Master Packing</th>
 				<td>{{value.master_packing }}</td>
 			</tr>
+			
+			<tr *ngIf="user_type == '3'">
+				<td colspan="2">
+					<div class="cs-box-radio table-btn-transparent">
+						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">
+							<ion-list-header>
+								<ion-label>GST</ion-label>
+							</ion-list-header>
+							<ion-item>
+								<ion-label>GST Paid</ion-label>
+								<ion-radio value="With GST" checked></ion-radio>
+							</ion-item>
+							
+							<ion-item>
+								<ion-label>GST Extra</ion-label>
+								<ion-radio value="Extra GST"></ion-radio>
+							</ion-item>
+						</ion-list>
+					</div>
+				</td>
+			</tr>
 		</table>
 	</div>
 	
@@ -410,8 +515,29 @@
 			</tr>
 			
 			<tr *ngIf="value.master_packing">
-				<th>Master Packing</th>
+				<th>Master Packing {{value.gstType}}</th>
 				<td>{{value.master_packing }}</td>
+			</tr>
+			
+			<tr *ngIf="user_type == '3'">
+				<td colspan="2">
+					<div class="cs-box-radio table-btn-transparent">
+						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">
+							<ion-list-header>
+								<ion-label>GST</ion-label>
+							</ion-list-header>
+							<ion-item>
+								<ion-label>GST Paid</ion-label>
+								<ion-radio value="With GST" checked></ion-radio>
+							</ion-item>
+							
+							<ion-item>
+								<ion-label>GST Extra</ion-label>
+								<ion-radio value="Extra GST"></ion-radio>
+							</ion-item>
+						</ion-list>
+					</div>
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -425,7 +551,7 @@
 				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price == '0' " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price != '0' " class="w62">Rate</th>
-				<th *ngIf="value1 != undefined " class="w62">Gst.(%)</th>
+				<th class="w62">Gst</th>
 				<th class="w45 text-center">Qty</th>
 				<th>Amount</th>
 				<th class="w40">&nbsp;</th>
@@ -436,7 +562,11 @@
 				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>
 				<td *ngIf="user_type == '3' && value.cp_net_price == '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>
 				<td *ngIf="user_type == '3' && value.cp_net_price != '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>
-				<td *ngIf="value1 != undefined">{{value1.gst}}</td>
+
+				<td *ngIf="value1 != undefined">{{value1.gst}} %</td>
+
+				<td  *ngIf="user_type == '3'">{{value.gstAmt != 0 ? value.gstAmt : ''}} ({{value.gst.gst}}%)</td>
+
 				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != '0' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>
 				<td>&#x20B9; {{value.amount}}</td>
 				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>
@@ -453,7 +583,7 @@
 				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price == '0' " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price != '0' " class="w62">Rate</th>
-				<th *ngIf="value1 != undefined " class="w62">Gst.(%)</th>
+				<th class="w62">Gst</th>
 				<th class="w45 text-center">Qty</th>
 				<th>Amount</th>
 				<th class="w40">&nbsp;</th>
@@ -464,7 +594,11 @@
 				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>
 				<td *ngIf="user_type == '3' && value.cp_net_price == '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>
 				<td *ngIf="user_type == '3' && value.cp_net_price != '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>
-				<td *ngIf="value1 != undefined ">{{value1.gst}}</td>
+				
+				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>
+
+				<td  *ngIf="user_type == '3'">{{value.gstAmt != 0 ? value.gstAmt : ''}} ({{value.gst.gst}}%)</td>
+
 				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != '0' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>
 				<td>&#x20B9; {{value.amount}}</td>
 				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>
@@ -481,7 +615,7 @@
 				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price == '0' " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price != '0' " class="w62">Rate</th>
-				<th *ngIf="value1 != undefined " class="w62">Gst.(%)</th>
+				<th class="w62">Gst</th>
 				<th class="w45 text-center">Qty</th>
 				<th>Amount</th>
 				<th class="w40">&nbsp;</th>
@@ -492,7 +626,11 @@
 				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>
 				<td *ngIf="user_type == '3' && value.cp_net_price == '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>
 				<td *ngIf="user_type == '3' && value.cp_net_price != '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>
-				<td *ngIf="value1 != undefined ">{{value1.gst}}</td>
+				
+				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>
+
+				<td  *ngIf="user_type == '3'">{{value.gstAmt != 0 ? value.gstAmt : ''}} ({{value.gst.gst}}%)</td>
+
 				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != '0' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>
 				<td>&#x20B9; {{value.amount}}</td>
 				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>
@@ -508,7 +646,7 @@
 				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price == '0' " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price != '0' " class="w62">Rate</th>
-				<th *ngIf="value1 != undefined " class="w62">Gst.(%)</th>
+				<th class="w62">Gst</th>
 				<th class="w45 text-center">Qty</th>
 				<th>Amount</th>
 				<th class="w40">&nbsp;</th>
@@ -519,8 +657,12 @@
 				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>
 				<td *ngIf="user_type == '3' && value.cp_net_price == '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>
 				<td *ngIf="user_type == '3' && value.cp_net_price != '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>
-				<td *ngIf="value1 != undefined ">{{value1.gst}}</td>
-				<td class="pl5 pr5"><input class="wp100(input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != '0' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>
+				
+				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>
+
+				<td  *ngIf="user_type == '3'">{{value.gstAmt != 0 ? value.gstAmt : ''}} ({{value.gst.gst}}%)</td>
+
+				<td class="pl5 pr5"><input class="wp100"(input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != '0' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>
 				<td>&#x20B9; {{value.amount}}</td>
 				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>
 			</tr>
@@ -535,7 +677,7 @@
 				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price == '0' " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price != '0' " class="w62">Rate</th>
-				<th *ngIf="value1 != undefined " class="w62">Gst.(%)</th>
+				<th class="w62">Gst</th>
 				<th class="w45 text-center">Qty</th>
 				<th>Amount</th>
 				<th class="w40">&nbsp;</th>
@@ -546,7 +688,11 @@
 				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>
 				<td *ngIf="user_type == '3' && value.cp_net_price == '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>
 				<td *ngIf="user_type == '3' && value.cp_net_price != '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>
-				<td *ngIf="value1 != undefined ">{{value1.gst}}</td>
+				
+				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>
+
+				<td  *ngIf="user_type == '3'">{{value.gstAmt != 0 ? value.gstAmt : ''}} ({{value.gst.gst}}%)</td>
+
 				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != '0' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>
 				<td>&#x20B9; {{value.amount}}</td>
 				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>
@@ -562,7 +708,7 @@
 				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price == '0' " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price != '0' " class="w62">Rate</th>
-				<th *ngIf="value1 != undefined " class="w62">Gst.(%)</th>
+				<th class="w62">Gst.(%)</th>
 				<th class="w45 text-center">Qty</th>
 				<th>Amount</th>
 				<th class="w40">&nbsp;</th>
@@ -573,7 +719,11 @@
 				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>
 				<td *ngIf="user_type == '3' && value.cp_net_price == '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>
 				<td *ngIf="user_type == '3' && value.cp_net_price != '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>
-				<td *ngIf="value1 != undefined ">{{value1.gst}}</td>
+				
+				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>
+
+				<td  *ngIf="user_type == '3'">{{value.gstAmt != 0 ? value.gstAmt : ''}} ({{value.gst.gst}}%)</td>
+
 				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != '0' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>
 				<td>&#x20B9; {{value.amount}}</td>
 				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>
@@ -590,7 +740,7 @@
 				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price == '0' " class="w62">Dis.(%)</th>
 				<th *ngIf="user_type == '3' && value.cp_net_price != '0' " class="w62">Rate</th>
-				<th *ngIf="value1 != undefined " class="w62">Gst.(%)</th>
+				<th class="w62">Gst.(%)</th>
 				<th class="w45 text-center">Qty</th>
 				<th>Amount</th>
 				<th class="w40">&nbsp;</th>
@@ -601,7 +751,11 @@
 				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>
 				<td *ngIf="user_type == '3' && value.cp_net_price == '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>
 				<td *ngIf="user_type == '3' && value.cp_net_price != '0'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>
-				<td *ngIf="value1 != undefined ">{{value1.gst}}</td>
+				
+				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>
+
+				<td  *ngIf="user_type == '3'">{{value.gstAmt != 0 ? value.gstAmt : ''}} ({{value.gst.gst}}%)</td>
+
 				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != '0' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>
 				<td>&#x20B9; {{value.amount}}</td>
 				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>

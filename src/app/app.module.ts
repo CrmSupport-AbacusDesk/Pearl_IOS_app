@@ -109,7 +109,6 @@ import { FileTransfer} from '@ionic-native/file-transfer';
 import { WorkPlanPageModule } from '../pages/work-plan/work-plan.module';
 import { MomentModule } from 'ngx-moment';
 
-
 @NgModule({
   declarations: [
     MyApp,
@@ -118,8 +117,8 @@ import { MomentModule } from 'ngx-moment';
   ],
   imports: [
     BrowserModule,
-    MomentModule,
     HttpModule,
+    MomentModule,
     IonicModule.forRoot(MyApp, {
       links: [
         {component:OrderDetailPage,name:'Detail',segment: 'detail/:userId'}

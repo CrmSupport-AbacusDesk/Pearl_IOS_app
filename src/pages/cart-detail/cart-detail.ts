@@ -65,6 +65,28 @@ export class CartDetailPage {
         console.log(this.order_data);
         console.log(this.order_data.order_id);
       }
+      this.order_data.order_after_discount = 0;
+      this.order_data.order_discount = 0;
+      this.order_data.order_discounted_amt = 0;
+      this.order_data.order_gst = 0;
+      this.order_data.order_total = 0;
+      this.order_data.sub_total = 0;
+      
+      for(var i=0; i<this.order_item.length; i++)
+      {
+        this.order_data.order_after_discount += parseFloat(this.order_item[i]['after_discount_amount']);
+        this.order_data.order_discount += parseFloat(this.order_item[i]['discount']);
+        this.order_data.order_gst += parseFloat(this.order_item[i]['gst']);
+        this.order_data.order_total += parseFloat(this.order_item[i]['amount']);
+        this.order_data.sub_total += parseFloat(this.order_item[i]['sub_total']);
+      }
+      
+      this.order_data.order_after_discount = parseFloat(this.order_data.order_after_discount).toFixed(2);
+      this.order_data.order_discount = parseFloat(this.order_data.order_discount).toFixed(2);
+      this.order_data.order_discounted_amt = parseFloat(this.order_data.order_discounted_amt).toFixed(2);
+      this.order_data.order_gst = parseFloat(this.order_data.order_gst).toFixed(2);
+      this.order_data.order_total = parseFloat(this.order_data.order_total).toFixed(2);
+      this.order_data.sub_total = parseFloat(this.order_data.sub_total).toFixed(2);
     });
   }
   
@@ -75,24 +97,24 @@ export class CartDetailPage {
   
   cal_cash_discount()
   {
-    this.order_data.cd_amount = 0;
-    this.order_data.cd_percentage = 0;
+    // this.order_data.cd_amount = 0;
+    // this.order_data.cd_percentage = 0;
     
-    this.subtotal = this.order_data.sub_total - this.order_data.order_discount;
-    this.order_data.cd_amount = (this.subtotal * this.cart_form.cd)/100;
-    this.order_data.cd_amount = parseFloat(this.order_data.cd_amount);
+    // this.subtotal = this.order_data.sub_total - this.order_data.order_discount;
+    // this.order_data.cd_amount = (this.subtotal * this.cart_form.cd)/100;
+    // this.order_data.cd_amount = parseFloat(this.order_data.cd_amount);
     this.order_data.cd_percentage = this.cart_form.cd;
     
-    this.second_subtotal = this.subtotal - this.order_data.cd_amount;
+    // this.second_subtotal = this.subtotal - this.order_data.cd_amount;
     
-    this.gst_amount = (this.second_subtotal * this.order_data.order_gst_percent)/100;
+    // this.gst_amount = (this.second_subtotal * this.order_data.order_gst_percent)/100;
     
-    this.amount = this.second_subtotal + this.gst_amount;
+    // this.amount = this.second_subtotal + this.gst_amount;
     
-    this.order_data.order_total = parseFloat(this.amount);
-    this.order_data.order_gst = parseFloat(this.gst_amount);
+    // this.order_data.order_total = parseFloat(this.amount);
+    // this.order_data.order_gst = parseFloat(this.gst_amount);
     
-    console.log(this.order_data);
+    // console.log(this.order_data);
   }
   
   brand_qty:any = 0;
@@ -322,7 +344,6 @@ export class CartDetailPage {
           {
             this.loading.dismiss();
           });
-          
         },
         error => {
           console.log('Error requesting location permissions', error);
@@ -345,7 +366,6 @@ export class CartDetailPage {
     place_order_dealer()
     {
       this.lodingPersent();
-      
       this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
         () => {
           
@@ -366,10 +386,11 @@ export class CartDetailPage {
             {
               console.log(result);
               
+              this.loading.dismiss();
+              
               if(result)
               {
                 this.order_for = result['order_type'];
-                this.loading.dismiss();
                 
                 let toast = this.toastCtrl.create({
                   message: 'Order Saved Successfully!',

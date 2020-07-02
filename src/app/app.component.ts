@@ -328,31 +328,40 @@ export class MyApp
                 console.log(this.versionNumber);
             });
             
-            this.serve.addData({},'Login/ios_app_version').then((result)=>{
+            this.serve.addData({},'Login/app_version').then((result)=>
+            {
                 console.log(result);
                 this.v_num = result['version'];
-                console.log(this.v_num);
-                if(this.v_num!=this.versionNumber){
+                
+                if(this.v_num!=this.versionNumber)
+                {
                     let updateAlert = this.alertCtrl.create({
                         title: 'Update Available',
-                        message: 'A newer version of this app is available for download. Please update it from AppStore !',
+                        message: 'A newer version of this app is available for download. Please update it from PlayStore !',
                         buttons: [
                             {
                                 text: 'Cancel',
-                                
+                                handler: () => {
+                                    setTimeout(() =>
+                                    {
+                                    }, 500);
+                                    
+                                    this.platform.exitApp();
+                                }
                             },
                             {
                                 text: 'Update Now',
                                 handler: () => {
+                                    setTimeout(() =>
+                                    {
+                                    }, 500);
                                     
-                                    window.open("https://apps.apple.com/us/app/pearl-precision/id1472354588?ls=1");
-                                    
+                                    window.open("https://play.google.com/store/apps/details?id=com.abacusdesk.pearls");
                                 }
                             }]
                         });
                         updateAlert.present();
                     }
-                    
                 })
             });
         }
@@ -639,7 +648,6 @@ export class MyApp
                     { title: 'Travel Plan', name: 'TravelListPage', component: TravelListPage, index: 23, icon: 'train', show: true },
                     { title: 'Calculator', name: 'GstCalculatorPage', component: GstCalculatorPage, index: 23, icon: 'gradient', show: true },
                     { title: 'Dealer Survey', name: 'DealerSurveyList', component: DealerSurveyListPage,index: 24, icon: 'group', show: true},
-                    { title: 'Work Plan', name: 'WorkPlan', component: WorkPlanPage,index: 24, icon: 'work', show: true},
                     { title: 'Channel Partner', name: 'Distributor', component: MainDistributorListPage,index: 15, icon: 'group', show: true},
                     { title: 'Direct Dealer', name: 'Direct Dealer', component: DirectDealerListPage,index: 13, icon: 'person_pin', show: true},
                     { title: 'Dealer', name: 'Dealer', component: DealerListPage,index: 12, icon: 'person', show: true},
