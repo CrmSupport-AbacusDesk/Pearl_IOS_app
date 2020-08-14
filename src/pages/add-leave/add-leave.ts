@@ -33,20 +33,27 @@ export class AddLeavePage {
     this.today_date = new Date().toISOString().slice(0,10);
   }
   
+  saveLeaveFlag:boolean=false;
+  
   add_leave()
   {
-    this.show_loading();
-    
-    this.db.addData({'data':this.data},"leave/add_leave").then(response=>
-      {
-        console.log(response);
+    if(this.saveLeaveFlag == false)
+    {
+      this.saveLeaveFlag = true;
 
-        this.presentToast1();
-        this.navCtrl.push(LeaveListPage);
-        this.loading.dismiss();
-      });
+      this.show_loading();
+      
+      this.db.addData({'data':this.data},"leave/add_leave").then(response=>
+        {
+          console.log(response);
+          
+          this.presentToast1();
+          this.navCtrl.push(LeaveListPage);
+          this.loading.dismiss();
+        });
+      }
     }
-
+    
     presentToast1() 
     {
       let toast1 = this.toastCtrl.create({
@@ -54,7 +61,7 @@ export class AddLeavePage {
         duration: 3000,
         position: 'bottom'
       });
-  
+      
       toast1.present();
     }
     

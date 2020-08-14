@@ -18,8 +18,8 @@
         <a *ngFor="let val of today_checkin" (click)="val.description == '' ? end_visit():checkin_detail(val.checkin_id)">
             <div class="csheader spbr" >
                 <div class="cs-left" style="width: 100%;">
-                    <p>Start : <span>{{val.visit_start | amLocal | amDateFormat: 'h:mm a'}}</span></p>
-                    <p *ngIf="val.description != ''">End : <span>{{val.visit_end  | amLocal | amDateFormat: 'h:mm a'}}</span></p>
+                    <p>Start : <span>{{val.visit_start  | amLocal | amDateFormat: 'h:mm a'}}</span></p>
+                    <p *ngIf="val.description != ''">End : <span>{{val.visit_end | amLocal | amDateFormat: 'h:mm a'}}</span></p>
                 </div>
                 <div class="cs-right" *ngIf="val.total_time != ''" style="width: 130px; text-align: right;">
                     <p >Time : <span>{{val.total_time}} </span></p>
@@ -79,8 +79,8 @@
         <a *ngFor="let val of previous_checkin" (click)="checkin_detail(val.checkin_id)" >
             <div class="csheader">
                 <div class="cs-left" style="width: 100%;">
-                    <p>Start : <span>{{val.visit_start | date:'hh:mm a'}}</span></p>
-                    <p *ngIf="val.visit_end != '0000-00-00 00:00:00'" style="margin-left: 10px !important;">End : <span>{{val.visit_end | date:'hh:mm a'}}</span></p>
+                    <p>Start : <span>{{val.visit_start | amLocal | amDateFormat: 'h:mm a'}}</span></p>
+                    <p *ngIf="val.visit_end != '0000-00-00 00:00:00'" style="margin-left: 10px !important;">End : <span>{{val.visit_end | amLocal | amDateFormat: 'h:mm a'}}</span></p>
                 </div>
                 <div class="cs-right flex-right" style="width: 130px;">
                     <p style="width: 100%; text-align: right;"><span>{{val.activity_date | date: 'MMM d, y'}}</span></p>

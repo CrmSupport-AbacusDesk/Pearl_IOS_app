@@ -50,6 +50,21 @@
                     
                     <!-- <p *ngIf="validateForm.get('email').hasError('required') && validateForm.get('email').touched" class="error-left relative">Email is required!</p> -->
                     
+                    <div class="square-box">
+                        <p>Response</p>
+                        <ion-list radio-group class="radio-alignment" formControlName="response" name="response" [(ngModel)]="data.response">
+                            <ion-item style="border-right: 1px solid #dedede">
+                                <ion-label>Interested</ion-label>
+                                <ion-radio value="Interested" ></ion-radio>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label>Not Interested</ion-label>
+                                <ion-radio value="Not Interested"></ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </div>
+                    <p *ngIf="validateForm.get('response').hasError('required') && validateForm.get('response').touched"  class="error-left relative">Response is required!</p>
+                    
                     <ion-item>
                         <ion-label floating><span>Address</span></ion-label>
                         <ion-input type="text"formControlName="address" [(ngModel)]="data.address" required></ion-input>
@@ -62,6 +77,8 @@
                     </ion-item>
                     
                     <p *ngIf="validateForm.get('pincode').hasError('required') && validateForm.get('pincode').touched" class="error-left relative">Pincode is required!</p>
+                    
+                    <p *ngIf="(validateForm.get('pincode').hasError('minlength') || validateForm.get('pincode').hasError('maxlength')) && validateForm.get('pincode').touched"  class="error-left relative">Pincode must be 6 digit!</p>
                     
                     <div class="csslecttype mt20">
                         <ion-item>
@@ -136,6 +153,8 @@
             </ion-list>
         </div>
         
+        <p *ngIf="validateForm.get('product_rating').hasError('required') && validateForm.get('product_rating').touched"  class="error-left relative">Product Rating is required!</p>
+        
         <div class="square-box">
             <p>Demonstration Response</p>
             <ion-list radio-group class="radio-alignment" formControlName="demonstration_response" name="demonstration_response" [(ngModel)]="data.demonstration_response">
@@ -157,6 +176,22 @@
                 </ion-item>
             </ion-list>
         </div>
+        <p *ngIf="validateForm.get('demonstration_response').hasError('required') && validateForm.get('demonstration_response').touched"  class="error-left relative">Demonstration Response is required!</p>
+        
+        <div class="square-box">
+            <p>Pearl Product</p>
+            <ion-list radio-group class="radio-alignment" formControlName="pearlProduct" name="pearlProduct" [(ngModel)]="data.pearlProduct">
+                <ion-item style="border-right: 1px solid #dedede">
+                    <ion-label>Selling</ion-label>
+                    <ion-radio value="Selling" ></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Not Selling</ion-label>
+                    <ion-radio value="Not Selling"></ion-radio>
+                </ion-item>
+            </ion-list>
+        </div>
+        <p *ngIf="validateForm.get('pearlProduct').hasError('required') && validateForm.get('pearlProduct').touched"  class="error-left relative">Pearl Product is required!</p>
         
         <div class="square-box">
             <p>Order</p>
@@ -171,6 +206,7 @@
                 </ion-item>
             </ion-list>
         </div>
+        <p *ngIf="validateForm.get('order').hasError('required') && validateForm.get('order').touched"  class="error-left relative">Order is required!</p>
         
         <ion-item>
             <ion-label floating><span>Distributor Firm Name</span></ion-label>

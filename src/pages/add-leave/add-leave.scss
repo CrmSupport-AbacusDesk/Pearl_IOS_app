@@ -2,14 +2,34 @@ page-add-leave {
 
 
     
-    input
-    {
-        height: 28px;
-    }
 
 
     textarea
     {
         height: 100px;
     }
+
+    .textarea-bodr 
+    {
+
+        ion-textarea
+        {
+            border: 1px solid #cccccc;
+            padding: 0px 10px;
+            font-size: 14px;
+        }
+    }
+
+
+    ion-item
+    {
+        &.input-height
+        {
+            input
+            {
+                height: 26px;
+            }
+        }
+    }
+
 }

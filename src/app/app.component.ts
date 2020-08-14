@@ -270,40 +270,48 @@ export class MyApp
         {
             const overlayView = this.app._appRoot._overlayPortal._views[0];
             
-            if (overlayView && overlayView.dismiss) 
+            if (overlayView && overlayView.dismiss)
             {
                 overlayView.dismiss();
                 return;
             }
             
             let nav = app.getActiveNav();
-            let activeView = nav.getActive().name;
             
-            if(activeView == 'LoginPage' || activeView == 'HomePage' || activeView == 'DashboardPage' || activeView == 'SelectRegistrationTypePage') 
-            {    
-                if(this.constant.backButton==0) 
+            if(nav.getActive() != undefined)
+            {
+                let activeView = nav.getActive().name;
+                
+                if(activeView == 'LoginPage' || activeView == 'HomePage' || activeView == 'DashboardPage' || activeView == 'SelectRegistrationTypePage') 
                 {    
-                    this.constant.backButton=1;
-                    
-                    let toast = this.toastCtrl.create({
-                        message: 'Press again to exit!',
-                        duration: 2000
-                    });
-                    
-                    toast.present();
-                    
-                    setTimeout(() => {
-                        this.constant.backButton=0;
-                    },2500);
+                    if(this.constant.backButton==0) 
+                    {    
+                        this.constant.backButton=1;
+                        
+                        let toast = this.toastCtrl.create({
+                            message: 'Press again to exit!',
+                            duration: 2000
+                        });
+                        
+                        toast.present();
+                        
+                        setTimeout(() => {
+                            this.constant.backButton=0;
+                        },2500);
+                    }
+                    else 
+                    {
+                        this.platform.exitApp();
+                    }
                 }
                 else 
                 {
-                    this.platform.exitApp();
+                    nav.pop();
                 }
             }
-            else 
+            else
             {
-                nav.pop();
+                this.platform.exitApp();
             }
         });
         
@@ -328,40 +336,32 @@ export class MyApp
                 console.log(this.versionNumber);
             });
             
-            this.serve.addData({},'Login/app_version').then((result)=>
+            this.serve.addData({},'Login/ios_app_version').then((result)=>
             {
                 console.log(result);
                 this.v_num = result['version'];
                 
                 if(this.v_num!=this.versionNumber)
                 {
-                    let updateAlert = this.alertCtrl.create({
-                        title: 'Update Available',
-                        message: 'A newer version of this app is available for download. Please update it from PlayStore !',
-                        buttons: [
-                            {
-                                text: 'Cancel',
-                                handler: () => {
-                                    setTimeout(() =>
-                                    {
-                                    }, 500);
-                                    
-                                    this.platform.exitApp();
-                                }
-                            },
-                            {
-                                text: 'Update Now',
-                                handler: () => {
-                                    setTimeout(() =>
-                                    {
-                                    }, 500);
-                                    
-                                    window.open("https://play.google.com/store/apps/details?id=com.abacusdesk.pearls");
-                                }
-                            }]
-                        });
-                        updateAlert.present();
+                let updateAlert = this.alertCtrl.create({
+                    title: 'Update Available',
+                    message: 'A newer version of this app is available for download. Please update it from PlayStore !',
+                    buttons: [
+                      {
+                    text: 'Cancel',
+                    
+                    },
+                    {
+                    text: 'Update Now',
+                    handler: () => {
+                        
+                    window.open("https://apps.apple.com/in/app/pearl-precision/id1472354588");
+                        
                     }
+                    }]
+                    });
+                    updateAlert.present();
+                }
                 })
             });
         }
@@ -625,6 +625,23 @@ export class MyApp
                             console.log('HomePage signUp');
                         }
                     }
+                }).catch((error:any)=>
+                {
+                    console.log("ERROR" + error);
+                    console.log(error);
+                    console.log(typeof(error));
+                    
+                    if(error.url == null && error.status == 0 && this.serve.errorCount === 0)
+                    {
+                        this.serve.errorCount++;
+                        this.presentAlertInternet();
+                        
+                        setTimeout(() => {
+                            
+                            this.serve.errorCount = 0;
+                            
+                        }, 1000);
+                    }   
                 });
             }
             
@@ -648,6 +665,7 @@ export class MyApp
                     { title: 'Travel Plan', name: 'TravelListPage', component: TravelListPage, index: 23, icon: 'train', show: true },
                     { title: 'Calculator', name: 'GstCalculatorPage', component: GstCalculatorPage, index: 23, icon: 'gradient', show: true },
                     { title: 'Dealer Survey', name: 'DealerSurveyList', component: DealerSurveyListPage,index: 24, icon: 'group', show: true},
+                    // { title: 'Work Plan', name: 'WorkPlan', component: WorkPlanPage,index: 24, icon: 'work', show: true},
                     { title: 'Channel Partner', name: 'Distributor', component: MainDistributorListPage,index: 15, icon: 'group', show: true},
                     { title: 'Direct Dealer', name: 'Direct Dealer', component: DirectDealerListPage,index: 13, icon: 'person_pin', show: true},
                     { title: 'Dealer', name: 'Dealer', component: DealerListPage,index: 12, icon: 'person', show: true},
@@ -745,6 +763,10 @@ export class MyApp
             this.storage.set('token_info','');
             this.storage.set('state_name','');
             this.storage.set('user_type','');
+            this.storage.set('order_item_array','');
+            this.storage.set('order_item_length','');
+            this.storage.set('order_details','');
+            this.storage.set('order_item_length','');
             this.user_logged_in = false;
             this.userLoggedRole = '';
             this.userLoggedDisplayName = '';
@@ -795,6 +817,17 @@ export class MyApp
                     }
                 }, 3000);
             });
+        }
+        
+        presentAlertInternet() 
+        {
+            let alert = this.alertCtrl.create({
+                title: 'Network Issue!',
+                enableBackdropDismiss: false,
+                message: 'Please Check Your Internet Connection.',
+                cssClass: 'alert-modal',
+            });
+            alert.present();
         }
     }
     

@@ -22,18 +22,17 @@
                     
                     <ion-item>
                         <ion-label floating><span>Owner Name</span></ion-label>
-                        <ion-input type="text" formControlName="name" [(ngModel)]="data.name" required></ion-input>
+                        <ion-input type="text" formControlName="name" [(ngModel)]="data.name"></ion-input>
                     </ion-item>
                     <p *ngIf="validateForm.get('name').hasError('required') && validateForm.get('name').touched" class="error-left relative">Name is required!</p>
                     
                     
                     <ion-item>
                         <ion-label floating><span>GST No </span></ion-label>
-                        <ion-input type="text" min="15" max="15" formControlName="gst" (input)="check_gst_existence(data.gst)"  [(ngModel)]="data.gst" ></ion-input>
+                        <ion-input type="text" formControlName="gst" (input)="check_gst_existence(data.gst)"  [(ngModel)]="data.gst" ></ion-input>
                     </ion-item>
                     
                     <p *ngIf="check_gst == 1"  class="error-left relative">GST No Already Exists!!</p>
-                    
                     
                     <p *ngIf="validateForm.get('gst').hasError('required') && validateForm.get('gst').touched"  class="error-left relative">GST No is required!</p>
                     
@@ -41,7 +40,7 @@
                     
                     <ion-item>
                         <ion-label floating><span>Mobile No</span></ion-label>
-                        <ion-input type="tel" minlength="10" maxlength="10" (input)="check_mobile_existence(data.mobile)" formControlName="mobile"  [(ngModel)]="data.mobile" required [readonly]="mobileEdit"></ion-input>
+                        <ion-input type="tel" minlength="10" maxlength="10" (input)="check_mobile_existence(data.mobile)" formControlName="mobile"  [(ngModel)]="data.mobile" [readonly]="mobileEdit"></ion-input>
                     </ion-item>
                     
                     <p *ngIf="check_mobile == 1"  class="error-left relative">Mobile No Already Exists!!</p>
@@ -62,7 +61,7 @@
                     
                     <ion-item>
                         <ion-label floating><span>Select Channel Partner</span></ion-label>
-                        <ion-select class="h43" name="channel_partner_name" [(ngModel)]="data.channel_partner_name" formControlName="channel_partner_name" required>
+                        <ion-select class="h43" name="channel_partner_name" [(ngModel)]="data.channel_partner_name" formControlName="channel_partner_name">
                             <ion-option *ngFor="let list of channel_partner_list" value="{{list.id}}">{{list.company_name}}</ion-option>
                         </ion-select>
                     </ion-item>
@@ -70,15 +69,16 @@
                     
                     <ion-item>
                         <ion-label floating><span>Email</span></ion-label>
-                        <ion-input type="email" formControlName="email" [(ngModel)]="data.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required></ion-input>
+                        <ion-input type="email" formControlName="email" [(ngModel)]="data.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"></ion-input>
                     </ion-item>
+
                     <p *ngIf="data.email && validateForm.get('email').hasError('pattern') && validateForm.get('email').touched"  class="error-left relative">Email invalid!</p>
                     
                     <p *ngIf="validateForm.get('email').hasError('required') && validateForm.get('email').touched" class="error-left relative">Email is required!</p>
                     
                     <ion-item>
                         <ion-label floating><span>Address</span></ion-label>
-                        <ion-input type="text"formControlName="address" [(ngModel)]="data.address" required></ion-input>
+                        <ion-input type="text"formControlName="address" [(ngModel)]="data.address"></ion-input>
                     </ion-item>
                     <p *ngIf="validateForm.get('address').hasError('required') && validateForm.get('address').touched" class="error-left relative">Address is required!</p>
                     
@@ -93,7 +93,7 @@
                             itemValueField="country_name"
                             itemTextField="country_name"
                             formControlName="country"
-                            (onChange)="typeChange(data.country.state_name)"
+                            (onChange)="typeChange(data.country.country_name)"
                             [canSearch]="true">
                         </ionic-selectable>
                     </ion-item>
@@ -105,12 +105,13 @@
                 <div *ngIf="data?.country?.country_name=='India'">
                     <ion-item>
                         <ion-label floating><span>Pincode</span></ion-label>
-                        <ion-input type="tel"  minlength="6" maxlength="6" formControlName="pincode" [(ngModel)]="data.pincode" (input)="get_pincode_area_name(data.pincode)" required ></ion-input>
+                        <ion-input type="tel" formControlName="pincode" [(ngModel)]="data.pincode" (input)="get_pincode_area_name(data.pincode)"></ion-input>
                     </ion-item>
-                    
                     <!-- <p>{{city_name}}</p> -->
                     
                     <p *ngIf="validateForm.get('pincode').hasError('required') && validateForm.get('pincode').touched" class="error-left relative">Pincode is required!</p>
+                    
+                    <p *ngIf="(validateForm.get('pincode').hasError('minlength') || validateForm.get('pincode').hasError('maxlength')) && validateForm.get('pincode').touched"  class="error-left relative">Pincode must be 6 digit!</p>
                     
                     <div class="csslecttype mt20">
                         <ion-item>

@@ -1,11 +1,8 @@
 <ion-header>
-    
     <ion-navbar>
         <ion-title>Order Summary {{order_data.order_id}}</ion-title>
     </ion-navbar>
-    
 </ion-header>
-
 
 <ion-content>
     <div class="stable">
@@ -26,24 +23,15 @@
                     <td class="text-center">{{value.qty}}</td>
                     <td class="text-right">&#x20B9; {{value.amount | number:'1.2-2'}}</td>
                 </tr>
-                <!-- <tr>
-                    <td>PEGASUS readers</td>
-                    <td class="text-center">105</td>
-                    <td class="text-right">&#x20B9; 22950</td>
-                </tr>
-                <tr>
-                    <td>PEGASUS readers</td>
-                    <td class="text-center">105</td>
-                    <td class="text-right">&#x20B9; 22950</td>
-                </tr> -->
             </table>
         </div>
     </div>
+
     <div class="sngtable">
         <table>
             <tr *ngIf="!order_data.order_id">
                 <td>Cash Discount (%)</td>
-                <th><input name="cd" class="small-input" [(ngModel)]="cart_form.cd" (input)="cal_cash_discount()"></th>
+                <th><input type="tel" name="cd" class="small-input" [(ngModel)]="cart_form.cd" (input)="cal_cash_discount()"></th>
             </tr>
             <tr>
                 <td>Subtotal</td>
@@ -71,17 +59,10 @@
     <div class="csnninput pt0" padding>
         <h1>Remark</h1>
         <textarea name="remark" [(ngModel)]="order.remark"></textarea>
-
     </div>
-
-
-
     
     <div class="sticky">
-        <!-- <div class="pl-orde pt0 pb0" *ngIf="order_data.order_gst != 0 && order_data.order_discount != 0 && order_data.order_id == undefined">
-            <button (click)="place_order()">Place Order</button> 
-        </div>-->
-
+    
         <div class="pl-orde pt0 pb0" *ngIf="order_data.type != '3' && !order_data.order_id">
             <button (click)="place_order()">Place Order</button>
         </div>

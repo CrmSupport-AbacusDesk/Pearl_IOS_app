@@ -100,7 +100,7 @@ export class AddDealerPage {
       email: ['', Validators.compose([Validators.required])],
       mobile: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
       whatsapp: ['',Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
-      gst: [''],
+      gst: ['', Validators.compose([Validators.minLength(15), Validators.maxLength(15)])],
       dob: [''],
       product_rating: [''],
       demonstration_response: [''],
@@ -108,16 +108,16 @@ export class AddDealerPage {
       channel_partner_name: ['', Validators.compose([Validators.required])],
       address: ['', Validators.compose([Validators.required])],
       country: ['India', Validators.compose([Validators.required])],
-      stateName: [''],
-      districtName: [''],
-      city: [''],
-      pincode: [''],
+      stateName: ['', Validators.compose([Validators.required])],
+      districtName: ['', Validators.compose([Validators.required])],
+      city: ['', Validators.compose([Validators.required])],
+      pincode: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6)])],
       
     });
     this.getCountryList();
     this.getState();
     this.get_assign_channel_partner();
-
+    
     this.data.country = {'country_name':'India'};
   }
   
@@ -162,7 +162,13 @@ export class AddDealerPage {
   district_list:any = [];
   
   
-  getDistrict(state) {
+  getDistrict(state) 
+  {
+    this.data.district = '';
+    this.data.city = '';
+    this.district_list = [];
+    this.city_list = [];
+    
     console.log(state);
     
     let loading = this.loadingCtrl.create({
@@ -230,8 +236,8 @@ export class AddDealerPage {
   
   
   getCity(state,district) {
-    console.log(state);
-    console.log(district);
+    this.data.city = '';
+    this.city_list = [];
     
     let loading = this.loadingCtrl.create({
       spinner: 'hide',
@@ -312,6 +318,15 @@ export class AddDealerPage {
   
   typeChange(country) 
   {  
+    console.log(country);
+    
+    this.data.state = '';
+    this.data.district = '';
+    this.data.city = '';
+    this.data.pincode = '';
+    this.district_list = [];
+    this.city_list = [];
+    
     if(country == 'India') 
     {
       const stateName = this.validateForm.get('stateName');
@@ -372,11 +387,12 @@ export class AddDealerPage {
   }
   
   data1:any=[];
-  order_data:any = []; 
-  addDealerValidation:any = false;
+  order_data:any = [];
   
   submitDealer()
   { 
+    console.log(this.validateForm);
+    
     if(this.validateForm.invalid)
     {
       this.validateForm.get('companyName').markAsTouched();
@@ -387,7 +403,7 @@ export class AddDealerPage {
       this.validateForm.get('pincode').markAsTouched();
       this.validateForm.get('city').markAsTouched();
       this.validateForm.get('address').markAsTouched();
-      this.validateForm.get('gst').markAsTouched();
+      // this.validateForm.get('gst').markAsTouched();
       this.validateForm.get('whatsapp').markAsTouched();
       this.validateForm.get('channel_partner_name').markAsTouched();
       this.validateForm.get('email').markAsTouched();
@@ -429,55 +445,63 @@ export class AddDealerPage {
     {
       if(this.data.country && this.data.country.country_name=='India')
       {
-        this.data.state = this.data.state.state_name;
-        this.data.district = this.data.district.district_name;
-        this.data.city = this.data.city.city;
+        this.data.state = this.data.state && this.data.state.state_name ? this.data.state.state_name : '';
+        this.data.district = this.data.district && this.data.district.district_name ? this.data.district.district_name : '';
+        this.data.city = this.data.city && this.data.city.city ? this.data.city.city : '';
       }
       
-      if(this.addDealerValidation == false)
-      {
-        this.addDealerValidation = true;
+      let loading = this.loadingCtrl.create({
+        spinner: 'hide',
+        content: `<img src="./assets/imgs/gif.svg" class="h15" />`,
+      });
+      
+      loading.present();
+      
+      this.serve.addData({'data':this.data},"Distributor/add_dealer").then(response=>{
         
-        this.serve.addData({'data':this.data},"Distributor/add_dealer").then(response=>{
-          console.log(response);
-          if(response['msg'])
-          {
+        console.log(response);
+        loading.dismiss();
+        
+        if(response['msg'])
+        {
+          this.data = {};
+          this.validateForm.reset();
+          
+          if(this.image)  {
             
-            if(this.image)
+            const fileTransfer: FileTransferObject = this.transfer.create();
+            var random = new Date().getTime() + Math.floor(Math.random() * 100);
+            let options: FileUploadOptions = 
             {
-              const fileTransfer: FileTransferObject = this.transfer.create();
-              var random = new Date().getTime() + Math.floor(Math.random() * 100);
-              let options: FileUploadOptions = 
-              {
-                fileKey: 'photo',
-                fileName: "myImage_" + random + ".jpg",
-                chunkedMode: false,
-                mimeType: "image/jpeg",
-              }
-              
-              fileTransfer.upload(this.image, this.constant.updateVisitingCard+'visitingCardImage?id='+response['msg'], options)
-              .then((data) => 
-              {
-                console.log(data);          
-              });
+              fileKey: 'photo',
+              fileName: "myImage_" + random + ".jpg",
+              chunkedMode: false,
+              mimeType: "image/jpeg",
             }
             
-            if(this.order != undefined)
+            fileTransfer.upload(this.image, this.constant.updateVisitingCard+'visitingCardImage?id='+response['msg'], options)
+            .then((data) => 
             {
-              this.order_data = response['data'];
-              this.navCtrl.push(AddOrderPage,{'order_data':this.order_data,'brand_assign':[]});
-              this.presentToast1();
-            }
-            
-            if(this.order == undefined)
-            {
-              this.data1 = response['data'];
-              this.navCtrl.push(AddCheckinPage,{'data':this.data1});
-              this.presentToast();
-            }
+              console.log(data);          
+            });
           }
-        });
-      }
+          
+          if(this.order != undefined)
+          {
+            this.order_data = response['data'];
+            this.navCtrl.push(AddOrderPage,{'order_data':this.order_data,'brand_assign':[],'user_data':this.order_data,'user_detail':this.order_data});
+            this.presentToast1();
+          }
+          
+          if(this.order == undefined)
+          {
+            this.data1 = response['data'];
+            this.navCtrl.push(AddCheckinPage,{'data':this.data1});
+            this.presentToast();
+          }
+          
+        }
+      });
     }
   }
   
@@ -670,5 +694,4 @@ export class AddDealerPage {
   //       }
   //     })
   //   }
-  
 }

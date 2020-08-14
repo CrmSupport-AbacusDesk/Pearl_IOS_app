@@ -14,7 +14,7 @@ export class ConstantProvider {
   public upload_icon_url: string = 'https://crm.pproducts.in/uploads/Products-Icon/';
   public updateVisitingCard: string = 'https://crm.pproducts.in/api/index.php/app/Distributor/';
   public VisitingCardURL: string = 'https://crm.pproducts.in/uploads/VisitingCard/';
-
+  
   // public server_url: string = 'https://phpstack-414838-1332777.cloudwaysapps.com/api/index.php/app/';
   // public upload_url: string = 'https://phpstack-414838-1332777.cloudwaysapps.com/uploads/Products/';
   // public upload_icon_url: string = 'https://phpstack-414838-1332777.cloudwaysapps.com/uploads/Products-Icon/';

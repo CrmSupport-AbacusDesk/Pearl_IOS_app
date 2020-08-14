@@ -271,20 +271,20 @@ export class CartDetailPage {
     
     this.order_data.sub_total = parseFloat(this.order_data.sub_total) - parseFloat(this.order_item[index].sub_total);
     
+    this.order_data.order_total = this.order_data.order_total.toFixed(2);
+    this.order_data.sub_total = this.order_data.sub_total.toFixed(2);
+    this.order_data.order_item = this.order_data.order_item.toFixed(2);
+    this.order_data.order_gst = this.order_data.order_gst.toFixed(2);
+    this.order_data.order_discount = this.order_data.order_discount.toFixed(2);
+    
     this.storage.set('order_details',this.order_data);
-    
     this.order_item.splice(index,1);
-    
     this.storage.set('order_item_array',this.order_item);
-    
     console.log(this.order_item);
-    
     this.presentToast1();
     
-    if(this.order_item.length)
-    {
-      this.test();
-    }
+    this.test();
+    
   }
   
   loading:any;
@@ -303,129 +303,105 @@ export class CartDetailPage {
     
     this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
       () => {
-        
+    
         let options = {maximumAge: 10000, timeout: 15000, enableHighAccuracy: true};
         this.geolocation.getCurrentPosition(options).then((resp) => {
-          
+    
           var lat = resp.coords.latitude
           var lng = resp.coords.longitude
-          
+    
           this.order_data.lat = lat;
           this.order_data.lng = lng;
-          
-          this.order_data.order_detail=this.order_item;
-          this.order_data.order_remark = this.order.remark;
-          
-          this.service.addData(this.order_data,"Order/add_order").then((result)=>
-          {
-            console.log(result);
-            
-            this.loading.dismiss();
-            
-            let toast = this.toastCtrl.create({
-              message: 'Order Saved Successfully!',
-              duration: 3000
-            });
-            
-            if(result['order_id'])
-            toast.present();
-            
-            this.navCtrl.setRoot(OrderListPage);
-            
-            this.storage.set('order_item_array','');
-            this.storage.set('order_item_length','');
-            this.storage.set('order_details','');
-            
-            this.order_data = {};
-            this.order_item=[];
-            this.globalVar = '';
-            
-          }).catch((error:any)=>
-          {
-            this.loading.dismiss();
-          });
-        },
-        error => {
-          console.log('Error requesting location permissions', error);
-          this.loading.dismiss();          
-        });
-      });
-    }
-    order_for:any = '';
     
-    presentAlert1() 
-    {
-      let alert = this.alertCtrl.create({
-        title: 'Alert',
-        subTitle: 'Select Distributor',
-        buttons: ['Ok']
-      });
-      alert.present();
-    }
+    this.order_data.order_detail=this.order_item;
+    this.order_data.order_remark = this.order.remark;
     
-    place_order_dealer()
+    this.service.addData(this.order_data,"Order/add_order").then((result)=>
     {
-      this.lodingPersent();
-      this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-        () => {
-          
-          let options = {maximumAge: 10000, timeout: 15000, enableHighAccuracy: true};
-          this.geolocation.getCurrentPosition(options).then((resp) => {
-            
-            var lat = resp.coords.latitude
-            var lng = resp.coords.longitude
-            
-            this.order_data.lat = lat;
-            this.order_data.lng = lng;
-            
-            this.order_data.data = this.data;
-            this.order_data.order_detail=this.order_item;
-            this.order_data.order_remark = this.order.remark;
-            
-            this.service.addData(this.order_data,"Order/add_dealer_order").then((result)=>
-            {
-              console.log(result);
-              
-              this.loading.dismiss();
-              
-              if(result)
-              {
-                this.order_for = result['order_type'];
-                
-                let toast = this.toastCtrl.create({
-                  message: 'Order Saved Successfully!',
-                  duration: 3000
-                });
-                
-                if(result['order_id'])
-                toast.present();
-                
-                this.navCtrl.setRoot(OrderListPage,{'order_type':this.order_for});
-                
-                this.storage.set('order_item_array','');
-                this.storage.set('order_item_length','');
-                this.storage.set('order_details','');
-                
-                this.order_data = {};
-                this.order_item=[];
-                this.globalVar = '';
-              }
-              
-            }).catch((error:any)=>
-            {
-              this.loading.dismiss();
-            });
-          },
-          error => {
-            console.log('Error requesting location permissions', error);
-            this.loading.dismiss();          
-          });
-        });
-      }
+      console.log(result);
       
+      this.loading.dismiss();
       
-      delete_order()
+      let toast = this.toastCtrl.create({
+        message: 'Order Saved Successfully!',
+        duration: 3000
+      });
+      
+      if(result['order_id'])
+      toast.present();
+      
+      this.navCtrl.setRoot(OrderListPage);
+      
+      this.storage.set('order_item_array','');
+      this.storage.set('order_item_length','');
+      this.storage.set('order_details','');
+      
+      this.order_data = {};
+      this.order_item=[];
+      this.globalVar = '';
+      
+    }).catch((error:any)=>
+    {
+      this.loading.dismiss();
+    });
+      },
+      error => {
+        console.log('Error requesting location permissions', error);
+        this.loading.dismiss();          
+      });
+    });
+  }
+  order_for:any = '';
+  
+  presentAlert1() 
+  {
+    let alert = this.alertCtrl.create({
+      title: 'Alert',
+      subTitle: 'Select Distributor',
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
+  
+  place_order_dealer()
+  {
+    this.lodingPersent();
+    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+      () => {
+    
+        let options = {maximumAge: 10000, timeout: 15000, enableHighAccuracy: true};
+        this.geolocation.getCurrentPosition(options).then((resp) => {
+    
+          var lat = resp.coords.latitude
+          var lng = resp.coords.longitude
+    
+          this.order_data.lat = lat;
+          this.order_data.lng = lng;
+    
+    this.order_data.data = this.data;
+    this.order_data.order_detail=this.order_item;
+    this.order_data.order_remark = this.order.remark;
+    
+    this.service.addData(this.order_data,"Order/add_dealer_order").then((result)=>
+    {
+      console.log(result);
+      
+      this.loading.dismiss();
+      
+      if(result)
       {
+        this.order_for = result['order_type'];
+        
+        let toast = this.toastCtrl.create({
+          message: 'Order Saved Successfully!',
+          duration: 3000
+        });
+        
+        if(result['order_id'])
+        toast.present();
+        
+        this.navCtrl.setRoot(OrderListPage,{'order_type':this.order_for});
+        
         this.storage.set('order_item_array','');
         this.storage.set('order_item_length','');
         this.storage.set('order_details','');
@@ -433,9 +409,32 @@ export class CartDetailPage {
         this.order_data = {};
         this.order_item=[];
         this.globalVar = '';
-        
-        this.navCtrl.push(OrderTypeModalPage); 
       }
       
-    }
+    }).catch((error:any)=>
+    {
+      this.loading.dismiss();
+    });
+      },
+      error => {
+        console.log('Error requesting location permissions', error);
+        this.loading.dismiss();          
+      });
+    });
+  }
+  
+  
+  delete_order()
+  {
+    this.storage.set('order_item_array','');
+    this.storage.set('order_item_length','');
+    this.storage.set('order_details','');
     
+    this.order_data = {};
+    this.order_item=[];
+    this.globalVar = '';
+    
+    this.navCtrl.push(OrderTypeModalPage); 
+  }
+  
+}

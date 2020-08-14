@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-
+        
         <div class="box light-red-bg relative" *ngIf="checkin_data.other_name != ''">
             <div class="heading border-none">
                 <div class="dist-name dflex">
@@ -69,7 +69,7 @@
                             <p>N A</p>
                         </div>
                         
-                      
+                        
                     </div>
                 </div>
             </div>
@@ -82,19 +82,33 @@
         
         <div class="vstime">
             <p>Start Time</p>
-            <p>{{checkin_data.visit_start | date: 'h:mm a'}}</p>
+            <p>{{checkin_data.visit_start | amLocal | amDateFormat: 'h:mm a'}}</p>
+        </div>
+        
+        <div class="edit m0">
+            <ion-list>
+                <ion-item>
+                    <ion-label floating>Select Type</ion-label>
+                    <ion-select class="h43" formControlName="description" [(ngModel)]="checkin.description">
+                        <ion-option *ngFor="let val of checkInStatus" value="{{val.checkInStatus}}">{{val.checkInStatus}}</ion-option>
+                        <ion-option value="OTHERS">OTHERS</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-list>
         </div>
         
         
-        <div class="csnninput">
-            <h1>Description</h1>
-            <textarea formControlName="description" [(ngModel)]="checkin.description"></textarea>
-				<p *ngIf="checkinForm.get('description').hasError('required') && checkinForm.get('description').touched"  class="error-left relative">Description is required!</p>
-
+        <p *ngIf="checkinForm.get('description').hasError('required') && checkinForm.get('description').touched" class="error-left relative">Description is required!</p>
+        
+        
+        <div class="csnninput" *ngIf="checkin.description == 'OTHERS'">
+            <h1>Remark</h1>
+            <textarea formControlName="remark" [(ngModel)]="checkin.remark"></textarea>
+            <p *ngIf="checkinForm.get('remark').hasError('required') && checkinForm.get('remark').touched" class="error-left relative">Remark is required!</p>
         </div>
         
         <div class="refbtn mt40">
-            <button color="theme"  ion-button block round >End Visit</button>
+            <button color="theme" ion-button block round >End Visit</button>
         </div>  
         
     </form>

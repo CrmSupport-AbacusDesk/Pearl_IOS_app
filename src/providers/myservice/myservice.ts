@@ -2,24 +2,21 @@ import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { ConstantProvider } from '../constant/constant';
 import { Storage } from '@ionic/storage';
+import { AlertController } from 'ionic-angular';
+import { timeout, catchError } from 'rxjs/operators';
 
-/*
-  Generated class for the MyserviceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class MyserviceProvider {
   
-userlogin:any;
-
-  constructor(public http: Http, private constant: ConstantProvider, public storage: Storage) {
+  userlogin:any;
+  errorCount: any = 0;
+  
+  constructor(public http: Http, private constant: ConstantProvider, public storage: Storage, public alertCtrl: AlertController) {
     console.log('Hello MyserviceProvider Provider');
   }
-
+  
   public get_data() {
-
+    
     return new Promise((resolve, reject) => {
       this.storage.get('token').then((value) => {
         console.log(value);
@@ -35,12 +32,12 @@ userlogin:any;
         }, (err) => {
           reject(err);
         });
+      });
     });
-  });
   }
-
+  
   public pending_data() {
-
+    
     return new Promise((resolve, reject) => {
       this.storage.get('token').then((value) => {
         console.log(value);
@@ -56,10 +53,10 @@ userlogin:any;
         }, (err) => {
           reject(err);
         });
+      });
     });
-  });
   }
-
+  
   public addData(value,url) {
     console.log(value);
     console.log(url);
@@ -70,30 +67,29 @@ userlogin:any;
         let header = new Headers();
         header.append('Authorization', 'Bearer '+token);
         header.append('Content-Type', 'application/json');
-        this.http.post(this.constant.server_url+url,JSON.stringify(value),{headers: header}).map((res)=>res.json())
+        this.http.post(this.constant.server_url+url,JSON.stringify(value),{headers: header}).pipe(timeout(20000)).map((res)=>res.json())
         .subscribe(res=>{
           console.log(res);
           resolve(res);
         }, (err) => {
           reject(err);
         });
-        });
-      })
-        
+      });
+    })
+    
   }
-
-
- 
-
+  
+  
+  
+  
   public set(value)
   {
-      this.userlogin=value;
-      console.log(this.userlogin);
-      
+    this.userlogin=value;
+    console.log(this.userlogin);
+    
   }
   public get()
   {
     return this.userlogin;
   }
-
 }

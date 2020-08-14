@@ -101,7 +101,6 @@ page-login {
                 border: 1px solid #dedede !important;
                 box-shadow: none !important;
                 height: 45px;
-                padding-left: 10px;
                 
                 .item-inner 
                 {
@@ -109,16 +108,15 @@ page-login {
                     box-shadow: none !important;
                     input
                     {
-                        letter-spacing: 1px;
-                        font-size: 12px;    
+                        letter-spacing: 0.5px;
+                        font-size: 12px;
                         margin-left: 0;
-                        margin-right: 0px;
                         @extend.semibold;
                     }
                 }
                 ion-label
                 {
-                    margin: 0px 10px 0px 0px;
+                    margin: 0px 15px 0px 0px;
                     img
                     {
                         width: 14px;

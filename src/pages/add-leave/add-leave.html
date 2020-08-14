@@ -14,18 +14,35 @@
 		<div class="edit">
 			<ion-list>
 				<div>
-					<ion-item >
+					<!-- <ion-item >
 						<ion-label floating><span>Subject *</span></ion-label>
 						<ion-input type="text" style="height: 28px;" name="subject" [(ngModel)]="data.subject" #subject="ngModel" [ngClass]="{'is-invalid':f1.submitted && subject?.invalid}" required></ion-input>
+					</ion-item> -->
+					
+					<ion-item>
+						<ion-label floating>Select Type</ion-label>
+						<ion-select class="h43" name="subject" [(ngModel)]="data.subject" #subject="ngModel" [ngClass]="{'is-invalid':f1.submitted && subject?.invalid}" required>
+							<ion-option value="HEALTH ISSUE">HEALTH ISSUE</ion-option>
+							<ion-option value="APPOINTMENT WITH DOCTOR">APPOINTMENT WITH DOCTOR</ion-option>
+							<ion-option value="FAMILY FUNCTION">FAMILY FUNCTION</ion-option>
+							<ion-option value="MARRIAGE">MARRIAGE</ion-option>
+							<ion-option value="HOLIDAY WITH FAMILY">HOLIDAY WITH FAMILY</ion-option>
+							<ion-option value="OTHERS">OTHERS</ion-option>
+						</ion-select>
 					</ion-item>
-				
+					
 					<p *ngIf="f1.submitted && subject?.invalid"  class="error-left relative">Subject is Required!</p>
 
+					<ion-item *ngIf="data.subject == 'OTHERS'" class="input-height">
+						<ion-label floating><span>Other Description</span></ion-label>
+						<ion-input type="text" name="otherDescription" [(ngModel)]="data.otherDescription" class=""></ion-input>
+					</ion-item>
+					
 					<ion-item>
 						<ion-label floating><span>Leave Start Date *</span></ion-label>
 						<ion-datetime display-format="MMM DD, YYYY" name="leave_start_date" [(ngModel)]="data.leave_start_date" #leave_start_date="ngModel" [ngClass]="{'is-invalid':f1.submitted && leave_start_date?.invalid}" required></ion-datetime>
 					</ion-item>
-
+					
 					<p *ngIf="f1.submitted && leave_start_date?.invalid"  class="error-left relative">Leave Start Date is Required!</p>
 					
 					<ion-item>
@@ -35,7 +52,7 @@
 					
 					<p *ngIf="f1.submitted && leave_end_date?.invalid"  class="error-left relative">Leave End Date is Required!</p>
 					
-					<ion-item>
+					<ion-item class="textarea-bodr">
 						<ion-label floating><span>Description</span></ion-label>
 						<ion-textarea name="description" [(ngModel)]="data.description"></ion-textarea>
 					</ion-item>
@@ -44,11 +61,11 @@
 			</ion-list>
 			<div >
 			</div>
-
-
+			
+			
 			<button ion-button block round class="h45 mt15">Save</button>
 		</div>
-
+		
 		
 	</form>
 </ion-content>

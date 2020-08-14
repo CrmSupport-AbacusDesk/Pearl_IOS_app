@@ -28,11 +28,15 @@ export class EndCheckinPage {
   checkinForm: FormGroup;
   order_token :any = [];
   brand_assign:any = [];
+  checkInStatus:any=[];
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: MyserviceProvider,public geolocation: Geolocation, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public formBuilder: FormBuilder, public locationAccuracy: LocationAccuracy , public alertCtrl: AlertController,public storage: Storage) {
-    this.checkin_data = this.navParams.get('data');
-    console.log(this.checkin_data);
     
+    if(this.navParams.get('data') != null)
+    {
+      this.checkin_data = this.navParams.get('data');
+      console.log(this.checkin_data);
+    }
     
     this.storage.get('order_details').then((order_details) => {
       console.log(order_details);
@@ -46,9 +50,11 @@ export class EndCheckinPage {
     });
     
     this.checkinForm = this.formBuilder.group({
-      // companyName: ['', Validators.compose([Validators.required])]
+      remark: [''],
       description: ['',Validators.compose([Validators.required])]
     })
+
+    this.getCheckinStatus();
     
   }
   
@@ -96,221 +102,107 @@ export class EndCheckinPage {
   
   end_visit(checkin_id, description)
   {
-    if(this.order_token)
+    if(this.checkinForm.invalid)
     {
-      
-      
-      if(this.checkinForm.invalid)
-      {
-        this.checkinForm.get('description').markAsTouched();
-        
-        
-        
-        return;
-      }
-      
-      
-      this.storage.set('order_item_array','');
-      this.storage.set('order_item_length','');
-      this.storage.set('order_details','');
-      
-      this.order_token = [];
-      
-      
-      var loading = this.loadingCtrl.create({
-        spinner: 'hide',
-        content: `<img src="./assets/imgs/gif.svg" class="h15" />`,
-      });
-      console.log(checkin_id);
-      console.log(description);    
-      
-      
-      this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-        () => {
-          
-          console.log('Request successful');
-          
-          // this.showLoading();
-          
-          let options = {maximumAge: 10000, timeout: 15000, enableHighAccuracy: true};
-          this.geolocation.getCurrentPosition(options).then((resp) => {
-            
-            console.log(resp.coords.latitude);
-            console.log(resp.coords.longitude);
-            // this.saveOrderHandler(resp.coords);
-            
-            var lat = resp.coords.latitude
-            var lng = resp.coords.longitude
-            
-            this.service.addData({'lat':lat, 'lng':lng, 'checkin_id': checkin_id, 'checkin': description},'Checkin/visit_end').then((result) => {
-              console.log(result);
-              this.for_order = result['for_order'];
-              this.brand_assign = result['brand_assign'];
-              
-              if(result['msg'] == 'success')
-              {
-                
-                loading.dismiss();
-                
-                
-                
-                this.presentToast();
-                
-                this.presentAlert();
-              }
-              
-              
-              
-              
-            })
-            
-          }).catch((error) => {
-            console.log('Error getting location', error);
-            // this.saveOrderHandler({});
-            this.service.addData({'checkin_id': checkin_id, 'checkin': description},'Checkin/visit_end').then((result)=>{
-              console.log(result);
-              this.for_order = result['for_order'];
-              this.brand_assign = result['brand_assign'];
-              
-              if(result['msg'] == 'success')
-              {
-                loading.dismiss();
-                // this.navCtrl.push(CheckinListPage);
-                this.presentToast();
-                this.presentAlert();
-              }
-              
-            })
-          });
-        },
-        error => {
-          console.log('Error requesting location permissions', error);
-          loading.dismiss();          
-        });
-        
-        loading.present();
-        
-      }
-      
-      if(this.order_token == '' || this.order_token == null)
-      {
-        if(this.checkinForm.invalid)
-        {
-          this.checkinForm.get('description').markAsTouched();
-          
-          
-          
-          return;
-        }
-        
-        
-        var loading = this.loadingCtrl.create({
-          spinner: 'hide',
-          content: `<img src="./assets/imgs/gif.svg" class="h15" />`,
-        });
-        console.log(checkin_id);
-        console.log(description);  
-        
-        this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-          () => {
-            
-            console.log('Request successful');
-            
-            // this.showLoading();
-            
-            let options = {maximumAge: 10000, timeout: 15000, enableHighAccuracy: true};
-            this.geolocation.getCurrentPosition(options).then((resp) => {
-              
-              console.log(resp.coords.latitude);
-              console.log(resp.coords.longitude);
-              // this.saveOrderHandler(resp.coords);
-              
-              var lat = resp.coords.latitude
-              var lng = resp.coords.longitude
-              
-              this.service.addData({'lat':lat, 'lng':lng, 'checkin_id': checkin_id, 'checkin': description},'Checkin/visit_end').then((result) => {
-                console.log(result);
-                this.for_order = result['for_order'];
-                this.brand_assign = result['brand_assign'];
-                
-                if(result['msg'] == 'success')
-                {
-                  
-                  loading.dismiss();
-                  
-                  
-                  
-                  this.presentToast();
-                  
-                  this.presentAlert();
-                }
-                
-                
-                
-                
-              })
-              
-            }).catch((error) => {
-              console.log('Error getting location', error);
-              // this.saveOrderHandler({});
-              this.service.addData({'checkin_id': checkin_id, 'checkin': description},'Checkin/visit_end').then((result)=>{
-                console.log(result);
-                this.for_order = result['for_order'];
-                this.brand_assign = result['brand_assign'];
-                
-                if(result['msg'] == 'success')
-                {
-                  loading.dismiss();
-                  // this.navCtrl.push(CheckinListPage);
-                  this.presentToast();
-                  this.presentAlert();
-                }
-                
-              })
-            });
-          },
-          error => {
-            console.log('Error requesting location permissions', error);
-            loading.dismiss();            
-          });
-          
-          loading.present();
-        }
-        
-        
-      }
-      
-      
-      presentAlert() {
-        let alert = this.alertCtrl.create({
-          title: 'Create Order',
-          message: 'Do you want to create order for this checkin?',
-          cssClass: 'alert-modal',
-          buttons: [
-            {
-              text: 'Yes',
-              handler: () => {
-                console.log('Yes clicked');
-                console.log(this.for_order);
-                this.navCtrl.push(AddOrderPage,{'for_order':this.for_order,'brand_assign':this.brand_assign});
-                
-              }
-            },
-            {
-              text: 'No',
-              role: 'cancel',
-              handler: () => {
-                console.log('Cancel clicked');
-                console.log(this.for_order)
-                this.navCtrl.push(CheckinListPage);
-                
-                
-              }
-            }
-          ]
-        });
-        alert.present();
-      }
-      
+      this.checkinForm.get('description').markAsTouched();
+      return;
     }
     
+    this.storage.set('order_item_array','');
+    this.storage.set('order_item_length','');
+    this.storage.set('order_details','');
+    
+    this.order_token = [];
+    
+    var loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: `<img src="./assets/imgs/gif.svg" class="h15" />`,
+    });
+    
+    loading.present();
+    
+    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+      () => 
+      {
+        console.log('Request successful');
+        
+        let options = {maximumAge: 10000, timeout: 15000, enableHighAccuracy: false};
+        this.geolocation.getCurrentPosition(options).then((resp) => {
+          
+          var lat = resp.coords.latitude
+          var lng = resp.coords.longitude
+          
+          this.service.addData({'lat':lat, 'lng':lng, 'checkin_id': checkin_id, 'checkin': description},'Checkin/visit_end').then((result) => {
+            console.log(result);
+            loading.dismiss();
+            
+            this.for_order = result['for_order'];
+            this.brand_assign = result['brand_assign'];
+            
+            this.presentToast();
+            this.presentAlert();
+          })
+          
+        }).catch((error) => {
+          console.log('Error getting location', error);
+          
+          this.service.addData({'checkin_id': checkin_id, 'checkin': description},'Checkin/visit_end').then((result)=>{
+            console.log(result);
+            loading.dismiss();
+            
+            this.for_order = result['for_order'];
+            this.brand_assign = result['brand_assign'];
+            
+            this.presentToast();
+            this.presentAlert();
+          });
+        });
+      },
+      error => {
+        console.log('Error requesting location permissions', error);
+        loading.dismiss();          
+      });
+    }
+    
+    
+    presentAlert() {
+      let alert = this.alertCtrl.create({
+        title: 'Create Order',
+        message: 'Do you want to create order for this checkin?',
+        cssClass: 'alert-modal',
+        buttons: [
+          {
+            text: 'Yes',
+            handler: () => {
+              console.log('Yes clicked');
+              console.log(this.for_order);
+              this.navCtrl.push(AddOrderPage,{'for_order':this.for_order,'brand_assign':this.brand_assign});
+              
+            }
+          },
+          {
+            text: 'No',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+              console.log(this.for_order)
+              this.navCtrl.push(CheckinListPage);
+              
+              
+            }
+          }
+        ]
+      });
+      alert.present();
+    }
+    
+    getCheckinStatus()
+    {
+      this.service.addData('','Checkin/getCheckinStatus').then((result) => 
+      {
+        console.log(result);
+        this.checkInStatus = result;
+      });
+    }
+  }
+  

@@ -64,9 +64,9 @@ export class DealerSurveyPage {
       email: [''],
       mobile: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
       whatsapp: ['',Validators.compose([Validators.minLength(10), Validators.maxLength(10)])],
-      product_rating: [''],
-      demonstration_response: [''],
-      order: [''],
+      product_rating: ['', Validators.compose([Validators.required])],
+      demonstration_response: ['', Validators.compose([Validators.required])],
+      order: ['', Validators.compose([Validators.required])],
       remark: [''],
       distributor_name: [''],
       distributor_ref: [''],
@@ -76,6 +76,8 @@ export class DealerSurveyPage {
       districtName: ['', Validators.compose([Validators.required])],
       pincode: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6)])],
       city: ['', Validators.compose([Validators.required])],
+      response: ['', Validators.compose([Validators.required])],
+      pearlProduct: ['', Validators.compose([Validators.required])],
     });
     
     this.getState();
@@ -108,7 +110,12 @@ export class DealerSurveyPage {
   
   district_list:any = [];
   
-  getDistrict(state) {
+  getDistrict(state) 
+  {
+    this.data.district = '';
+    this.data.city = '';
+    this.city_list = [];
+
     console.log(state);
     
     let loading = this.loadingCtrl.create({
@@ -153,7 +160,9 @@ export class DealerSurveyPage {
   }
   
   
-  getCity(state,district) {
+  getCity(state,district) 
+  {
+    this.data.city = '';
     console.log(state);
     console.log(district);
     
@@ -239,8 +248,6 @@ export class DealerSurveyPage {
   submit()
   {
     console.log(this.data);
-    this.lodingPersent();
-    
     if(this.validateForm.invalid)
     {
       this.validateForm.get('companyName').markAsTouched();
@@ -251,8 +258,11 @@ export class DealerSurveyPage {
       this.validateForm.get('pincode').markAsTouched();
       this.validateForm.get('city').markAsTouched();
       this.validateForm.get('address').markAsTouched();
-      // this.validateForm.get('email').markAsTouched();
-      
+      this.validateForm.get('response').markAsTouched();
+      this.validateForm.get('product_rating').markAsTouched();
+      this.validateForm.get('demonstration_response').markAsTouched();
+      this.validateForm.get('pearlProduct').markAsTouched();
+      this.validateForm.get('order').markAsTouched();
       return;
     }
     
@@ -262,27 +272,40 @@ export class DealerSurveyPage {
     
     if(this.submit_function == false)
     {
+      this.lodingPersent();
       this.submit_function = true;
       
       if(this.dr_id)
       {
         this.serve.addData({'data':this.data},"Distributor/update_dealer_survey").then(response=>{
           console.log(response);
+          this.loading.dismiss();
+
           this.navCtrl.pop();
+          
+        }).catch((error:any)=>
+        {
+          this.loading.dismiss(); 
         });
-        this.loading.dismiss();
+        
       }
       else
       {
         this.serve.addData({'survey_data':this.data},"Distributor/add_dealer_survey").then(response=>{
           console.log(response);
-          if(response['msg'] == 'success'){
+          this.loading.dismiss();
+
+          if(response['msg'] == 'success')
+          {
             
             this.navCtrl.pop();
             this.presentToast1();
           }
+
+        }).catch((error:any)=>
+        {
+          this.loading.dismiss(); 
         });
-        this.loading.dismiss();
       }
     }
   }

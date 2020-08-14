@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, Navbar, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Navbar, Events, AlertController } from 'ionic-angular';
 import { AddCheckinPage } from '../add-checkin/add-checkin';
 import { MyserviceProvider } from '../../../providers/myservice/myservice';
 import { EndCheckinPage } from '../end-checkin/end-checkin';
@@ -23,7 +23,7 @@ export class CheckinListPage {
   checkInType:any;
   url:any='';
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: MyserviceProvider, public loadingCtrl: LoadingController, public events: Events) 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public service: MyserviceProvider, public loadingCtrl: LoadingController, public events: Events, public alertCtrl: AlertController) 
   {
     this.checkInType = this.navParams.get('checkInType');
     console.log(this.checkInType);
@@ -76,7 +76,20 @@ export class CheckinListPage {
       this.checkin_id = result['checkin_id'];
       this.checkin_data = result['checkin_data'];
       console.log(this.checkin_data);
-    })
+    }).catch((error:any)=>
+    {
+      if(this.service.errorCount === 0)
+      {
+        this.service.errorCount++;
+        this.presentAlertInternet();
+        
+        setTimeout(() => {
+          
+          this.service.errorCount = 0;
+          
+        }, 1000);
+      }
+    });
   }
   
   today_checkin:any = [];
@@ -91,12 +104,16 @@ export class CheckinListPage {
       content: `<img src="./assets/imgs/gif.svg" class="h15" />`,
     });
     
+    loading.present();
+    
     this.search.check_in_date = moment(this.search.check_in_date).format('YYYY-MM-DD');
     console.log(this.search.check_in_date);
     
     
     this.service.addData({'date':this.search.check_in_date,'limit':this.limit},'Checkin/checkin_list').then((result)=>{
       console.log(result);
+      loading.dismiss();
+      
       this.today_checkin = result['today_checkin'];
       this.previous_checkin = result['previous_checkin'];
       
@@ -109,11 +126,11 @@ export class CheckinListPage {
       {
         this.load_data = "1";
       }
-      
+    }).catch((error:any)=>
+    {
+      this.presentAlertInternet();
       loading.dismiss();
-      
     });
-    loading.present();
   }
   
   
@@ -206,6 +223,16 @@ export class CheckinListPage {
       });
     }
     
+    presentAlertInternet() 
+    {
+      let alert = this.alertCtrl.create({
+        title: 'Network Issue!',
+        enableBackdropDismiss: false,
+        message: 'Please Check Your Internet Connection.',
+        cssClass: 'alert-modal',
+      });
+      alert.present();
+    }
     
   }
   

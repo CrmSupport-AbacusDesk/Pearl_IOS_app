@@ -18,11 +18,16 @@ export class DealerSurveyListPage {
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: MyserviceProvider, public loadingCtrl: LoadingController) 
   {
-    this.getDealerSurveyList();
+    
   }
   
   ionViewDidLoad() {
     console.log('ionViewDidLoad DealerSurveyListPage');
+  }
+  
+  ionViewWillEnter()
+  {
+    this.getDealerSurveyList();
   }
   
   getDealerSurveyList()
@@ -31,6 +36,8 @@ export class DealerSurveyListPage {
       spinner: 'hide',
       content: `<img src="./assets/imgs/gif.svg" class="h15" />`,
     }); 
+    loading.present();
+    
     this.service.addData({'limit':this.limit,'company_name':this.search},'Distributor/dealer_survey_list').then((result)=>{
       console.log(result);
       this.delaer_survey_list = result;
@@ -40,10 +47,11 @@ export class DealerSurveyListPage {
       {
         this.load_data = "1";
       }
-      
-      
+    }).catch((error):any=>
+    {
+      loading.dismiss();
     });
-    loading.present();
+    
   }
   
   loadData(infiniteScroll)
@@ -71,7 +79,7 @@ export class DealerSurveyListPage {
     {
       this.navCtrl.push(DealerSurveyPage);
     }
-
+    
     dealer_survey_edit(dr_id)
     {
       this.navCtrl.push(DealerSurveyPage,{dr_id:dr_id});

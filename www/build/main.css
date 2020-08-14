@@ -50521,12 +50521,18 @@ page-aboutus .div-center h1 {
   padding: 16px 16px 16px 16px !important;
 }
 
-page-add-leave input {
-  height: 28px;
-}
-
 page-add-leave textarea {
   height: 100px;
+}
+
+page-add-leave .textarea-bodr ion-textarea {
+  border: 1px solid #cccccc;
+  padding: 0px 10px;
+  font-size: 14px;
+}
+
+page-add-leave ion-item.input-height input {
+  height: 26px;
 }
 
 page-add-order .field-heading h1 {
@@ -51617,8 +51623,8 @@ page-dashboard .dscscounter a .icon img {
 }
 
 page-dashboard .dscscounter a h1 {
-  font-size: 16px;
-  margin: 5px 0px 0px 0px !important;
+  font-size: 17px;
+  margin: 5px 10px 0px 10px !important;
   color: #ff0000;
 }
 
@@ -51903,7 +51909,6 @@ page-login .cs-form ion-list ion-item {
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
   height: 45px;
-  padding-left: 10px;
 }
 
 page-login .cs-form ion-list ion-item .item-inner {
@@ -51913,14 +51918,13 @@ page-login .cs-form ion-list ion-item .item-inner {
 }
 
 page-login .cs-form ion-list ion-item .item-inner input {
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   font-size: 12px;
   margin-left: 0;
-  margin-right: 0px;
 }
 
 page-login .cs-form ion-list ion-item ion-label {
-  margin: 0px 10px 0px 0px;
+  margin: 0px 15px 0px 0px;
 }
 
 page-login .cs-form ion-list ion-item ion-label img {

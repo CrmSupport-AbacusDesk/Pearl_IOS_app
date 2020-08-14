@@ -34,8 +34,6 @@ export class DashboardPage {
   
   constructor(public navCtrl: NavController, public service: CatalougeProvider, public loadingCtrl: LoadingController, private storage: Storage, public geolocation: Geolocation, public attendence_serv: AttendenceserviceProvider, public toastCtrl: ToastController, public alertCtrl: AlertController, public events: Events, public locationAccuracy: LocationAccuracy, public platform: Platform, public push: Push, public serve: MyserviceProvider, public track: GeolocationserviceProvider, public menu: MenuController, public constant: ConstantProvider,public modal: ModalController) {
     
-    this.last_attendence();
-    
     var time =  new Date();
     
     this.currentTime = moment().format("HH:mm:ss");
@@ -110,7 +108,8 @@ export class DashboardPage {
   ionViewDidEnter()
   {
     this.location();
-    this.events.publish('current_page','Dashboard');    
+    this.events.publish('current_page','Dashboard');
+    this.last_attendence(); 
   }
   
   ionViewDidLeave()
@@ -310,9 +309,11 @@ export class DashboardPage {
         content: `<img src="./assets/imgs/gif.svg" class="h15" />`,
       });
       
+      loading.present();
+      
       this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(() => 
       {
-        let options = {maximumAge: 10000, timeout: 15000, enableHighAccuracy: true};
+        let options = {maximumAge: 10000, timeout: 15000, enableHighAccuracy: false};
         this.geolocation.getCurrentPosition(options).then((resp) => 
         { 
           var lat = resp.coords.latitude
@@ -321,12 +322,11 @@ export class DashboardPage {
           this.attendence_serv.stop_attend({ 'lat': lat, 'lng': lng, 'attend_id': this.last_attendence_data.attend_id }).then((result) => 
           {
             console.log(result);
-            if(result =='success')
-            {
-              this.last_attendence();
-              this.presentToast1();
-            }
             loading.dismiss();
+            
+            this.last_attendence();
+            this.presentToast1();
+            
           }).catch((error:any)=>
           {
             loading.dismiss();
@@ -334,15 +334,14 @@ export class DashboardPage {
           
         }).catch((error) => {
           console.log('Error getting location', error);
-          this.attendence_serv.stop_attend({}).then((result)=>{
+          
+          this.attendence_serv.stop_attend({'attend_id': this.last_attendence_data.attend_id}).then((result)=>{
             console.log(result);
-            if(result['msg'] =='success')
-            {
-              // this.track.stopTracking();
-              this.last_attendence();
-              this.presentToast1();
-            }
             loading.dismiss();
+            
+            this.last_attendence();
+            this.presentToast1();
+            
           }).catch((error:any)=>
           {
             loading.dismiss();
@@ -353,7 +352,6 @@ export class DashboardPage {
         console.log('Error requesting location permissions', error);
         loading.dismiss();
       });
-      loading.present();
     }
     
     

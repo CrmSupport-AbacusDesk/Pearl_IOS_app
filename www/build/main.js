@@ -1,6 +1,6 @@
 webpackJsonp([4],{
 
-/***/ 103:
+/***/ 111:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -89,7 +89,7 @@ var SearchserviceProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__add_order_add_order__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__dealer_list_dealer_list__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_camera__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_file_transfer__ = __webpack_require__(504);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_file_transfer__ = __webpack_require__(505);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_constant_constant__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -149,7 +149,6 @@ var AddDealerPage = /** @class */ (function () {
         this.category_list = [];
         this.data1 = [];
         this.order_data = [];
-        this.addDealerValidation = false;
         this.inserted_id = '';
         this.type = this.navParams.get('type');
         console.log(this.type);
@@ -194,7 +193,7 @@ var AddDealerPage = /** @class */ (function () {
             email: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
             mobile: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].minLength(10), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].maxLength(10)])],
             whatsapp: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].minLength(10), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].maxLength(10)])],
-            gst: [''],
+            gst: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].minLength(15), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].maxLength(15)])],
             dob: [''],
             product_rating: [''],
             demonstration_response: [''],
@@ -202,10 +201,10 @@ var AddDealerPage = /** @class */ (function () {
             channel_partner_name: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
             address: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
             country: ['India', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
-            stateName: [''],
-            districtName: [''],
-            city: [''],
-            pincode: [''],
+            stateName: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
+            districtName: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
+            city: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
+            pincode: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].minLength(6), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].maxLength(6)])],
         });
         this.getCountryList();
         this.getState();
@@ -245,6 +244,10 @@ var AddDealerPage = /** @class */ (function () {
     };
     AddDealerPage.prototype.getDistrict = function (state) {
         var _this = this;
+        this.data.district = '';
+        this.data.city = '';
+        this.district_list = [];
+        this.city_list = [];
         console.log(state);
         var loading = this.loadingCtrl.create({
             spinner: 'hide',
@@ -291,8 +294,8 @@ var AddDealerPage = /** @class */ (function () {
     };
     AddDealerPage.prototype.getCity = function (state, district) {
         var _this = this;
-        console.log(state);
-        console.log(district);
+        this.data.city = '';
+        this.city_list = [];
         var loading = this.loadingCtrl.create({
             spinner: 'hide',
             content: "<img src=\"./assets/imgs/gif.svg\" class=\"h15\" />",
@@ -355,6 +358,13 @@ var AddDealerPage = /** @class */ (function () {
         }
     };
     AddDealerPage.prototype.typeChange = function (country) {
+        console.log(country);
+        this.data.state = '';
+        this.data.district = '';
+        this.data.city = '';
+        this.data.pincode = '';
+        this.district_list = [];
+        this.city_list = [];
         if (country == 'India') {
             var stateName = this.validateForm.get('stateName');
             stateName.setValidators([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])]);
@@ -402,6 +412,7 @@ var AddDealerPage = /** @class */ (function () {
     };
     AddDealerPage.prototype.submitDealer = function () {
         var _this = this;
+        console.log(this.validateForm);
         if (this.validateForm.invalid) {
             this.validateForm.get('companyName').markAsTouched();
             this.validateForm.get('name').markAsTouched();
@@ -411,7 +422,7 @@ var AddDealerPage = /** @class */ (function () {
             this.validateForm.get('pincode').markAsTouched();
             this.validateForm.get('city').markAsTouched();
             this.validateForm.get('address').markAsTouched();
-            this.validateForm.get('gst').markAsTouched();
+            // this.validateForm.get('gst').markAsTouched();
             this.validateForm.get('whatsapp').markAsTouched();
             this.validateForm.get('channel_partner_name').markAsTouched();
             this.validateForm.get('email').markAsTouched();
@@ -442,42 +453,47 @@ var AddDealerPage = /** @class */ (function () {
         }
         else {
             if (this.data.country && this.data.country.country_name == 'India') {
-                this.data.state = this.data.state.state_name;
-                this.data.district = this.data.district.district_name;
-                this.data.city = this.data.city.city;
+                this.data.state = this.data.state && this.data.state.state_name ? this.data.state.state_name : '';
+                this.data.district = this.data.district && this.data.district.district_name ? this.data.district.district_name : '';
+                this.data.city = this.data.city && this.data.city.city ? this.data.city.city : '';
             }
-            if (this.addDealerValidation == false) {
-                this.addDealerValidation = true;
-                this.serve.addData({ 'data': this.data }, "Distributor/add_dealer").then(function (response) {
-                    console.log(response);
-                    if (response['msg']) {
-                        if (_this.image) {
-                            var fileTransfer = _this.transfer.create();
-                            var random = new Date().getTime() + Math.floor(Math.random() * 100);
-                            var options = {
-                                fileKey: 'photo',
-                                fileName: "myImage_" + random + ".jpg",
-                                chunkedMode: false,
-                                mimeType: "image/jpeg",
-                            };
-                            fileTransfer.upload(_this.image, _this.constant.updateVisitingCard + 'visitingCardImage?id=' + response['msg'], options)
-                                .then(function (data) {
-                                console.log(data);
-                            });
-                        }
-                        if (_this.order != undefined) {
-                            _this.order_data = response['data'];
-                            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__add_order_add_order__["a" /* AddOrderPage */], { 'order_data': _this.order_data, 'brand_assign': [] });
-                            _this.presentToast1();
-                        }
-                        if (_this.order == undefined) {
-                            _this.data1 = response['data'];
-                            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__add_checkin_add_checkin__["a" /* AddCheckinPage */], { 'data': _this.data1 });
-                            _this.presentToast();
-                        }
+            var loading_1 = this.loadingCtrl.create({
+                spinner: 'hide',
+                content: "<img src=\"./assets/imgs/gif.svg\" class=\"h15\" />",
+            });
+            loading_1.present();
+            this.serve.addData({ 'data': this.data }, "Distributor/add_dealer").then(function (response) {
+                console.log(response);
+                loading_1.dismiss();
+                if (response['msg']) {
+                    _this.data = {};
+                    _this.validateForm.reset();
+                    if (_this.image) {
+                        var fileTransfer = _this.transfer.create();
+                        var random = new Date().getTime() + Math.floor(Math.random() * 100);
+                        var options = {
+                            fileKey: 'photo',
+                            fileName: "myImage_" + random + ".jpg",
+                            chunkedMode: false,
+                            mimeType: "image/jpeg",
+                        };
+                        fileTransfer.upload(_this.image, _this.constant.updateVisitingCard + 'visitingCardImage?id=' + response['msg'], options)
+                            .then(function (data) {
+                            console.log(data);
+                        });
                     }
-                });
-            }
+                    if (_this.order != undefined) {
+                        _this.order_data = response['data'];
+                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__add_order_add_order__["a" /* AddOrderPage */], { 'order_data': _this.order_data, 'brand_assign': [], 'user_data': _this.order_data, 'user_detail': _this.order_data });
+                        _this.presentToast1();
+                    }
+                    if (_this.order == undefined) {
+                        _this.data1 = response['data'];
+                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__add_checkin_add_checkin__["a" /* AddCheckinPage */], { 'data': _this.data1 });
+                        _this.presentToast();
+                    }
+                }
+            });
         }
     };
     AddDealerPage.prototype.presentAlert = function () {
@@ -562,7 +578,7 @@ var AddDealerPage = /** @class */ (function () {
     ], AddDealerPage.prototype, "navBar", void 0);
     AddDealerPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-add-dealer',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/add-dealer/add-dealer.html"*/'<ion-header>    \n    <ion-navbar>\n        <ion-title>\n            <h1>Add {{title}}</h1>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>   \n    \n    <form [formGroup]="validateForm">\n        <div class="edit">\n            \n            <ion-list>\n                <div>\n                    \n                    <ion-item >\n                        <ion-label floating><span>Company Name</span></ion-label>\n                        <ion-input type="text" formControlName="companyName" [(ngModel)]="data.company_name" ></ion-input>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'companyName\').hasError(\'required\') && validateForm.get(\'companyName\').touched" class="error-left relative">Company Name is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Owner Name</span></ion-label>\n                        <ion-input type="text" formControlName="name" [(ngModel)]="data.name" required></ion-input>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'name\').hasError(\'required\') && validateForm.get(\'name\').touched" class="error-left relative">Name is required!</p>\n                    \n                    \n                    <ion-item>\n                        <ion-label floating><span>GST No </span></ion-label>\n                        <ion-input type="text" min="15" max="15" formControlName="gst" (input)="check_gst_existence(data.gst)"  [(ngModel)]="data.gst" ></ion-input>\n                    </ion-item>\n                    \n                    <p *ngIf="check_gst == 1"  class="error-left relative">GST No Already Exists!!</p>\n                    \n                    \n                    <p *ngIf="validateForm.get(\'gst\').hasError(\'required\') && validateForm.get(\'gst\').touched"  class="error-left relative">GST No is required!</p>\n                    \n                    <p *ngIf="(validateForm.get(\'gst\').hasError(\'minlength\') || validateForm.get(\'gst\').hasError(\'maxlength\')) && validateForm.get(\'gst\').touched"  class="error-left relative">GST No must be 15 digit!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Mobile No</span></ion-label>\n                        <ion-input type="tel" minlength="10" maxlength="10" (input)="check_mobile_existence(data.mobile)" formControlName="mobile"  [(ngModel)]="data.mobile" required [readonly]="mobileEdit"></ion-input>\n                    </ion-item>\n                    \n                    <p *ngIf="check_mobile == 1"  class="error-left relative">Mobile No Already Exists!!</p>\n                    \n                    \n                    <p *ngIf="validateForm.get(\'mobile\').hasError(\'required\') && validateForm.get(\'mobile\').touched"  class="error-left relative">Mobile is required!</p>\n                    \n                    <p *ngIf="(validateForm.get(\'mobile\').hasError(\'minlength\') || validateForm.get(\'mobile\').hasError(\'maxlength\')) && validateForm.get(\'mobile\').touched"  class="error-left relative">Mobile must be 10 digit!</p>\n                    \n                    <ion-item class="whtapp">\n                        <ion-label floating><span>WhatsApp No</span></ion-label>\n                        <ion-input type="tel"  minlength="10" maxlength="10"  formControlName="whatsapp"  [(ngModel)]="data.whatsapp" ></ion-input>\n                    </ion-item>\n                    \n                    <p *ngIf="validateForm.get(\'whatsapp\').hasError(\'required\') && validateForm.get(\'whatsapp\').touched"  class="error-left relative">WhatsApp No is required!</p>\n                    \n                    <p *ngIf="(validateForm.get(\'whatsapp\').hasError(\'minlength\') || validateForm.get(\'whatsapp\').hasError(\'maxlength\')) && validateForm.get(\'whatsapp\').touched"  class="error-left relative">WhatsApp No must be 10 digit!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Select Channel Partner</span></ion-label>\n                        <ion-select class="h43" name="channel_partner_name" [(ngModel)]="data.channel_partner_name" formControlName="channel_partner_name" required>\n                            <ion-option *ngFor="let list of channel_partner_list" value="{{list.id}}">{{list.company_name}}</ion-option>\n                        </ion-select>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'channel_partner_name\').hasError(\'required\') && validateForm.get(\'channel_partner_name\').touched" class="error-left relative">Channel Partner Name is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Email</span></ion-label>\n                        <ion-input type="email" formControlName="email" [(ngModel)]="data.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required></ion-input>\n                    </ion-item>\n                    <p *ngIf="data.email && validateForm.get(\'email\').hasError(\'pattern\') && validateForm.get(\'email\').touched"  class="error-left relative">Email invalid!</p>\n                    \n                    <p *ngIf="validateForm.get(\'email\').hasError(\'required\') && validateForm.get(\'email\').touched" class="error-left relative">Email is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Address</span></ion-label>\n                        <ion-input type="text"formControlName="address" [(ngModel)]="data.address" required></ion-input>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'address\').hasError(\'required\') && validateForm.get(\'address\').touched" class="error-left relative">Address is required!</p>\n                    \n                    \n                    <div class="csslecttype mt20">\n                        <ion-item>\n                            <ion-label class="pl15">Country *</ion-label>\n                            <ionic-selectable\n                            item-content \n                            [(ngModel)]="data.country"\n                            [items]="countryList"\n                            itemValueField="country_name"\n                            itemTextField="country_name"\n                            formControlName="country"\n                            (onChange)="typeChange(data.country.state_name)"\n                            [canSearch]="true">\n                        </ionic-selectable>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'country\').hasError(\'required\') && validateForm.get(\'country\').touched"  class="error-left relative">Country is required!</p>\n                </div>\n                \n                \n                \n                <div *ngIf="data?.country?.country_name==\'India\'">\n                    <ion-item>\n                        <ion-label floating><span>Pincode</span></ion-label>\n                        <ion-input type="tel"  minlength="6" maxlength="6" formControlName="pincode" [(ngModel)]="data.pincode" (input)="get_pincode_area_name(data.pincode)" required ></ion-input>\n                    </ion-item>\n                    \n                    <!-- <p>{{city_name}}</p> -->\n                    \n                    <p *ngIf="validateForm.get(\'pincode\').hasError(\'required\') && validateForm.get(\'pincode\').touched" class="error-left relative">Pincode is required!</p>\n                    \n                    <div class="csslecttype mt20">\n                        <ion-item>\n                            <ion-label class="pl15">State</ion-label>\n                            <ionic-selectable\n                            item-content \n                            [(ngModel)]="data.state"\n                            [items]="state_list"\n                            itemValueField="state_name"\n                            itemTextField="state_name"\n                            (onChange)="getDistrict(data.state.state_name)"\n                            formControlName="stateName"\n                            [canSearch]="true">\n                        </ionic-selectable>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'stateName\').hasError(\'required\') && validateForm.get(\'stateName\').touched"  class="error-left relative">State is required!</p>\n                </div>\n                \n                <div class="csslecttype mt20">\n                    <ion-item>\n                        <ion-label class="pl15">District</ion-label>\n                        <ionic-selectable\n                        item-content \n                        [(ngModel)]="data.district"\n                        [items]="district_list"\n                        itemValueField="district_name"\n                        itemTextField="district_name"\n                        formControlName="districtName"\n                        (onChange)="getCity(data.state.state_name,data.district.district_name)"\n                        [canSearch]="true">\n                    </ionic-selectable>\n                </ion-item>\n                <p *ngIf="validateForm.get(\'districtName\').hasError(\'required\') && validateForm.get(\'districtName\').touched"  class="error-left relative">District is required!</p>\n            </div>\n            \n            \n            <div class="csslecttype mt20">\n                <ion-item>\n                    <ion-label class="pl15">City</ion-label>\n                    <ionic-selectable\n                    item-content \n                    [(ngModel)]="data.city"\n                    [items]="city_list"\n                    itemValueField="city"\n                    itemTextField="city"\n                    formControlName="city"\n                    [canSearch]="true">\n                </ionic-selectable>\n            </ion-item>\n            <p *ngIf="validateForm.get(\'city\').hasError(\'required\') && validateForm.get(\'city\').touched"  class="error-left relative">City is required!</p>\n        </div>\n    </div>\n    \n    <ion-item>\n        <ion-label floating><span>Date of Birth</span></ion-label>\n        <ion-datetime display-format="MMM DD, YYYY" formControlName="dob" [(ngModel)]="data.dob"></ion-datetime>\n    </ion-item>\n    \n    <ion-item>\n        <ion-label floating><span>Date of Anniversary</span></ion-label>\n        <ion-datetime display-format="MMM DD, YYYY" formControlName="anniversary_date" [(ngModel)]="data.anniversary_date"></ion-datetime>\n    </ion-item>     \n    \n    <div class="after-upload">\n        <p>Upload Visiting Card</p>\n        <ul>\n            <li class="img-upload" *ngIf="!image" (click)="open_camera()">\n                <i class="material-icons">camera_alt</i>\n            </li>\n            \n            <li *ngIf="image">\n                <img [src]="image" alt="">\n            </li>\n        </ul>\n    </div>\n</div>\n\n</ion-list>\n<div >\n</div>\n</div>\n\n</form>\n<div class="h16"></div>\n</ion-content>\n\n<ion-footer padding>\n    <button ion-button block round class="h45" (click)="submitDealer()" [disabled] = "check_mobile == 1">Click To Save {{title}}</button>\n</ion-footer>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/add-dealer/add-dealer.html"*/,
+            selector: 'page-add-dealer',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/add-dealer/add-dealer.html"*/'<ion-header>    \n    <ion-navbar>\n        <ion-title>\n            <h1>Add {{title}}</h1>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>   \n    \n    <form [formGroup]="validateForm">\n        <div class="edit">\n            \n            <ion-list>\n                <div>\n                    \n                    <ion-item >\n                        <ion-label floating><span>Company Name</span></ion-label>\n                        <ion-input type="text" formControlName="companyName" [(ngModel)]="data.company_name" ></ion-input>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'companyName\').hasError(\'required\') && validateForm.get(\'companyName\').touched" class="error-left relative">Company Name is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Owner Name</span></ion-label>\n                        <ion-input type="text" formControlName="name" [(ngModel)]="data.name"></ion-input>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'name\').hasError(\'required\') && validateForm.get(\'name\').touched" class="error-left relative">Name is required!</p>\n                    \n                    \n                    <ion-item>\n                        <ion-label floating><span>GST No </span></ion-label>\n                        <ion-input type="text" formControlName="gst" (input)="check_gst_existence(data.gst)"  [(ngModel)]="data.gst" ></ion-input>\n                    </ion-item>\n                    \n                    <p *ngIf="check_gst == 1"  class="error-left relative">GST No Already Exists!!</p>\n                    \n                    <p *ngIf="validateForm.get(\'gst\').hasError(\'required\') && validateForm.get(\'gst\').touched"  class="error-left relative">GST No is required!</p>\n                    \n                    <p *ngIf="(validateForm.get(\'gst\').hasError(\'minlength\') || validateForm.get(\'gst\').hasError(\'maxlength\')) && validateForm.get(\'gst\').touched"  class="error-left relative">GST No must be 15 digit!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Mobile No</span></ion-label>\n                        <ion-input type="tel" minlength="10" maxlength="10" (input)="check_mobile_existence(data.mobile)" formControlName="mobile"  [(ngModel)]="data.mobile" [readonly]="mobileEdit"></ion-input>\n                    </ion-item>\n                    \n                    <p *ngIf="check_mobile == 1"  class="error-left relative">Mobile No Already Exists!!</p>\n                    \n                    \n                    <p *ngIf="validateForm.get(\'mobile\').hasError(\'required\') && validateForm.get(\'mobile\').touched"  class="error-left relative">Mobile is required!</p>\n                    \n                    <p *ngIf="(validateForm.get(\'mobile\').hasError(\'minlength\') || validateForm.get(\'mobile\').hasError(\'maxlength\')) && validateForm.get(\'mobile\').touched"  class="error-left relative">Mobile must be 10 digit!</p>\n                    \n                    <ion-item class="whtapp">\n                        <ion-label floating><span>WhatsApp No</span></ion-label>\n                        <ion-input type="tel"  minlength="10" maxlength="10"  formControlName="whatsapp"  [(ngModel)]="data.whatsapp" ></ion-input>\n                    </ion-item>\n                    \n                    <p *ngIf="validateForm.get(\'whatsapp\').hasError(\'required\') && validateForm.get(\'whatsapp\').touched"  class="error-left relative">WhatsApp No is required!</p>\n                    \n                    <p *ngIf="(validateForm.get(\'whatsapp\').hasError(\'minlength\') || validateForm.get(\'whatsapp\').hasError(\'maxlength\')) && validateForm.get(\'whatsapp\').touched"  class="error-left relative">WhatsApp No must be 10 digit!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Select Channel Partner</span></ion-label>\n                        <ion-select class="h43" name="channel_partner_name" [(ngModel)]="data.channel_partner_name" formControlName="channel_partner_name">\n                            <ion-option *ngFor="let list of channel_partner_list" value="{{list.id}}">{{list.company_name}}</ion-option>\n                        </ion-select>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'channel_partner_name\').hasError(\'required\') && validateForm.get(\'channel_partner_name\').touched" class="error-left relative">Channel Partner Name is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Email</span></ion-label>\n                        <ion-input type="email" formControlName="email" [(ngModel)]="data.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"></ion-input>\n                    </ion-item>\n\n                    <p *ngIf="data.email && validateForm.get(\'email\').hasError(\'pattern\') && validateForm.get(\'email\').touched"  class="error-left relative">Email invalid!</p>\n                    \n                    <p *ngIf="validateForm.get(\'email\').hasError(\'required\') && validateForm.get(\'email\').touched" class="error-left relative">Email is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Address</span></ion-label>\n                        <ion-input type="text"formControlName="address" [(ngModel)]="data.address"></ion-input>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'address\').hasError(\'required\') && validateForm.get(\'address\').touched" class="error-left relative">Address is required!</p>\n                    \n                    \n                    <div class="csslecttype mt20">\n                        <ion-item>\n                            <ion-label class="pl15">Country *</ion-label>\n                            <ionic-selectable\n                            item-content \n                            [(ngModel)]="data.country"\n                            [items]="countryList"\n                            itemValueField="country_name"\n                            itemTextField="country_name"\n                            formControlName="country"\n                            (onChange)="typeChange(data.country.country_name)"\n                            [canSearch]="true">\n                        </ionic-selectable>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'country\').hasError(\'required\') && validateForm.get(\'country\').touched"  class="error-left relative">Country is required!</p>\n                </div>\n                \n                \n                \n                <div *ngIf="data?.country?.country_name==\'India\'">\n                    <ion-item>\n                        <ion-label floating><span>Pincode</span></ion-label>\n                        <ion-input type="tel" formControlName="pincode" [(ngModel)]="data.pincode" (input)="get_pincode_area_name(data.pincode)"></ion-input>\n                    </ion-item>\n                    <!-- <p>{{city_name}}</p> -->\n                    \n                    <p *ngIf="validateForm.get(\'pincode\').hasError(\'required\') && validateForm.get(\'pincode\').touched" class="error-left relative">Pincode is required!</p>\n                    \n                    <p *ngIf="(validateForm.get(\'pincode\').hasError(\'minlength\') || validateForm.get(\'pincode\').hasError(\'maxlength\')) && validateForm.get(\'pincode\').touched"  class="error-left relative">Pincode must be 6 digit!</p>\n                    \n                    <div class="csslecttype mt20">\n                        <ion-item>\n                            <ion-label class="pl15">State</ion-label>\n                            <ionic-selectable\n                            item-content \n                            [(ngModel)]="data.state"\n                            [items]="state_list"\n                            itemValueField="state_name"\n                            itemTextField="state_name"\n                            (onChange)="getDistrict(data.state.state_name)"\n                            formControlName="stateName"\n                            [canSearch]="true">\n                        </ionic-selectable>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'stateName\').hasError(\'required\') && validateForm.get(\'stateName\').touched"  class="error-left relative">State is required!</p>\n                </div>\n                \n                <div class="csslecttype mt20">\n                    <ion-item>\n                        <ion-label class="pl15">District</ion-label>\n                        <ionic-selectable\n                        item-content \n                        [(ngModel)]="data.district"\n                        [items]="district_list"\n                        itemValueField="district_name"\n                        itemTextField="district_name"\n                        formControlName="districtName"\n                        (onChange)="getCity(data.state.state_name,data.district.district_name)"\n                        [canSearch]="true">\n                    </ionic-selectable>\n                </ion-item>\n                <p *ngIf="validateForm.get(\'districtName\').hasError(\'required\') && validateForm.get(\'districtName\').touched"  class="error-left relative">District is required!</p>\n            </div>\n            \n            \n            <div class="csslecttype mt20">\n                <ion-item>\n                    <ion-label class="pl15">City</ion-label>\n                    <ionic-selectable\n                    item-content \n                    [(ngModel)]="data.city"\n                    [items]="city_list"\n                    itemValueField="city"\n                    itemTextField="city"\n                    formControlName="city"\n                    [canSearch]="true">\n                </ionic-selectable>\n            </ion-item>\n            <p *ngIf="validateForm.get(\'city\').hasError(\'required\') && validateForm.get(\'city\').touched"  class="error-left relative">City is required!</p>\n        </div>\n    </div>\n    \n    <ion-item>\n        <ion-label floating><span>Date of Birth</span></ion-label>\n        <ion-datetime display-format="MMM DD, YYYY" formControlName="dob" [(ngModel)]="data.dob"></ion-datetime>\n    </ion-item>\n    \n    <ion-item>\n        <ion-label floating><span>Date of Anniversary</span></ion-label>\n        <ion-datetime display-format="MMM DD, YYYY" formControlName="anniversary_date" [(ngModel)]="data.anniversary_date"></ion-datetime>\n    </ion-item>     \n    \n    <div class="after-upload">\n        <p>Upload Visiting Card</p>\n        <ul>\n            <li class="img-upload" *ngIf="!image" (click)="open_camera()">\n                <i class="material-icons">camera_alt</i>\n            </li>\n            \n            <li *ngIf="image">\n                <img [src]="image" alt="">\n            </li>\n        </ul>\n    </div>\n</div>\n\n</ion-list>\n<div >\n</div>\n</div>\n\n</form>\n<div class="h16"></div>\n</ion-content>\n\n<ion-footer padding>\n    <button ion-button block round class="h45" (click)="submitDealer()" [disabled] = "check_mobile == 1">Click To Save {{title}}</button>\n</ion-footer>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/add-dealer/add-dealer.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__providers_enquiryservice_enquiryservice__["a" /* EnquiryserviceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["LoadingController"], __WEBPACK_IMPORTED_MODULE_3__providers_myservice_myservice__["a" /* MyserviceProvider */], __WEBPACK_IMPORTED_MODULE_4__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ActionSheetController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"], __WEBPACK_IMPORTED_MODULE_8__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_9__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_10__providers_constant_constant__["a" /* ConstantProvider */]])
     ], AddDealerPage);
@@ -607,19 +623,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-/**
- * Generated class for the AddCheckinPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 var AddCheckinPage = /** @class */ (function () {
     function AddCheckinPage(navCtrl, navParams, loadingCtrl, service, toastCtrl, formBuilder, platform, locationAccuracy, geolocation) {
-        // let backAction  = platform.registerBackButtonAction(()=>{
-        //   console.log('second');
-        //   this.navCtrl.push(CheckinListPage);
-        //   backAction()
-        // },2);
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.loadingCtrl = loadingCtrl;
@@ -655,11 +660,6 @@ var AddCheckinPage = /** @class */ (function () {
             name: ['', __WEBPACK_IMPORTED_MODULE_5__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_5__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_5__angular_forms__["Validators"].minLength(3)])],
             mobile: ['', __WEBPACK_IMPORTED_MODULE_5__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_5__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_5__angular_forms__["Validators"].minLength(10), __WEBPACK_IMPORTED_MODULE_5__angular_forms__["Validators"].maxLength(10)])]
         });
-        // let backAction  = platform.registerBackButtonAction(()=>{
-        //   console.log('second');
-        //   this.navCtrl.push(CheckinListPage);
-        //   backAction()
-        // },2);
     }
     AddCheckinPage.prototype.ionViewDidLoad = function () {
         var _this = this;
@@ -749,87 +749,44 @@ var AddCheckinPage = /** @class */ (function () {
     // }
     AddCheckinPage.prototype.startVisit = function () {
         var _this = this;
-        console.log(this.distribution_data);
-        // return false;
         var loading = this.loadingCtrl.create({
             spinner: 'hide',
             content: "<img src=\"./assets/imgs/gif.svg\" class=\"h15\" />",
         });
+        loading.present();
         this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(function () {
             console.log('Request successful');
-            // this.showLoading();
-            var options = { maximumAge: 10000, timeout: 15000, enableHighAccuracy: true };
+            var options = { maximumAge: 10000, timeout: 15000, enableHighAccuracy: false };
             _this.geolocation.getCurrentPosition(options).then(function (resp) {
-                console.log(resp.coords.latitude);
-                console.log(resp.coords.longitude);
-                // this.saveOrderHandler(resp.coords);
                 var lat = resp.coords.latitude;
                 var lng = resp.coords.longitude;
-                if (_this.distribution_data == '') {
-                    console.log(_this.data);
-                    _this.data.dr_id = _this.data.type_name.id;
-                    _this.data.dr_name = _this.data.type_name.name;
-                    _this.data.lat = lat;
-                    _this.data.lng = lng;
-                    console.log(_this.data);
-                    _this.service.addData({ 'data': _this.data }, 'Checkin/start_visit_new').then(function (result) {
-                        console.log(result);
-                        if (result == 'success') {
-                            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__checkin_list_checkin_list__["a" /* CheckinListPage */]);
-                            loading.dismiss();
-                            _this.presentToast();
-                        }
-                        else {
-                            loading.dismiss();
-                        }
-                    });
-                }
-                if (_this.distribution_data != '') {
-                    _this.service.addData({ 'data': _this.data }, 'Checkin/start_visit_new').then(function (result) {
-                        console.log(result);
-                        if (result == 'success') {
-                            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__checkin_list_checkin_list__["a" /* CheckinListPage */]);
-                            loading.dismiss();
-                            _this.presentToast();
-                        }
-                        else {
-                            loading.dismiss();
-                        }
-                    });
-                }
+                _this.data.dr_id = _this.data.type_name.id;
+                _this.data.dr_name = _this.data.type_name.name;
+                _this.data.lat = lat;
+                _this.data.lng = lng;
+                _this.service.addData({ 'data': _this.data }, 'Checkin/start_visit_new').then(function (result) {
+                    console.log(result);
+                    _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__checkin_list_checkin_list__["a" /* CheckinListPage */]);
+                    loading.dismiss();
+                    _this.presentToast();
+                });
             }).catch(function (error) {
                 console.log('Error getting location', error);
-                // this.saveOrderHandler({});
-                if (_this.distribution_data == '') {
-                    console.log(_this.data);
-                    _this.data.dr_id = _this.data.type_name.id;
-                    _this.data.dr_name = _this.data.type_name.name;
-                    console.log(_this.data);
-                    _this.service.addData({ 'data': _this.data }, 'Checkin/start_visit_new').then(function (result) {
-                        console.log(result);
-                        if (result == 'success') {
-                            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__checkin_list_checkin_list__["a" /* CheckinListPage */]);
-                            loading.dismiss();
-                            _this.presentToast();
-                        }
-                    });
-                }
-                if (_this.distribution_data != '') {
-                    _this.service.addData({ 'data': _this.data }, 'Checkin/start_visit_new').then(function (result) {
-                        console.log(result);
-                        if (result == 'success') {
-                            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__checkin_list_checkin_list__["a" /* CheckinListPage */]);
-                            loading.dismiss();
-                            _this.presentToast();
-                        }
-                    });
-                }
+                console.log(_this.data);
+                _this.data.dr_id = _this.data.type_name.id;
+                _this.data.dr_name = _this.data.type_name.name;
+                console.log(_this.data);
+                _this.service.addData({ 'data': _this.data }, 'Checkin/start_visit_new').then(function (result) {
+                    console.log(result);
+                    _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__checkin_list_checkin_list__["a" /* CheckinListPage */]);
+                    loading.dismiss();
+                    _this.presentToast();
+                });
             });
         }, function (error) {
             console.log('Error requesting location permissions', error);
             loading.dismiss();
         });
-        loading.present();
     };
     AddCheckinPage.prototype.startOtherVisit = function () {
         var _this = this;
@@ -843,7 +800,6 @@ var AddCheckinPage = /** @class */ (function () {
             content: "<img src=\"./assets/imgs/gif.svg\" class=\"h15\" />",
         });
         console.log(this.data);
-        // return false;
         this.service.addData({ 'data': this.data }, 'Checkin/start_other_visit').then(function (result) {
             console.log(result);
             if (result == 'success') {
@@ -882,10 +838,7 @@ var AddCheckinPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-add-checkin',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/add-checkin/add-checkin.html"*/'<!--\n	Generated template for the AddCheckinPage page.\n	\n	See http://ionicframework.com/docs/components/#navigation for more info on\n	Ionic pages and navigation.\n-->\n<ion-header>\n	\n	<ion-navbar>\n		\n		\n		<ion-title>\n			<h1>Add Checkin</h1>\n		</ion-title>\n	</ion-navbar>\n	\n</ion-header>\n\n\n<ion-content padding>\n	\n	<ion-list radio-group [(ngModel)]="data.network" name="network" (ngModelChange)="get_network_list(data.network)">\n		<ion-item>\n			<ion-label>Channel Partner</ion-label>\n			<ion-radio value="1" ></ion-radio>\n		</ion-item>\n		<ion-item class="mt16">\n			<ion-label>Direct Dealer</ion-label>\n			<ion-radio value="7"></ion-radio>\n		</ion-item>\n		<ion-item class="mt16">\n			<ion-label>Dealer</ion-label>\n			<ion-radio value="3"></ion-radio>\n		</ion-item>\n		<ion-item class="mt16">\n			<ion-label>Other</ion-label>\n			<ion-radio value="Other"></ion-radio>\n		</ion-item>\n	</ion-list>\n	\n	<div *ngIf="data.network == \'1\' || data.network == \'7\' || data.network == \'3\'" class="enquiry" style="padding: 0px 16px !important;">\n		<ion-list>\n			\n			<div class="csslecttype">\n				\n				<ion-item style="border-bottom: 1px solid #dedede !important;">\n					<ion-label *ngIf="data.network == \'1\'">Channel Partner</ion-label>\n					<ion-label *ngIf="data.network == \'3\'">Dealer</ion-label>\n					\n					<ion-label *ngIf="data.network == \'7\'">Direct Dealer</ion-label>\n					\n					<ionic-selectable\n					item-content \n					[(ngModel)]="data.type_name"\n					[items]="distributor_network_list"\n					itemValueField="id"\n					name="name"\n					value="company_name"\n					itemTextField="company_name"\n					(onChange)="other(data.type_name.company_name,data.network,data.type_name)"\n					[canSearch]="true"\n					#selectComponent>\n				</ionic-selectable>\n			</ion-item>			\n		</div>\n	</ion-list>\n</div>\n\n<div padding *ngIf="load == \'1\' && data.type_name.company_name != \'Other\'">\n	<div class="cs-figure">\n		<p ><span>Company Name :</span> {{type_name.company_name}}</p>\n		<p><span>Name :</span>  {{type_name.name}}</p>\n		<p> <span>Mobile :</span> {{type_name.mobile}}</p>\n	</div>\n</div>\n\n<form [formGroup]="AddCheckinForm" novalidate >\n	<div *ngIf="data.network == \'Other\'" class="edit" style="margin-top: -25px;"> \n		<ion-list>\n			\n			<ion-item >\n				<ion-label floating>Name</ion-label>\n				<ion-input type="text" [(ngModel)]="data.name" formControlName="name" minlength="3" required></ion-input>\n			</ion-item>\n			\n			<p *ngIf="AddCheckinForm.get(\'name\').hasError(\'required\') && AddCheckinForm.get(\'name\').touched"  class="error-left relative">Name is required!</p>\n			\n			<p *ngIf="(AddCheckinForm.get(\'mobile\').hasError(\'minlength\')) && AddCheckinForm.get(\'mobile\').touched"  class="error-left relative">Mobile must be 10 digit!</p>\n			\n			<ion-item >\n				<ion-label floating>Mobile</ion-label>\n				<ion-input type="tel" minlength="10" maxlength="10" [(ngModel)]="data.mobile" formControlName="mobile" required></ion-input>\n			</ion-item>\n			\n			<p *ngIf="AddCheckinForm.get(\'mobile\').hasError(\'required\') && AddCheckinForm.get(\'mobile\').touched"  class="error-left relative">Mobile is required!</p>\n			\n			<p *ngIf="(AddCheckinForm.get(\'mobile\').hasError(\'minlength\') || AddCheckinForm.get(\'mobile\').hasError(\'maxlength\')) && AddCheckinForm.get(\'mobile\').touched"  class="error-left relative">Mobile must be 10 digit!</p>\n		</ion-list>\n	</div>\n	\n	<!-- <div class="refbtn mt40 pt0 pl16 pr16" padding >\n		<button color="theme" ion-button block round >Start Visit</button>\n	</div> -->\n</form>\n\n\n\n\n\n\n<!-- <div class="refbtn mt40" *ngIf="other_name == \'Other\'">\n	<button color="theme" ion-button block round (click)="add_dealer(data.network)">Add Network Type</button>\n</div> -->\n\n\n\n<!-- \n	<div class="refbtn mt40" >\n		<button color="theme" ion-button block round   (click)="startVisit()">Start Visit</button>\n	</div> -->\n	\n	\n	\n</ion-content>\n\n<ion-footer padding>\n	<button ion-button block round class="h45" [disabled]="!data.network" (click)="startVisit()" *ngIf="data.network != \'Other\' && other_name != \'Other\' && (type_name.company_name)">Start Visit</button>\n	\n	<button ion-button block round class="h45" (click)="startOtherVisit()" *ngIf="data.network == \'Other\' && data.name && data.mobile?.length == 10">Start Visit</button>\n</ion-footer>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/add-checkin/add-checkin.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["LoadingController"],
-            __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__["a" /* MyserviceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"], __WEBPACK_IMPORTED_MODULE_5__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"], __WEBPACK_IMPORTED_MODULE_7__ionic_native_location_accuracy__["a" /* LocationAccuracy */], __WEBPACK_IMPORTED_MODULE_8__ionic_native_geolocation__["a" /* Geolocation */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["LoadingController"], __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__["a" /* MyserviceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"], __WEBPACK_IMPORTED_MODULE_5__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"], __WEBPACK_IMPORTED_MODULE_7__ionic_native_location_accuracy__["a" /* LocationAccuracy */], __WEBPACK_IMPORTED_MODULE_8__ionic_native_geolocation__["a" /* Geolocation */]])
     ], AddCheckinPage);
     return AddCheckinPage;
 }());
@@ -903,7 +856,7 @@ var AddCheckinPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__distributor_detail_distributor_detail__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__add_distribution_add_distribution__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__add_distribution_add_distribution__ = __webpack_require__(173);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1025,7 +978,7 @@ var DirectDealerListPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__distributor_detail_distributor_detail__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__add_distribution_add_distribution__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__add_distribution_add_distribution__ = __webpack_require__(173);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1150,7 +1103,7 @@ var MainDistributorListPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_background_geolocation__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_geolocation__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_filter__ = __webpack_require__(434);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_filter__ = __webpack_require__(491);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_filter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_filter__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__myservice_myservice__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__(27);
@@ -1263,7 +1216,7 @@ var GeolocationserviceProvider = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactusPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_aboutservice_aboutservice__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_aboutservice_aboutservice__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__search_search__ = __webpack_require__(29);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1332,7 +1285,7 @@ var ContactusPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__distributor_detail_distributor_detail__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_leads_add_leads__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_leads_add_leads__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_myservice_myservice__ = __webpack_require__(7);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1431,7 +1384,7 @@ var DistributorListPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginserviceProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__constant_constant__ = __webpack_require__(16);
@@ -1576,7 +1529,7 @@ var LoginserviceProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 152:
+/***/ 153:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1650,7 +1603,47 @@ var AboutserviceProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 153:
+/***/ 16:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConstantProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ConstantProvider = /** @class */ (function () {
+    function ConstantProvider(http) {
+        this.http = http;
+        this.backButton = 0;
+        this.server_url = 'https://crm.pproducts.in/api/index.php/app/';
+        this.upload_url = 'https://crm.pproducts.in/uploads/Products/';
+        this.upload_icon_url = 'https://crm.pproducts.in/uploads/Products-Icon/';
+        this.updateVisitingCard = 'https://crm.pproducts.in/api/index.php/app/Distributor/';
+        this.VisitingCardURL = 'https://crm.pproducts.in/uploads/VisitingCard/';
+        console.log('Hello ConstantProvider Provider');
+    }
+    ConstantProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Http */]])
+    ], ConstantProvider);
+    return ConstantProvider;
+}());
+
+//# sourceMappingURL=constant.js.map
+
+/***/ }),
+
+/***/ 167:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1721,7 +1714,7 @@ var LeaveListPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 154:
+/***/ 168:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1730,7 +1723,7 @@ var LeaveListPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_catalouge_catalouge__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__search_search__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__products_products__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__products_products__ = __webpack_require__(84);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1802,7 +1795,7 @@ var SubcategoryPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 156:
+/***/ 170:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1811,7 +1804,7 @@ var SubcategoryPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__cp_order_cart_cp_order_cart__ = __webpack_require__(404);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__cp_order_cart_cp_order_cart__ = __webpack_require__(488);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2032,7 +2025,7 @@ var AddCpOrderPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 157:
+/***/ 171:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2243,47 +2236,7 @@ var OrderTypeModalPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 16:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConstantProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var ConstantProvider = /** @class */ (function () {
-    function ConstantProvider(http) {
-        this.http = http;
-        this.backButton = 0;
-        this.server_url = 'https://crm.pproducts.in/api/index.php/app/';
-        this.upload_url = 'https://crm.pproducts.in/uploads/Products/';
-        this.upload_icon_url = 'https://crm.pproducts.in/uploads/Products-Icon/';
-        this.updateVisitingCard = 'https://crm.pproducts.in/api/index.php/app/Distributor/';
-        this.VisitingCardURL = 'https://crm.pproducts.in/uploads/VisitingCard/';
-        console.log('Hello ConstantProvider Provider');
-    }
-    ConstantProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Http */]])
-    ], ConstantProvider);
-    return ConstantProvider;
-}());
-
-//# sourceMappingURL=constant.js.map
-
-/***/ }),
-
-/***/ 171:
+/***/ 172:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2337,7 +2290,7 @@ var CheckinDetailPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 172:
+/***/ 173:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2722,7 +2675,7 @@ var AddDistributionPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 173:
+/***/ 174:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3037,7 +2990,7 @@ var AddLeadsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 174:
+/***/ 175:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3284,7 +3237,7 @@ var OtpverifyPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 175:
+/***/ 176:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3525,7 +3478,7 @@ var AttendencePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 176:
+/***/ 177:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3533,7 +3486,7 @@ var AttendencePage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_enquiryservice_enquiryservice__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__login_login__ = __webpack_require__(529);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__login_login__ = __webpack_require__(530);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3634,28 +3587,28 @@ var map = {
 		257
 	],
 	"../pages/add-order/add-order.module": [
-		593
+		594
 	],
 	"../pages/attendence/attendence.module": [
-		578
-	],
-	"../pages/brand/brand.module": [
-		391
-	],
-	"../pages/cart-detail/cart-detail.module": [
-		579
-	],
-	"../pages/catalouge/catalouge.module": [
-		507
-	],
-	"../pages/channel-partner-app/add-cp-order/add-cp-order.module": [
 		580
 	],
-	"../pages/channel-partner-app/cp-discount/cp-discount.module": [
+	"../pages/brand/brand.module": [
+		475
+	],
+	"../pages/cart-detail/cart-detail.module": [
+		581
+	],
+	"../pages/catalouge/catalouge.module": [
 		508
 	],
-	"../pages/channel-partner-app/cp-order-cart/cp-order-cart.module": [
+	"../pages/channel-partner-app/add-cp-order/add-cp-order.module": [
+		582
+	],
+	"../pages/channel-partner-app/cp-discount/cp-discount.module": [
 		509
+	],
+	"../pages/channel-partner-app/cp-order-cart/cp-order-cart.module": [
+		528
 	],
 	"../pages/channel-partner-app/cp-order-list/cp-order-list.module": [
 		510
@@ -3667,13 +3620,13 @@ var map = {
 		512
 	],
 	"../pages/dashboard/dashboard.module": [
-		591
+		583
 	],
 	"../pages/dealer-survey-list/dealer-survey-list.module": [
 		513
 	],
 	"../pages/dealer-survey/dealer-survey.module": [
-		581
+		584
 	],
 	"../pages/enquiry/enquiry.module": [
 		516
@@ -3704,10 +3657,10 @@ var map = {
 		527
 	],
 	"../pages/login/login.module": [
-		528
+		529
 	],
 	"../pages/menu/menu.module": [
-		536
+		543
 	],
 	"../pages/my-wallet/my-wallet.module": [
 		537
@@ -3729,16 +3682,16 @@ var map = {
 		542
 	],
 	"../pages/order-detail/order-detail.module": [
-		582
+		585
 	],
 	"../pages/order-list/order-list.module": [
-		583
+		586
 	],
 	"../pages/order-type-modal/order-type-modal.module": [
-		543
+		544
 	],
 	"../pages/otpverify/otpverify.module": [
-		544
+		549
 	],
 	"../pages/plumber-app/offer-detail/offer-detail.module": [
 		545
@@ -3747,7 +3700,7 @@ var map = {
 		547
 	],
 	"../pages/plumber-app/offers/offers.module": [
-		549
+		561
 	],
 	"../pages/plumber-profile/plumber-profile.module": [
 		550
@@ -3756,13 +3709,13 @@ var map = {
 		551
 	],
 	"../pages/product-details/product-details.module": [
-		554
+		553
 	],
 	"../pages/products/products.module": [
-		584
+		587
 	],
 	"../pages/profile/profile.module": [
-		553
+		554
 	],
 	"../pages/retailer-detail/retailer-detail.module": [
 		991,
@@ -3772,16 +3725,16 @@ var map = {
 		555
 	],
 	"../pages/sales-app/add-checkin/add-checkin.module": [
-		585
+		588
 	],
 	"../pages/sales-app/add-dealer/add-dealer.module": [
-		592
+		593
 	],
 	"../pages/sales-app/add-distribution/add-distribution.module": [
-		586
+		589
 	],
 	"../pages/sales-app/add-leads/add-leads.module": [
-		587
+		590
 	],
 	"../pages/sales-app/checkin-detail/checkin-detail.module": [
 		556
@@ -3793,13 +3746,13 @@ var map = {
 		558
 	],
 	"../pages/sales-app/customer-order/customer-order.module": [
-		559
-	],
-	"../pages/sales-app/dealer-list/dealer-list.module": [
 		560
 	],
+	"../pages/sales-app/dealer-list/dealer-list.module": [
+		559
+	],
 	"../pages/sales-app/direct-dealer-list/direct-dealer-list.module": [
-		561
+		575
 	],
 	"../pages/sales-app/distributor-detail/distributor-detail.module": [
 		562
@@ -3808,28 +3761,28 @@ var map = {
 		563
 	],
 	"../pages/sales-app/edit-network/edit-network.module": [
-		588
+		591
 	],
 	"../pages/sales-app/end-checkin/end-checkin.module": [
-		589
+		564
 	],
 	"../pages/sales-app/main-distributor-list/main-distributor-list.module": [
-		564
+		566
 	],
 	"../pages/search/search.module": [
 		565
 	],
 	"../pages/select-registration-type/select-registration-type.module": [
-		566
+		567
 	],
 	"../pages/signup/signup.module": [
-		590
+		592
 	],
 	"../pages/subcategory/subcategory.module": [
-		569
+		579
 	],
 	"../pages/target-list/target-list.module": [
-		567
+		568
 	],
 	"../pages/term-condition/term-condition.module": [
 		570
@@ -3838,16 +3791,16 @@ var map = {
 		571
 	],
 	"../pages/travel-list/travel-list.module": [
-		576
-	],
-	"../pages/wallet-history/wallet-history.module": [
 		573
 	],
+	"../pages/wallet-history/wallet-history.module": [
+		578
+	],
 	"../pages/work-plan/work-plan.module": [
-		574
+		576
 	],
 	"../pages/work-type-modal/work-type-modal.module": [
-		575
+		577
 	]
 };
 function webpackAsyncContext(req) {
@@ -3952,7 +3905,7 @@ var AddLeavePageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_myservice_myservice__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__leave_list_leave_list__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__leave_list_leave_list__ = __webpack_require__(167);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3981,6 +3934,7 @@ var AddLeavePage = /** @class */ (function () {
         this.currentTime = '';
         this.sub_list = [];
         this.today_date = '';
+        this.saveLeaveFlag = false;
     }
     AddLeavePage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad AddLeavePage');
@@ -3991,13 +3945,16 @@ var AddLeavePage = /** @class */ (function () {
     };
     AddLeavePage.prototype.add_leave = function () {
         var _this = this;
-        this.show_loading();
-        this.db.addData({ 'data': this.data }, "leave/add_leave").then(function (response) {
-            console.log(response);
-            _this.presentToast1();
-            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__leave_list_leave_list__["a" /* LeaveListPage */]);
-            _this.loading.dismiss();
-        });
+        if (this.saveLeaveFlag == false) {
+            this.saveLeaveFlag = true;
+            this.show_loading();
+            this.db.addData({ 'data': this.data }, "leave/add_leave").then(function (response) {
+                console.log(response);
+                _this.presentToast1();
+                _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__leave_list_leave_list__["a" /* LeaveListPage */]);
+                _this.loading.dismiss();
+            });
+        }
     };
     AddLeavePage.prototype.presentToast1 = function () {
         var toast1 = this.toastCtrl.create({
@@ -4093,7 +4050,7 @@ var AddLeavePage = /** @class */ (function () {
     };
     AddLeavePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-add-leave',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/add-leave/add-leave.html"*/'<ion-header class="catalogue-header" no-border>\n	<ion-navbar>\n		<ion-title>Apply Leave</ion-title>\n		<!-- <ion-buttons end class="login-btn">\n			<button ion-button>\n				<img class="w30" src="assets/icons/profil-ic-2.svg" alt="">\n			</button>\n		</ion-buttons> -->\n	</ion-navbar>\n</ion-header>\n\n<ion-content>\n	<form #f1="ngForm" (ngSubmit)="f1.valid && add_leave()" autocomplete="off">\n		<div class="edit">\n			<ion-list>\n				<div>\n					<ion-item >\n						<ion-label floating><span>Subject *</span></ion-label>\n						<ion-input type="text" style="height: 28px;" name="subject" [(ngModel)]="data.subject" #subject="ngModel" [ngClass]="{\'is-invalid\':f1.submitted && subject?.invalid}" required></ion-input>\n					</ion-item>\n				\n					<p *ngIf="f1.submitted && subject?.invalid"  class="error-left relative">Subject is Required!</p>\n\n					<ion-item>\n						<ion-label floating><span>Leave Start Date *</span></ion-label>\n						<ion-datetime display-format="MMM DD, YYYY" name="leave_start_date" [(ngModel)]="data.leave_start_date" #leave_start_date="ngModel" [ngClass]="{\'is-invalid\':f1.submitted && leave_start_date?.invalid}" required></ion-datetime>\n					</ion-item>\n\n					<p *ngIf="f1.submitted && leave_start_date?.invalid"  class="error-left relative">Leave Start Date is Required!</p>\n					\n					<ion-item>\n						<ion-label floating><span>Leave End Date *</span></ion-label>\n						<ion-datetime display-format="MMM DD, YYYY" name="leave_end_date" [(ngModel)]="data.leave_end_date" #leave_end_date="ngModel" [ngClass]="{\'is-invalid\':f1.submitted && leave_end_date?.invalid}" required></ion-datetime>\n					</ion-item>\n					\n					<p *ngIf="f1.submitted && leave_end_date?.invalid"  class="error-left relative">Leave End Date is Required!</p>\n					\n					<ion-item>\n						<ion-label floating><span>Description</span></ion-label>\n						<ion-textarea name="description" [(ngModel)]="data.description"></ion-textarea>\n					</ion-item>\n					\n				</div>\n			</ion-list>\n			<div >\n			</div>\n\n\n			<button ion-button block round class="h45 mt15">Save</button>\n		</div>\n\n		\n	</form>\n</ion-content>\n\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/add-leave/add-leave.html"*/,
+            selector: 'page-add-leave',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/add-leave/add-leave.html"*/'<ion-header class="catalogue-header" no-border>\n	<ion-navbar>\n		<ion-title>Apply Leave</ion-title>\n		<!-- <ion-buttons end class="login-btn">\n			<button ion-button>\n				<img class="w30" src="assets/icons/profil-ic-2.svg" alt="">\n			</button>\n		</ion-buttons> -->\n	</ion-navbar>\n</ion-header>\n\n<ion-content>\n	<form #f1="ngForm" (ngSubmit)="f1.valid && add_leave()" autocomplete="off">\n		<div class="edit">\n			<ion-list>\n				<div>\n					<!-- <ion-item >\n						<ion-label floating><span>Subject *</span></ion-label>\n						<ion-input type="text" style="height: 28px;" name="subject" [(ngModel)]="data.subject" #subject="ngModel" [ngClass]="{\'is-invalid\':f1.submitted && subject?.invalid}" required></ion-input>\n					</ion-item> -->\n					\n					<ion-item>\n						<ion-label floating>Select Type</ion-label>\n						<ion-select class="h43" name="subject" [(ngModel)]="data.subject" #subject="ngModel" [ngClass]="{\'is-invalid\':f1.submitted && subject?.invalid}" required>\n							<ion-option value="HEALTH ISSUE">HEALTH ISSUE</ion-option>\n							<ion-option value="APPOINTMENT WITH DOCTOR">APPOINTMENT WITH DOCTOR</ion-option>\n							<ion-option value="FAMILY FUNCTION">FAMILY FUNCTION</ion-option>\n							<ion-option value="MARRIAGE">MARRIAGE</ion-option>\n							<ion-option value="HOLIDAY WITH FAMILY">HOLIDAY WITH FAMILY</ion-option>\n							<ion-option value="OTHERS">OTHERS</ion-option>\n						</ion-select>\n					</ion-item>\n					\n					<p *ngIf="f1.submitted && subject?.invalid"  class="error-left relative">Subject is Required!</p>\n\n					<ion-item *ngIf="data.subject == \'OTHERS\'" class="input-height">\n						<ion-label floating><span>Other Description</span></ion-label>\n						<ion-input type="text" name="otherDescription" [(ngModel)]="data.otherDescription" class=""></ion-input>\n					</ion-item>\n					\n					<ion-item>\n						<ion-label floating><span>Leave Start Date *</span></ion-label>\n						<ion-datetime display-format="MMM DD, YYYY" name="leave_start_date" [(ngModel)]="data.leave_start_date" #leave_start_date="ngModel" [ngClass]="{\'is-invalid\':f1.submitted && leave_start_date?.invalid}" required></ion-datetime>\n					</ion-item>\n					\n					<p *ngIf="f1.submitted && leave_start_date?.invalid"  class="error-left relative">Leave Start Date is Required!</p>\n					\n					<ion-item>\n						<ion-label floating><span>Leave End Date *</span></ion-label>\n						<ion-datetime display-format="MMM DD, YYYY" name="leave_end_date" [(ngModel)]="data.leave_end_date" #leave_end_date="ngModel" [ngClass]="{\'is-invalid\':f1.submitted && leave_end_date?.invalid}" required></ion-datetime>\n					</ion-item>\n					\n					<p *ngIf="f1.submitted && leave_end_date?.invalid"  class="error-left relative">Leave End Date is Required!</p>\n					\n					<ion-item class="textarea-bodr">\n						<ion-label floating><span>Description</span></ion-label>\n						<ion-textarea name="description" [(ngModel)]="data.description"></ion-textarea>\n					</ion-item>\n					\n				</div>\n			</ion-list>\n			<div >\n			</div>\n			\n			\n			<button ion-button block round class="h45 mt15">Save</button>\n		</div>\n		\n		\n	</form>\n</ion-content>\n\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/add-leave/add-leave.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_3__providers_myservice_myservice__["a" /* MyserviceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["LoadingController"]])
     ], AddLeavePage);
@@ -4111,12 +4068,12 @@ var AddLeavePage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__catalouge_catalouge__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__subcategory_subcategory__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__brand_brand__ = __webpack_require__(392);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__product_details_product_details__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__catalouge_catalouge__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__subcategory_subcategory__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__brand_brand__ = __webpack_require__(476);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__product_details_product_details__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_constant_constant__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_searchservice_searchservice__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_searchservice_searchservice__ = __webpack_require__(111);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4202,7 +4159,143 @@ var SearchPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 391:
+/***/ 42:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EnquiryserviceProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__constant_constant__ = __webpack_require__(16);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+// import { HttpClient } from '@angular/common/http';
+
+
+
+
+/*
+  Generated class for the EnquiryserviceProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+var EnquiryserviceProvider = /** @class */ (function () {
+    function EnquiryserviceProvider(http, constant, storage) {
+        this.http = http;
+        this.constant = constant;
+        this.storage = storage;
+    }
+    EnquiryserviceProvider.prototype.getCustomerType = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
+            header.append('Content-Type', 'application/json');
+            _this.http.get(_this.constant.server_url + 'login/getCustomerType', { headers: header }).map(function (res) { return res.json(); })
+                .subscribe(function (res) {
+                console.log(res);
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    EnquiryserviceProvider.prototype.getState = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
+            header.append('Content-Type', 'application/json');
+            _this.http.get(_this.constant.server_url + 'enquiry/all_state', { headers: header }).map(function (res) { return res.json(); })
+                .subscribe(function (res) {
+                console.log(res);
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    EnquiryserviceProvider.prototype.getCity = function (val) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
+            header.append('Content-Type', 'application/json');
+            _this.http.post(_this.constant.server_url + 'enquiry/all_city', JSON.stringify(val), { headers: header }).map(function (res) { return res.json(); })
+                .subscribe(function (res) {
+                console.log(res);
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    EnquiryserviceProvider.prototype.getCity1 = function (val) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
+            header.append('Content-Type', 'application/json');
+            _this.http.post(_this.constant.server_url + 'enquiry/get_city', JSON.stringify(val), { headers: header }).map(function (res) { return res.json(); })
+                .subscribe(function (res) {
+                console.log(res);
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    EnquiryserviceProvider.prototype.get_pincode_city_name = function (val) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
+            header.append('Content-Type', 'application/json');
+            _this.http.post(_this.constant.server_url + 'enquiry/pincode_city_name', JSON.stringify(val), { headers: header }).map(function (res) { return res.json(); })
+                .subscribe(function (res) {
+                console.log(res);
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    EnquiryserviceProvider.prototype.submit_enquiry = function (enquiry) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.storage.get('token').then(function (token) {
+                console.log(token);
+                if (typeof (token) !== 'undefined' && token) {
+                    var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
+                    header.append('Content-Type', 'application/json');
+                    header.append('Authorization', 'Bearer ' + token);
+                    _this.http.post(_this.constant.server_url + 'product/submit_enquiry', JSON.stringify(enquiry), { headers: header }).map(function (res) { return res.json(); })
+                        .subscribe(function (res) {
+                        console.log(res);
+                        resolve(res);
+                    }, function (err) {
+                        reject(err);
+                    });
+                }
+            });
+        });
+    };
+    EnquiryserviceProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_3__constant_constant__["a" /* ConstantProvider */], __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]])
+    ], EnquiryserviceProvider);
+    return EnquiryserviceProvider;
+}());
+
+//# sourceMappingURL=enquiryservice.js.map
+
+/***/ }),
+
+/***/ 475:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4210,7 +4303,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BrandPageModule", function() { return BrandPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__brand__ = __webpack_require__(392);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__brand__ = __webpack_require__(476);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4240,7 +4333,7 @@ var BrandPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 392:
+/***/ 476:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4248,8 +4341,8 @@ var BrandPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_constant_constant__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__products_products__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_searchservice_searchservice__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__products_products__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_searchservice_searchservice__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__search_search__ = __webpack_require__(29);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4323,7 +4416,7 @@ var BrandPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 397:
+/***/ 481:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4390,7 +4483,7 @@ var ProductdetailserviceProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 398:
+/***/ 482:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4398,7 +4491,7 @@ var ProductdetailserviceProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__offer_sub_category_offer_sub_category__ = __webpack_require__(399);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__offer_sub_category_offer_sub_category__ = __webpack_require__(483);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4451,7 +4544,7 @@ var OfferCategoryPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 399:
+/***/ 483:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4459,7 +4552,7 @@ var OfferCategoryPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__offer_product_list_offer_product_list__ = __webpack_require__(400);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__offer_product_list_offer_product_list__ = __webpack_require__(484);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4513,7 +4606,7 @@ var OfferSubCategoryPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 400:
+/***/ 484:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4522,7 +4615,7 @@ var OfferSubCategoryPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_constant_constant__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__product_details_product_details__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__product_details_product_details__ = __webpack_require__(86);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4576,7 +4669,7 @@ var OfferProductListPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 402:
+/***/ 486:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4639,7 +4732,7 @@ var LedgerPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 403:
+/***/ 487:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4647,7 +4740,7 @@ var LedgerPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_cp_order_add_cp_order__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_cp_order_add_cp_order__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__order_detail_order_detail__ = __webpack_require__(62);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4756,7 +4849,7 @@ var CpOrderListPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 404:
+/***/ 488:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4930,143 +5023,7 @@ var CpOrderCartPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 42:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EnquiryserviceProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__constant_constant__ = __webpack_require__(16);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-// import { HttpClient } from '@angular/common/http';
-
-
-
-
-/*
-  Generated class for the EnquiryserviceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
-var EnquiryserviceProvider = /** @class */ (function () {
-    function EnquiryserviceProvider(http, constant, storage) {
-        this.http = http;
-        this.constant = constant;
-        this.storage = storage;
-    }
-    EnquiryserviceProvider.prototype.getCustomerType = function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
-            header.append('Content-Type', 'application/json');
-            _this.http.get(_this.constant.server_url + 'login/getCustomerType', { headers: header }).map(function (res) { return res.json(); })
-                .subscribe(function (res) {
-                console.log(res);
-                resolve(res);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    EnquiryserviceProvider.prototype.getState = function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
-            header.append('Content-Type', 'application/json');
-            _this.http.get(_this.constant.server_url + 'enquiry/all_state', { headers: header }).map(function (res) { return res.json(); })
-                .subscribe(function (res) {
-                console.log(res);
-                resolve(res);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    EnquiryserviceProvider.prototype.getCity = function (val) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
-            header.append('Content-Type', 'application/json');
-            _this.http.post(_this.constant.server_url + 'enquiry/all_city', JSON.stringify(val), { headers: header }).map(function (res) { return res.json(); })
-                .subscribe(function (res) {
-                console.log(res);
-                resolve(res);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    EnquiryserviceProvider.prototype.getCity1 = function (val) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
-            header.append('Content-Type', 'application/json');
-            _this.http.post(_this.constant.server_url + 'enquiry/get_city', JSON.stringify(val), { headers: header }).map(function (res) { return res.json(); })
-                .subscribe(function (res) {
-                console.log(res);
-                resolve(res);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    EnquiryserviceProvider.prototype.get_pincode_city_name = function (val) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
-            header.append('Content-Type', 'application/json');
-            _this.http.post(_this.constant.server_url + 'enquiry/pincode_city_name', JSON.stringify(val), { headers: header }).map(function (res) { return res.json(); })
-                .subscribe(function (res) {
-                console.log(res);
-                resolve(res);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    EnquiryserviceProvider.prototype.submit_enquiry = function (enquiry) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            _this.storage.get('token').then(function (token) {
-                console.log(token);
-                if (typeof (token) !== 'undefined' && token) {
-                    var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
-                    header.append('Content-Type', 'application/json');
-                    header.append('Authorization', 'Bearer ' + token);
-                    _this.http.post(_this.constant.server_url + 'product/submit_enquiry', JSON.stringify(enquiry), { headers: header }).map(function (res) { return res.json(); })
-                        .subscribe(function (res) {
-                        console.log(res);
-                        resolve(res);
-                    }, function (err) {
-                        reject(err);
-                    });
-                }
-            });
-        });
-    };
-    EnquiryserviceProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_3__constant_constant__["a" /* ConstantProvider */], __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]])
-    ], EnquiryserviceProvider);
-    return EnquiryserviceProvider;
-}());
-
-//# sourceMappingURL=enquiryservice.js.map
-
-/***/ }),
-
-/***/ 498:
+/***/ 499:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5121,9 +5078,12 @@ var EndCheckinPage = /** @class */ (function () {
         this.checkin = {};
         this.order_token = [];
         this.brand_assign = [];
+        this.checkInStatus = [];
         this.for_order = [];
-        this.checkin_data = this.navParams.get('data');
-        console.log(this.checkin_data);
+        if (this.navParams.get('data') != null) {
+            this.checkin_data = this.navParams.get('data');
+            console.log(this.checkin_data);
+        }
         this.storage.get('order_details').then(function (order_details) {
             console.log(order_details);
             _this.order_token = order_details;
@@ -5134,9 +5094,10 @@ var EndCheckinPage = /** @class */ (function () {
             }
         });
         this.checkinForm = this.formBuilder.group({
-            // companyName: ['', Validators.compose([Validators.required])]
+            remark: [''],
             description: ['', __WEBPACK_IMPORTED_MODULE_5__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_5__angular_forms__["Validators"].required])]
         });
+        this.getCheckinStatus();
     }
     EndCheckinPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad EndCheckinPage');
@@ -5170,114 +5131,48 @@ var EndCheckinPage = /** @class */ (function () {
     };
     EndCheckinPage.prototype.end_visit = function (checkin_id, description) {
         var _this = this;
-        if (this.order_token) {
-            if (this.checkinForm.invalid) {
-                this.checkinForm.get('description').markAsTouched();
-                return;
-            }
-            this.storage.set('order_item_array', '');
-            this.storage.set('order_item_length', '');
-            this.storage.set('order_details', '');
-            this.order_token = [];
-            var loading = this.loadingCtrl.create({
-                spinner: 'hide',
-                content: "<img src=\"./assets/imgs/gif.svg\" class=\"h15\" />",
-            });
-            console.log(checkin_id);
-            console.log(description);
-            this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(function () {
-                console.log('Request successful');
-                // this.showLoading();
-                var options = { maximumAge: 10000, timeout: 15000, enableHighAccuracy: true };
-                _this.geolocation.getCurrentPosition(options).then(function (resp) {
-                    console.log(resp.coords.latitude);
-                    console.log(resp.coords.longitude);
-                    // this.saveOrderHandler(resp.coords);
-                    var lat = resp.coords.latitude;
-                    var lng = resp.coords.longitude;
-                    _this.service.addData({ 'lat': lat, 'lng': lng, 'checkin_id': checkin_id, 'checkin': description }, 'Checkin/visit_end').then(function (result) {
-                        console.log(result);
-                        _this.for_order = result['for_order'];
-                        _this.brand_assign = result['brand_assign'];
-                        if (result['msg'] == 'success') {
-                            loading.dismiss();
-                            _this.presentToast();
-                            _this.presentAlert();
-                        }
-                    });
-                }).catch(function (error) {
-                    console.log('Error getting location', error);
-                    // this.saveOrderHandler({});
-                    _this.service.addData({ 'checkin_id': checkin_id, 'checkin': description }, 'Checkin/visit_end').then(function (result) {
-                        console.log(result);
-                        _this.for_order = result['for_order'];
-                        _this.brand_assign = result['brand_assign'];
-                        if (result['msg'] == 'success') {
-                            loading.dismiss();
-                            // this.navCtrl.push(CheckinListPage);
-                            _this.presentToast();
-                            _this.presentAlert();
-                        }
-                    });
-                });
-            }, function (error) {
-                console.log('Error requesting location permissions', error);
-                loading.dismiss();
-            });
-            loading.present();
+        if (this.checkinForm.invalid) {
+            this.checkinForm.get('description').markAsTouched();
+            return;
         }
-        if (this.order_token == '' || this.order_token == null) {
-            if (this.checkinForm.invalid) {
-                this.checkinForm.get('description').markAsTouched();
-                return;
-            }
-            var loading = this.loadingCtrl.create({
-                spinner: 'hide',
-                content: "<img src=\"./assets/imgs/gif.svg\" class=\"h15\" />",
-            });
-            console.log(checkin_id);
-            console.log(description);
-            this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(function () {
-                console.log('Request successful');
-                // this.showLoading();
-                var options = { maximumAge: 10000, timeout: 15000, enableHighAccuracy: true };
-                _this.geolocation.getCurrentPosition(options).then(function (resp) {
-                    console.log(resp.coords.latitude);
-                    console.log(resp.coords.longitude);
-                    // this.saveOrderHandler(resp.coords);
-                    var lat = resp.coords.latitude;
-                    var lng = resp.coords.longitude;
-                    _this.service.addData({ 'lat': lat, 'lng': lng, 'checkin_id': checkin_id, 'checkin': description }, 'Checkin/visit_end').then(function (result) {
-                        console.log(result);
-                        _this.for_order = result['for_order'];
-                        _this.brand_assign = result['brand_assign'];
-                        if (result['msg'] == 'success') {
-                            loading.dismiss();
-                            _this.presentToast();
-                            _this.presentAlert();
-                        }
-                    });
-                }).catch(function (error) {
-                    console.log('Error getting location', error);
-                    // this.saveOrderHandler({});
-                    _this.service.addData({ 'checkin_id': checkin_id, 'checkin': description }, 'Checkin/visit_end').then(function (result) {
-                        console.log(result);
-                        _this.for_order = result['for_order'];
-                        _this.brand_assign = result['brand_assign'];
-                        if (result['msg'] == 'success') {
-                            loading.dismiss();
-                            // this.navCtrl.push(CheckinListPage);
-                            _this.presentToast();
-                            _this.presentAlert();
-                        }
-                    });
+        this.storage.set('order_item_array', '');
+        this.storage.set('order_item_length', '');
+        this.storage.set('order_details', '');
+        this.order_token = [];
+        var loading = this.loadingCtrl.create({
+            spinner: 'hide',
+            content: "<img src=\"./assets/imgs/gif.svg\" class=\"h15\" />",
+        });
+        loading.present();
+        this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(function () {
+            console.log('Request successful');
+            var options = { maximumAge: 10000, timeout: 15000, enableHighAccuracy: false };
+            _this.geolocation.getCurrentPosition(options).then(function (resp) {
+                var lat = resp.coords.latitude;
+                var lng = resp.coords.longitude;
+                _this.service.addData({ 'lat': lat, 'lng': lng, 'checkin_id': checkin_id, 'checkin': description }, 'Checkin/visit_end').then(function (result) {
+                    console.log(result);
+                    loading.dismiss();
+                    _this.for_order = result['for_order'];
+                    _this.brand_assign = result['brand_assign'];
+                    _this.presentToast();
+                    _this.presentAlert();
                 });
-            }, function (error) {
-                console.log('Error requesting location permissions', error);
-                loading.dismiss();
+            }).catch(function (error) {
+                console.log('Error getting location', error);
+                _this.service.addData({ 'checkin_id': checkin_id, 'checkin': description }, 'Checkin/visit_end').then(function (result) {
+                    console.log(result);
+                    loading.dismiss();
+                    _this.for_order = result['for_order'];
+                    _this.brand_assign = result['brand_assign'];
+                    _this.presentToast();
+                    _this.presentAlert();
+                });
             });
-            loading.present();
-        }
+        }, function (error) {
+            console.log('Error requesting location permissions', error);
+            loading.dismiss();
+        });
     };
     EndCheckinPage.prototype.presentAlert = function () {
         var _this = this;
@@ -5307,9 +5202,16 @@ var EndCheckinPage = /** @class */ (function () {
         });
         alert.present();
     };
+    EndCheckinPage.prototype.getCheckinStatus = function () {
+        var _this = this;
+        this.service.addData('', 'Checkin/getCheckinStatus').then(function (result) {
+            console.log(result);
+            _this.checkInStatus = result;
+        });
+    };
     EndCheckinPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-end-checkin',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/end-checkin/end-checkin.html"*/'<ion-header>\n    \n    <ion-navbar>\n        <ion-title>End Checkin</ion-title>\n    </ion-navbar>\n    \n</ion-header>\n\n\n<ion-content>\n    \n    <div class="prlist">\n        <div class="box light-red-bg relative" *ngIf="checkin_data.other_name == \'\'">\n            <h1 class="font14 mb10">{{checkin_data.dr_name}}</h1>\n            <div class="heading border-none">\n                <div class="dist-name dflex">\n                    <div class="first-leter w50">{{checkin_data.dr_name | slice:0:1}}</div>\n                    <div class="name-number">\n                        <p>{{checkin_data.name}}</p>\n                        \n                        <div class="text-with-ic dflex mb0" *ngIf="checkin_data.dr_mobile_no">\n                            <i class="material-icons text-relat-icon">call</i>\n                            <p>{{checkin_data.dr_mobile_no}}</p>\n                        </div>\n                        <div class="text-with-ic dflex mb0" *ngIf="!checkin_data.dr_mobile_no">\n                            <i class="material-icons text-relat-icon">call</i>\n                            <p>N A</p>\n                        </div>\n                        \n                        <!-- <div class="text-with-ic dflex mb0">\n                            <i class="material-icons text-relat-icon">forum</i>\n                            <p>{{distributor_detail.whatsapp_no}}</p>\n                        </div> -->\n                        \n                        <div class="text-with-ic dflex mb0" *ngIf="checkin_data.email">\n                            <i class="material-icons text-relat-icon">email</i>\n                            <a class="f14 underline mt8">{{checkin_data.email}}</a>\n                        </div>\n                        <div class="text-with-ic dflex mb0" *ngIf="!checkin_data.email">\n                            <i class="material-icons text-relat-icon">email</i>\n                            <a class="f14 underline mt8">N A</a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class="detail">\n                <p class="mt10"><strong>ADDRESS</strong></p>\n                <p class="f13" *ngIf="checkin_data.district || checkin_data.state || checkin_data.pincode">{{checkin_data.address | titlecase}} {{checkin_data.city}} {{checkin_data.district}} {{checkin_data.state}} {{checkin_data.pincode}}</p>\n                <p class="f13" *ngIf="!checkin_data.district && !checkin_data.state && !checkin_data.pincode">N A</p>\n                <div class="cs-table-list" style="margin: 3px -10px;">\n                    \n                </div>\n            </div>\n        </div>\n\n        <div class="box light-red-bg relative" *ngIf="checkin_data.other_name != \'\'">\n            <div class="heading border-none">\n                <div class="dist-name dflex">\n                    <div class="first-leter w50">O</div>\n                    <div class="name-number">\n                        <p>{{checkin_data.other_name}}</p>\n                        \n                        <div class="text-with-ic dflex mb0" *ngIf="checkin_data.mobile">\n                            <i class="material-icons text-relat-icon">call</i>\n                            <p>{{checkin_data.mobile}}</p>\n                        </div>\n                        <div class="text-with-ic dflex mb0" *ngIf="!checkin_data.mobile">\n                            <i class="material-icons text-relat-icon">call</i>\n                            <p>N A</p>\n                        </div>\n                        \n                      \n                    </div>\n                </div>\n            </div>\n            \n        </div>\n    </div>\n    \n    \n    <form [formGroup]="checkinForm" novalidate (ngSubmit)="end_visit(checkin_data.checkin_id,checkin.description)"  padding>\n        \n        <div class="vstime">\n            <p>Start Time</p>\n            <p>{{checkin_data.visit_start | date: \'h:mm a\'}}</p>\n        </div>\n        \n        \n        <div class="csnninput">\n            <h1>Description</h1>\n            <textarea formControlName="description" [(ngModel)]="checkin.description"></textarea>\n				<p *ngIf="checkinForm.get(\'description\').hasError(\'required\') && checkinForm.get(\'description\').touched"  class="error-left relative">Description is required!</p>\n\n        </div>\n        \n        <div class="refbtn mt40">\n            <button color="theme"  ion-button block round >End Visit</button>\n        </div>  \n        \n    </form>\n    \n</ion-content>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/end-checkin/end-checkin.html"*/,
+            selector: 'page-end-checkin',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/end-checkin/end-checkin.html"*/'<ion-header>\n    \n    <ion-navbar>\n        <ion-title>End Checkin</ion-title>\n    </ion-navbar>\n    \n</ion-header>\n\n\n<ion-content>\n    \n    <div class="prlist">\n        <div class="box light-red-bg relative" *ngIf="checkin_data.other_name == \'\'">\n            <h1 class="font14 mb10">{{checkin_data.dr_name}}</h1>\n            <div class="heading border-none">\n                <div class="dist-name dflex">\n                    <div class="first-leter w50">{{checkin_data.dr_name | slice:0:1}}</div>\n                    <div class="name-number">\n                        <p>{{checkin_data.name}}</p>\n                        \n                        <div class="text-with-ic dflex mb0" *ngIf="checkin_data.dr_mobile_no">\n                            <i class="material-icons text-relat-icon">call</i>\n                            <p>{{checkin_data.dr_mobile_no}}</p>\n                        </div>\n                        <div class="text-with-ic dflex mb0" *ngIf="!checkin_data.dr_mobile_no">\n                            <i class="material-icons text-relat-icon">call</i>\n                            <p>N A</p>\n                        </div>\n                        \n                        <!-- <div class="text-with-ic dflex mb0">\n                            <i class="material-icons text-relat-icon">forum</i>\n                            <p>{{distributor_detail.whatsapp_no}}</p>\n                        </div> -->\n                        \n                        <div class="text-with-ic dflex mb0" *ngIf="checkin_data.email">\n                            <i class="material-icons text-relat-icon">email</i>\n                            <a class="f14 underline mt8">{{checkin_data.email}}</a>\n                        </div>\n                        <div class="text-with-ic dflex mb0" *ngIf="!checkin_data.email">\n                            <i class="material-icons text-relat-icon">email</i>\n                            <a class="f14 underline mt8">N A</a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class="detail">\n                <p class="mt10"><strong>ADDRESS</strong></p>\n                <p class="f13" *ngIf="checkin_data.district || checkin_data.state || checkin_data.pincode">{{checkin_data.address | titlecase}} {{checkin_data.city}} {{checkin_data.district}} {{checkin_data.state}} {{checkin_data.pincode}}</p>\n                <p class="f13" *ngIf="!checkin_data.district && !checkin_data.state && !checkin_data.pincode">N A</p>\n                <div class="cs-table-list" style="margin: 3px -10px;">\n                    \n                </div>\n            </div>\n        </div>\n        \n        <div class="box light-red-bg relative" *ngIf="checkin_data.other_name != \'\'">\n            <div class="heading border-none">\n                <div class="dist-name dflex">\n                    <div class="first-leter w50">O</div>\n                    <div class="name-number">\n                        <p>{{checkin_data.other_name}}</p>\n                        \n                        <div class="text-with-ic dflex mb0" *ngIf="checkin_data.mobile">\n                            <i class="material-icons text-relat-icon">call</i>\n                            <p>{{checkin_data.mobile}}</p>\n                        </div>\n                        <div class="text-with-ic dflex mb0" *ngIf="!checkin_data.mobile">\n                            <i class="material-icons text-relat-icon">call</i>\n                            <p>N A</p>\n                        </div>\n                        \n                        \n                    </div>\n                </div>\n            </div>\n            \n        </div>\n    </div>\n    \n    \n    <form [formGroup]="checkinForm" novalidate (ngSubmit)="end_visit(checkin_data.checkin_id,checkin.description)"  padding>\n        \n        <div class="vstime">\n            <p>Start Time</p>\n            <p>{{checkin_data.visit_start | amLocal | amDateFormat: \'h:mm a\'}}</p>\n        </div>\n        \n        <div class="edit m0">\n            <ion-list>\n                <ion-item>\n                    <ion-label floating>Select Type</ion-label>\n                    <ion-select class="h43" formControlName="description" [(ngModel)]="checkin.description">\n                        <ion-option *ngFor="let val of checkInStatus" value="{{val.checkInStatus}}">{{val.checkInStatus}}</ion-option>\n                        <ion-option value="OTHERS">OTHERS</ion-option>\n                    </ion-select>\n                </ion-item>\n            </ion-list>\n        </div>\n        \n        \n        <p *ngIf="checkinForm.get(\'description\').hasError(\'required\') && checkinForm.get(\'description\').touched" class="error-left relative">Description is required!</p>\n        \n        \n        <div class="csnninput" *ngIf="checkin.description == \'OTHERS\'">\n            <h1>Remark</h1>\n            <textarea formControlName="remark" [(ngModel)]="checkin.remark"></textarea>\n            <p *ngIf="checkinForm.get(\'remark\').hasError(\'required\') && checkinForm.get(\'remark\').touched" class="error-left relative">Remark is required!</p>\n        </div>\n        \n        <div class="refbtn mt40">\n            <button color="theme" ion-button block round >End Visit</button>\n        </div>  \n        \n    </form>\n    \n</ion-content>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/end-checkin/end-checkin.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__["a" /* MyserviceProvider */], __WEBPACK_IMPORTED_MODULE_4__ionic_native_geolocation__["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["LoadingController"], __WEBPACK_IMPORTED_MODULE_5__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_6__ionic_native_location_accuracy__["a" /* LocationAccuracy */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */]])
     ], EndCheckinPage);
@@ -5320,14 +5222,14 @@ var EndCheckinPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 499:
+/***/ 500:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CustomerCheckinPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkin_detail_checkin_detail__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkin_detail_checkin_detail__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_myservice_myservice__ = __webpack_require__(7);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5383,7 +5285,7 @@ var CustomerCheckinPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 500:
+/***/ 501:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5458,7 +5360,7 @@ var CustomerOrderPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 501:
+/***/ 502:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5728,7 +5630,7 @@ var EditNetworkPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 503:
+/***/ 504:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5854,7 +5756,7 @@ var WorkTypeModalPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 505:
+/***/ 506:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5865,7 +5767,7 @@ var WorkTypeModalPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__order_list_order_list__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__order_detail_order_detail__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__order_type_modal_order_type_modal__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__order_type_modal_order_type_modal__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_location_accuracy__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_geolocation__ = __webpack_require__(43);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6078,14 +5980,17 @@ var CartDetailPage = /** @class */ (function () {
         this.order_data.order_discount = parseFloat(this.order_data.order_discount) - parseFloat(this.order_item[index].discount);
         this.order_data.order_item = parseFloat(this.order_data.order_item) - parseFloat(this.order_item[index].qty);
         this.order_data.sub_total = parseFloat(this.order_data.sub_total) - parseFloat(this.order_item[index].sub_total);
+        this.order_data.order_total = this.order_data.order_total.toFixed(2);
+        this.order_data.sub_total = this.order_data.sub_total.toFixed(2);
+        this.order_data.order_item = this.order_data.order_item.toFixed(2);
+        this.order_data.order_gst = this.order_data.order_gst.toFixed(2);
+        this.order_data.order_discount = this.order_data.order_discount.toFixed(2);
         this.storage.set('order_details', this.order_data);
         this.order_item.splice(index, 1);
         this.storage.set('order_item_array', this.order_item);
         console.log(this.order_item);
         this.presentToast1();
-        if (this.order_item.length) {
-            this.test();
-        }
+        this.test();
     };
     CartDetailPage.prototype.lodingPersent = function () {
         this.loading = this.loadingCtrl.create({
@@ -6191,7 +6096,7 @@ var CartDetailPage = /** @class */ (function () {
     };
     CartDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-cart-detail',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/cart-detail/cart-detail.html"*/'<ion-header>\n    \n    <ion-navbar>\n        <ion-title>Order Summary {{order_data.order_id}}</ion-title>\n    </ion-navbar>\n    \n</ion-header>\n\n\n<ion-content>\n    <div class="stable">\n        <div class="head-table">\n            <table>\n                <tr>\n                    <th>Brand Name</th>\n                    <th class="text-center">Qty.</th>\n                    <th class="text-right">Amount</th>\n                </tr>\n            </table>\n        </div>\n        \n        <div class="body-table">\n            <table>\n                <tr *ngFor="let value of temp_arr"> \n                    <td>{{value.brand}}</td>\n                    <td class="text-center">{{value.qty}}</td>\n                    <td class="text-right">&#x20B9; {{value.amount | number:\'1.2-2\'}}</td>\n                </tr>\n                <!-- <tr>\n                    <td>PEGASUS readers</td>\n                    <td class="text-center">105</td>\n                    <td class="text-right">&#x20B9; 22950</td>\n                </tr>\n                <tr>\n                    <td>PEGASUS readers</td>\n                    <td class="text-center">105</td>\n                    <td class="text-right">&#x20B9; 22950</td>\n                </tr> -->\n            </table>\n        </div>\n    </div>\n    <div class="sngtable">\n        <table>\n            <tr *ngIf="!order_data.order_id">\n                <td>Cash Discount (%)</td>\n                <th><input name="cd" class="small-input" [(ngModel)]="cart_form.cd" (input)="cal_cash_discount()"></th>\n            </tr>\n            <tr>\n                <td>Subtotal</td>\n                <th>&#x20B9; {{order_data.sub_total}}</th>\n            </tr>\n            <tr *ngIf="order_data.order_discount != 0" >\n                <td>Discount</td>\n                <th>&#x20B9; {{order_data.order_discount}}</th>\n            </tr>\n            <!-- <tr *ngIf="order_data.cd_percentage">\n                <td>Cash Discount</td>\n                <th>&#x20B9; {{order_data.cd_amount}}</th>\n            </tr> -->\n            <tr *ngIf="order_data.order_gst != 0">\n                <td>GST</td>\n                <th>&#x20B9; {{order_data.order_gst}}</th>\n            </tr>\n            <tr>\n                <th class="text-left">Net Amount</th>\n                <th>&#x20B9; {{order_data.order_total}}</th>\n            </tr>\n        </table>\n    </div>\n\n    <div class="csnninput pt0" padding>\n        <h1>Remark</h1>\n        <textarea name="remark" [(ngModel)]="order.remark"></textarea>\n\n    </div>\n\n\n\n    \n    <div class="sticky">\n        <!-- <div class="pl-orde pt0 pb0" *ngIf="order_data.order_gst != 0 && order_data.order_discount != 0 && order_data.order_id == undefined">\n            <button (click)="place_order()">Place Order</button> \n        </div>-->\n\n        <div class="pl-orde pt0 pb0" *ngIf="order_data.type != \'3\' && !order_data.order_id">\n            <button (click)="place_order()">Place Order</button>\n        </div>\n\n        <div class="pl-orde pt0 pb0" *ngIf="order_data.type == \'3\' && !order_data.order_id">\n            <button (click)="place_order_dealer()">Place Order</button>\n        </div>\n\n        <div class="pl-orde pt0 pb0" *ngIf="order_data.order_id">\n            <button (click)="addOrderItem()">Add Item</button>\n        </div>\n        \n        <div class="pl-orde1" *ngIf="order_data.order_id == undefined">\n            <button (click)="delete_order()">Remove Order</button>\n        </div>\n        \n        <div class="cs-search">\n            <ion-searchbar (ionInput)="getItems()" name="type" [(ngModel)]="search.type"></ion-searchbar>\n        </div>\n    </div>\n    \n    \n    <div class="list-outer ordlist">\n        \n        <div class="list-inner" *ngFor="let data of order_item;let i = index;">\n            <div style="padding: 0px 16px;">\n                <div class="min-heading">\n                    <div class="cs-l">\n                        <h2>{{data.product_name | titlecase}}</h2>\n                    </div>\n                    <div class="cs-r" (click)="removeFromCart(i)">\n                        <p>DELETE</p>\n                    </div>\n                </div>\n                \n                <div class="data-table">\n                    <table>\n                        <tr *ngIf="data.cat_no != \'\'">\n                            <th>CAT No.</th>\n                            <td>{{data.cat_no}}</td>\n                        </tr>\n                        <tr *ngIf="data.brand != \'\'">\n                            <th>Brand</th>\n                            <td>{{data.brand | titlecase}}</td>\n                        </tr>\n                        <tr>\n                            <th>Category</th>\n                            <td>{{data.category | titlecase}}</td>\n                        </tr>\n                        <tr *ngIf="data.sub_category != \'\'">\n                            <th>Sub Category</th>\n                            <td>{{data.sub_category | titlecase}}</td>\n                        </tr>\n                        <tr *ngIf="data.color != \'\'">\n                            <th>Color</th>\n                            <td>{{data.color | titlecase}}</td>\n                        </tr>\n                    </table>\n                </div>\n                \n                \n                <div class="oneinfo">\n                    <div class="figure">\n                        <p>Qty</p>\n                        <p>{{data.qty}}</p>\n                    </div>\n                    <div class="figure" *ngIf="order_data.order_gst != 0 && order_data.order_discount != 0">\n                        <p>Discount</p>\n                        <p>&#x20B9; {{data.discount}}</p>\n                    </div>\n                    <div class="figure">\n                        <p>Amount</p>\n                        <p>&#x20B9; {{data.amount |number:\'1.2-2\'}}</p>\n                    </div>\n                </div>\n            </div>\n        </div>\n        \n        \n    </div>\n    \n</ion-content>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/cart-detail/cart-detail.html"*/,
+            selector: 'page-cart-detail',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/cart-detail/cart-detail.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>Order Summary {{order_data.order_id}}</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <div class="stable">\n        <div class="head-table">\n            <table>\n                <tr>\n                    <th>Brand Name</th>\n                    <th class="text-center">Qty.</th>\n                    <th class="text-right">Amount</th>\n                </tr>\n            </table>\n        </div>\n        \n        <div class="body-table">\n            <table>\n                <tr *ngFor="let value of temp_arr"> \n                    <td>{{value.brand}}</td>\n                    <td class="text-center">{{value.qty}}</td>\n                    <td class="text-right">&#x20B9; {{value.amount | number:\'1.2-2\'}}</td>\n                </tr>\n            </table>\n        </div>\n    </div>\n\n    <div class="sngtable">\n        <table>\n            <tr *ngIf="!order_data.order_id">\n                <td>Cash Discount (%)</td>\n                <th><input type="tel" name="cd" class="small-input" [(ngModel)]="cart_form.cd" (input)="cal_cash_discount()"></th>\n            </tr>\n            <tr>\n                <td>Subtotal</td>\n                <th>&#x20B9; {{order_data.sub_total}}</th>\n            </tr>\n            <tr *ngIf="order_data.order_discount != 0" >\n                <td>Discount</td>\n                <th>&#x20B9; {{order_data.order_discount}}</th>\n            </tr>\n            <!-- <tr *ngIf="order_data.cd_percentage">\n                <td>Cash Discount</td>\n                <th>&#x20B9; {{order_data.cd_amount}}</th>\n            </tr> -->\n            <tr *ngIf="order_data.order_gst != 0">\n                <td>GST</td>\n                <th>&#x20B9; {{order_data.order_gst}}</th>\n            </tr>\n            <tr>\n                <th class="text-left">Net Amount</th>\n                <th>&#x20B9; {{order_data.order_total}}</th>\n            </tr>\n        </table>\n    </div>\n\n    <div class="csnninput pt0" padding>\n        <h1>Remark</h1>\n        <textarea name="remark" [(ngModel)]="order.remark"></textarea>\n    </div>\n    \n    <div class="sticky">\n    \n        <div class="pl-orde pt0 pb0" *ngIf="order_data.type != \'3\' && !order_data.order_id">\n            <button (click)="place_order()">Place Order</button>\n        </div>\n\n        <div class="pl-orde pt0 pb0" *ngIf="order_data.type == \'3\' && !order_data.order_id">\n            <button (click)="place_order_dealer()">Place Order</button>\n        </div>\n\n        <div class="pl-orde pt0 pb0" *ngIf="order_data.order_id">\n            <button (click)="addOrderItem()">Add Item</button>\n        </div>\n        \n        <div class="pl-orde1" *ngIf="order_data.order_id == undefined">\n            <button (click)="delete_order()">Remove Order</button>\n        </div>\n        \n        <div class="cs-search">\n            <ion-searchbar (ionInput)="getItems()" name="type" [(ngModel)]="search.type"></ion-searchbar>\n        </div>\n    </div>\n    \n    \n    <div class="list-outer ordlist">\n        \n        <div class="list-inner" *ngFor="let data of order_item;let i = index;">\n            <div style="padding: 0px 16px;">\n                <div class="min-heading">\n                    <div class="cs-l">\n                        <h2>{{data.product_name | titlecase}}</h2>\n                    </div>\n                    <div class="cs-r" (click)="removeFromCart(i)">\n                        <p>DELETE</p>\n                    </div>\n                </div>\n                \n                <div class="data-table">\n                    <table>\n                        <tr *ngIf="data.cat_no != \'\'">\n                            <th>CAT No.</th>\n                            <td>{{data.cat_no}}</td>\n                        </tr>\n                        <tr *ngIf="data.brand != \'\'">\n                            <th>Brand</th>\n                            <td>{{data.brand | titlecase}}</td>\n                        </tr>\n                        <tr>\n                            <th>Category</th>\n                            <td>{{data.category | titlecase}}</td>\n                        </tr>\n                        <tr *ngIf="data.sub_category != \'\'">\n                            <th>Sub Category</th>\n                            <td>{{data.sub_category | titlecase}}</td>\n                        </tr>\n                        <tr *ngIf="data.color != \'\'">\n                            <th>Color</th>\n                            <td>{{data.color | titlecase}}</td>\n                        </tr>\n                    </table>\n                </div>\n                \n                \n                <div class="oneinfo">\n                    <div class="figure">\n                        <p>Qty</p>\n                        <p>{{data.qty}}</p>\n                    </div>\n                    <div class="figure" *ngIf="order_data.order_gst != 0 && order_data.order_discount != 0">\n                        <p>Discount</p>\n                        <p>&#x20B9; {{data.discount}}</p>\n                    </div>\n                    <div class="figure">\n                        <p>Amount</p>\n                        <p>&#x20B9; {{data.amount |number:\'1.2-2\'}}</p>\n                    </div>\n                </div>\n            </div>\n        </div>\n        \n        \n    </div>\n    \n</ion-content>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/cart-detail/cart-detail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__["a" /* MyserviceProvider */], __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["LoadingController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"], __WEBPACK_IMPORTED_MODULE_7__ionic_native_location_accuracy__["a" /* LocationAccuracy */], __WEBPACK_IMPORTED_MODULE_8__ionic_native_geolocation__["a" /* Geolocation */]])
     ], CartDetailPage);
@@ -6202,7 +6107,7 @@ var CartDetailPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 506:
+/***/ 507:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6267,7 +6172,7 @@ var CpDiscountPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 507:
+/***/ 508:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6275,7 +6180,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CatalougePageModule", function() { return CatalougePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__catalouge__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__catalouge__ = __webpack_require__(85);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6305,7 +6210,7 @@ var CatalougePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 508:
+/***/ 509:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6313,7 +6218,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CpDiscountPageModule", function() { return CpDiscountPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__cp_discount__ = __webpack_require__(506);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__cp_discount__ = __webpack_require__(507);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6343,44 +6248,6 @@ var CpDiscountPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 509:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CpOrderCartPageModule", function() { return CpOrderCartPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__cp_order_cart__ = __webpack_require__(404);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var CpOrderCartPageModule = /** @class */ (function () {
-    function CpOrderCartPageModule() {
-    }
-    CpOrderCartPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__cp_order_cart__["a" /* CpOrderCartPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__cp_order_cart__["a" /* CpOrderCartPage */]),
-            ],
-        })
-    ], CpOrderCartPageModule);
-    return CpOrderCartPageModule;
-}());
-
-//# sourceMappingURL=cp-order-cart.module.js.map
-
-/***/ }),
-
 /***/ 510:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6389,7 +6256,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CpOrderListPageModule", function() { return CpOrderListPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__cp_order_list__ = __webpack_require__(403);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__cp_order_list__ = __webpack_require__(487);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6427,7 +6294,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LedgerPageModule", function() { return LedgerPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ledger__ = __webpack_require__(402);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ledger__ = __webpack_require__(486);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6565,10 +6432,12 @@ var DealerSurveyListPage = /** @class */ (function () {
         this.limit = 0;
         this.flag = '';
         this.delaer_survey_list = [];
-        this.getDealerSurveyList();
     }
     DealerSurveyListPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad DealerSurveyListPage');
+    };
+    DealerSurveyListPage.prototype.ionViewWillEnter = function () {
+        this.getDealerSurveyList();
     };
     DealerSurveyListPage.prototype.getDealerSurveyList = function () {
         var _this = this;
@@ -6576,6 +6445,7 @@ var DealerSurveyListPage = /** @class */ (function () {
             spinner: 'hide',
             content: "<img src=\"./assets/imgs/gif.svg\" class=\"h15\" />",
         });
+        loading.present();
         this.service.addData({ 'limit': this.limit, 'company_name': this.search }, 'Distributor/dealer_survey_list').then(function (result) {
             console.log(result);
             _this.delaer_survey_list = result;
@@ -6583,8 +6453,9 @@ var DealerSurveyListPage = /** @class */ (function () {
             if (_this.delaer_survey_list.length == 0) {
                 _this.load_data = "1";
             }
+        }).catch(function (error) {
+            loading.dismiss();
         });
-        loading.present();
     };
     DealerSurveyListPage.prototype.loadData = function (infiniteScroll) {
         var _this = this;
@@ -6699,9 +6570,9 @@ var DealerSurveyPage = /** @class */ (function () {
             email: [''],
             mobile: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].minLength(10), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].maxLength(10)])],
             whatsapp: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].minLength(10), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].maxLength(10)])],
-            product_rating: [''],
-            demonstration_response: [''],
-            order: [''],
+            product_rating: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
+            demonstration_response: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
+            order: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
             remark: [''],
             distributor_name: [''],
             distributor_ref: [''],
@@ -6711,6 +6582,8 @@ var DealerSurveyPage = /** @class */ (function () {
             districtName: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
             pincode: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].minLength(6), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].maxLength(6)])],
             city: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
+            response: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
+            pearlProduct: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["Validators"].required])],
         });
         this.getState();
     }
@@ -6735,6 +6608,9 @@ var DealerSurveyPage = /** @class */ (function () {
     };
     DealerSurveyPage.prototype.getDistrict = function (state) {
         var _this = this;
+        this.data.district = '';
+        this.data.city = '';
+        this.city_list = [];
         console.log(state);
         var loading = this.loadingCtrl.create({
             spinner: 'hide',
@@ -6771,6 +6647,7 @@ var DealerSurveyPage = /** @class */ (function () {
     };
     DealerSurveyPage.prototype.getCity = function (state, district) {
         var _this = this;
+        this.data.city = '';
         console.log(state);
         console.log(district);
         var loading = this.loadingCtrl.create({
@@ -6838,7 +6715,6 @@ var DealerSurveyPage = /** @class */ (function () {
     DealerSurveyPage.prototype.submit = function () {
         var _this = this;
         console.log(this.data);
-        this.lodingPersent();
         if (this.validateForm.invalid) {
             this.validateForm.get('companyName').markAsTouched();
             this.validateForm.get('name').markAsTouched();
@@ -6848,30 +6724,39 @@ var DealerSurveyPage = /** @class */ (function () {
             this.validateForm.get('pincode').markAsTouched();
             this.validateForm.get('city').markAsTouched();
             this.validateForm.get('address').markAsTouched();
-            // this.validateForm.get('email').markAsTouched();
+            this.validateForm.get('response').markAsTouched();
+            this.validateForm.get('product_rating').markAsTouched();
+            this.validateForm.get('demonstration_response').markAsTouched();
+            this.validateForm.get('pearlProduct').markAsTouched();
+            this.validateForm.get('order').markAsTouched();
             return;
         }
         this.data.state = this.data.state.state_name;
         this.data.district = this.data.district.district_name;
         this.data.city = this.data.city.city;
         if (this.submit_function == false) {
+            this.lodingPersent();
             this.submit_function = true;
             if (this.dr_id) {
                 this.serve.addData({ 'data': this.data }, "Distributor/update_dealer_survey").then(function (response) {
                     console.log(response);
+                    _this.loading.dismiss();
                     _this.navCtrl.pop();
+                }).catch(function (error) {
+                    _this.loading.dismiss();
                 });
-                this.loading.dismiss();
             }
             else {
                 this.serve.addData({ 'survey_data': this.data }, "Distributor/add_dealer_survey").then(function (response) {
                     console.log(response);
+                    _this.loading.dismiss();
                     if (response['msg'] == 'success') {
                         _this.navCtrl.pop();
                         _this.presentToast1();
                     }
+                }).catch(function (error) {
+                    _this.loading.dismiss();
                 });
-                this.loading.dismiss();
             }
         }
     };
@@ -6896,7 +6781,7 @@ var DealerSurveyPage = /** @class */ (function () {
     ], DealerSurveyPage.prototype, "navBar", void 0);
     DealerSurveyPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-dealer-survey',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/dealer-survey/dealer-survey.html"*/'<ion-header>    \n    <ion-navbar>\n        <ion-title>\n            <h1>Add Dealer Survey</h1>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>       \n    <form [formGroup]="validateForm">\n        <div class="edit">\n            \n            <ion-list>\n                <div>    \n                    <ion-item >\n                        <ion-label floating><span>Company Name</span></ion-label>\n                        <ion-input type="text" formControlName="companyName" [(ngModel)]="data.company_name" ></ion-input>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'companyName\').hasError(\'required\') && validateForm.get(\'companyName\').touched" class="error-left relative">Company Name is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Contact Person Name</span></ion-label>\n                        <ion-input type="text" formControlName="name" [(ngModel)]="data.name" required></ion-input>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'name\').hasError(\'required\') && validateForm.get(\'name\').touched" class="error-left relative">Name is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Mobile No</span></ion-label>\n                        <ion-input type="tel" minlength="10" maxlength="10" formControlName="mobile"  [(ngModel)]="data.mobile" required></ion-input>\n                    </ion-item>\n                    \n                    <p *ngIf="validateForm.get(\'mobile\').hasError(\'required\') && validateForm.get(\'mobile\').touched"  class="error-left relative">Mobile is required!</p>\n                    \n                    <p *ngIf="(validateForm.get(\'mobile\').hasError(\'minlength\') || validateForm.get(\'mobile\').hasError(\'maxlength\')) && validateForm.get(\'mobile\').touched"  class="error-left relative">Mobile must be 10 digit!</p>\n                    \n                    <ion-item class="whtapp">\n                        <ion-label floating><span>WhatsApp No</span></ion-label>\n                        <ion-input type="tel"  minlength="10" maxlength="10"  formControlName="whatsapp"  [(ngModel)]="data.whatsapp" ></ion-input>\n                    </ion-item>\n                    \n                    <p *ngIf="validateForm.get(\'whatsapp\').hasError(\'required\') && validateForm.get(\'whatsapp\').touched"  class="error-left relative">WhatsApp No is required!</p>\n                    \n                    <p *ngIf="(validateForm.get(\'whatsapp\').hasError(\'minlength\') || validateForm.get(\'whatsapp\').hasError(\'maxlength\')) && validateForm.get(\'whatsapp\').touched"  class="error-left relative">WhatsApp No must be 10 digit!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Email</span></ion-label>\n                        <ion-input type="email" formControlName="email" [(ngModel)]="data.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"></ion-input>\n                    </ion-item>\n                    <p *ngIf="data.email && validateForm.get(\'email\').hasError(\'pattern\') && validateForm.get(\'email\').touched"  class="error-left relative">Email invalid!</p>\n                    \n                    <!-- <p *ngIf="validateForm.get(\'email\').hasError(\'required\') && validateForm.get(\'email\').touched" class="error-left relative">Email is required!</p> -->\n                    \n                    <ion-item>\n                        <ion-label floating><span>Address</span></ion-label>\n                        <ion-input type="text"formControlName="address" [(ngModel)]="data.address" required></ion-input>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'address\').hasError(\'required\') && validateForm.get(\'address\').touched" class="error-left relative">Address is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Pincode</span></ion-label>\n                        <ion-input type="tel"  minlength="6" maxlength="6" formControlName="pincode" [(ngModel)]="data.pincode" (input)="get_pincode_area_name(data.pincode)" required ></ion-input>\n                    </ion-item>\n                    \n                    <p *ngIf="validateForm.get(\'pincode\').hasError(\'required\') && validateForm.get(\'pincode\').touched" class="error-left relative">Pincode is required!</p>\n                    \n                    <div class="csslecttype mt20">\n                        <ion-item>\n                            <ion-label class="pl15">State</ion-label>\n                            <ionic-selectable\n                            item-content \n                            [(ngModel)]="data.state"\n                            [items]="state_list"\n                            itemValueField="state_name"\n                            itemTextField="state_name"\n                            (onChange)="getDistrict(data.state.state_name)"\n                            formControlName="stateName"\n                            [canSearch]="true">\n                        </ionic-selectable>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'stateName\').hasError(\'required\') && validateForm.get(\'stateName\').touched"  class="error-left relative">State is required!</p>\n                </div>\n                \n                <div class="csslecttype mt20">\n                    <ion-item>\n                        <ion-label class="pl15">District</ion-label>\n                        <ionic-selectable\n                        item-content \n                        [(ngModel)]="data.district"\n                        [items]="district_list"\n                        itemValueField="district_name"\n                        itemTextField="district_name"\n                        formControlName="districtName"\n                        (onChange)="getCity(data.state.state_name,data.district.district_name)"\n                        [canSearch]="true">\n                    </ionic-selectable>\n                </ion-item>\n                <p *ngIf="validateForm.get(\'districtName\').hasError(\'required\') && validateForm.get(\'districtName\').touched"  class="error-left relative">District is required!</p>\n            </div>\n            \n            \n            <div class="csslecttype mt20">\n                <ion-item>\n                    <ion-label class="pl15">City</ion-label>\n                    <ionic-selectable\n                    item-content \n                    [(ngModel)]="data.city"\n                    [items]="city_list"\n                    itemValueField="city"\n                    itemTextField="city"\n                    formControlName="city"\n                    [canSearch]="true">\n                </ionic-selectable>\n            </ion-item>\n            <p *ngIf="validateForm.get(\'city\').hasError(\'required\') && validateForm.get(\'city\').touched"  class="error-left relative">City is required!</p>\n        </div>\n        \n        <div class="square-box">\n            <p>Product Rating</p>\n            <ion-list radio-group class="radio-alignment" formControlName="product_rating" name="product_rating"  [(ngModel)]="data.product_rating">\n                <ion-item style="border-right: 1px solid #dedede">\n                    <ion-label>Very Good</ion-label>\n                    <ion-radio value="Very Good" ></ion-radio>\n                </ion-item>\n                <ion-item>\n                    <ion-label>Good</ion-label>\n                    <ion-radio value="Good"></ion-radio>\n                </ion-item>\n                <ion-item style="border-right: 1px solid #dedede">\n                    <ion-label>Average</ion-label>\n                    <ion-radio value="Average"></ion-radio>\n                </ion-item>\n                <ion-item>\n                    <ion-label>Poor</ion-label>\n                    <ion-radio value="Poor"></ion-radio>\n                </ion-item>\n            </ion-list>\n        </div>\n        \n        <div class="square-box">\n            <p>Demonstration Response</p>\n            <ion-list radio-group class="radio-alignment" formControlName="demonstration_response" name="demonstration_response" [(ngModel)]="data.demonstration_response">\n                <ion-item style="border-right: 1px solid #dedede">\n                    <ion-label>Very Good</ion-label>\n                    <ion-radio value="Very Good" ></ion-radio>\n                </ion-item>\n                <ion-item>\n                    <ion-label>Good</ion-label>\n                    <ion-radio value="Good"></ion-radio>\n                </ion-item>\n                <ion-item style="border-right: 1px solid #dedede">\n                    <ion-label>Average</ion-label>\n                    <ion-radio value="Average"></ion-radio>\n                </ion-item>\n                <ion-item>\n                    <ion-label>Poor</ion-label>\n                    <ion-radio value="Poor"></ion-radio>\n                </ion-item>\n            </ion-list>\n        </div>\n        \n        <div class="square-box">\n            <p>Order</p>\n            <ion-list radio-group class="radio-alignment" formControlName="order" name="order"  [(ngModel)]="data.order">\n                <ion-item style="border-right: 1px solid #dedede">\n                    <ion-label>Yes</ion-label>\n                    <ion-radio value="Yes" ></ion-radio>\n                </ion-item>\n                <ion-item>\n                    <ion-label>No</ion-label>\n                    <ion-radio value="No"></ion-radio>\n                </ion-item>\n            </ion-list>\n        </div>\n        \n        <ion-item>\n            <ion-label floating><span>Distributor Firm Name</span></ion-label>\n            <ion-input type="text"formControlName="distributor_name" [(ngModel)]="data.distributor_name"></ion-input>\n        </ion-item>\n        \n        <ion-item>\n            <ion-label floating><span>Reference Distributor Firm Name</span></ion-label>\n            <ion-input type="text"formControlName="distributor_ref" [(ngModel)]="data.distributor_ref"></ion-input>\n        </ion-item>\n        \n        <ion-item>\n            <ion-label floating><span>Reference Distributor Mobile No</span></ion-label>\n            <ion-input type="tel" minlength="10" maxlength="10" formControlName="distributor_ref_mobile" [(ngModel)]="data.distributor_ref_mobile"></ion-input>\n        </ion-item>\n        \n        <ion-item>\n            <ion-label floating><span>Remark</span></ion-label>\n            <ion-textarea type="text" formControlName="remark" [(ngModel)]="data.remark"></ion-textarea>\n        </ion-item>\n        \n    </div>\n    \n</ion-list>\n<div >\n</div>\n</div>\n\n</form>\n<div class="h16"></div>\n</ion-content>\n\n<ion-footer padding>\n    <button ion-button block round class="h45" (click)="submit()" [disabled] = "loading == \'1\' && check_mobile == 1">Click To Save</button>\n</ion-footer>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/dealer-survey/dealer-survey.html"*/,
+            selector: 'page-dealer-survey',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/dealer-survey/dealer-survey.html"*/'<ion-header>    \n    <ion-navbar>\n        <ion-title>\n            <h1>Add Dealer Survey</h1>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>       \n    <form [formGroup]="validateForm">\n        <div class="edit">\n            \n            <ion-list>\n                <div>    \n                    <ion-item >\n                        <ion-label floating><span>Company Name</span></ion-label>\n                        <ion-input type="text" formControlName="companyName" [(ngModel)]="data.company_name" ></ion-input>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'companyName\').hasError(\'required\') && validateForm.get(\'companyName\').touched" class="error-left relative">Company Name is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Contact Person Name</span></ion-label>\n                        <ion-input type="text" formControlName="name" [(ngModel)]="data.name" required></ion-input>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'name\').hasError(\'required\') && validateForm.get(\'name\').touched" class="error-left relative">Name is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Mobile No</span></ion-label>\n                        <ion-input type="tel" minlength="10" maxlength="10" formControlName="mobile"  [(ngModel)]="data.mobile" required></ion-input>\n                    </ion-item>\n                    \n                    <p *ngIf="validateForm.get(\'mobile\').hasError(\'required\') && validateForm.get(\'mobile\').touched"  class="error-left relative">Mobile is required!</p>\n                    \n                    <p *ngIf="(validateForm.get(\'mobile\').hasError(\'minlength\') || validateForm.get(\'mobile\').hasError(\'maxlength\')) && validateForm.get(\'mobile\').touched"  class="error-left relative">Mobile must be 10 digit!</p>\n                    \n                    <ion-item class="whtapp">\n                        <ion-label floating><span>WhatsApp No</span></ion-label>\n                        <ion-input type="tel"  minlength="10" maxlength="10"  formControlName="whatsapp"  [(ngModel)]="data.whatsapp" ></ion-input>\n                    </ion-item>\n                    \n                    <p *ngIf="validateForm.get(\'whatsapp\').hasError(\'required\') && validateForm.get(\'whatsapp\').touched"  class="error-left relative">WhatsApp No is required!</p>\n                    \n                    <p *ngIf="(validateForm.get(\'whatsapp\').hasError(\'minlength\') || validateForm.get(\'whatsapp\').hasError(\'maxlength\')) && validateForm.get(\'whatsapp\').touched"  class="error-left relative">WhatsApp No must be 10 digit!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Email</span></ion-label>\n                        <ion-input type="email" formControlName="email" [(ngModel)]="data.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"></ion-input>\n                    </ion-item>\n                    <p *ngIf="data.email && validateForm.get(\'email\').hasError(\'pattern\') && validateForm.get(\'email\').touched"  class="error-left relative">Email invalid!</p>\n                    \n                    <!-- <p *ngIf="validateForm.get(\'email\').hasError(\'required\') && validateForm.get(\'email\').touched" class="error-left relative">Email is required!</p> -->\n                    \n                    <div class="square-box">\n                        <p>Response</p>\n                        <ion-list radio-group class="radio-alignment" formControlName="response" name="response" [(ngModel)]="data.response">\n                            <ion-item style="border-right: 1px solid #dedede">\n                                <ion-label>Interested</ion-label>\n                                <ion-radio value="Interested" ></ion-radio>\n                            </ion-item>\n                            <ion-item>\n                                <ion-label>Not Interested</ion-label>\n                                <ion-radio value="Not Interested"></ion-radio>\n                            </ion-item>\n                        </ion-list>\n                    </div>\n                    <p *ngIf="validateForm.get(\'response\').hasError(\'required\') && validateForm.get(\'response\').touched"  class="error-left relative">Response is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Address</span></ion-label>\n                        <ion-input type="text"formControlName="address" [(ngModel)]="data.address" required></ion-input>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'address\').hasError(\'required\') && validateForm.get(\'address\').touched" class="error-left relative">Address is required!</p>\n                    \n                    <ion-item>\n                        <ion-label floating><span>Pincode</span></ion-label>\n                        <ion-input type="tel"  minlength="6" maxlength="6" formControlName="pincode" [(ngModel)]="data.pincode" (input)="get_pincode_area_name(data.pincode)" required ></ion-input>\n                    </ion-item>\n                    \n                    <p *ngIf="validateForm.get(\'pincode\').hasError(\'required\') && validateForm.get(\'pincode\').touched" class="error-left relative">Pincode is required!</p>\n                    \n                    <p *ngIf="(validateForm.get(\'pincode\').hasError(\'minlength\') || validateForm.get(\'pincode\').hasError(\'maxlength\')) && validateForm.get(\'pincode\').touched"  class="error-left relative">Pincode must be 6 digit!</p>\n                    \n                    <div class="csslecttype mt20">\n                        <ion-item>\n                            <ion-label class="pl15">State</ion-label>\n                            <ionic-selectable\n                            item-content \n                            [(ngModel)]="data.state"\n                            [items]="state_list"\n                            itemValueField="state_name"\n                            itemTextField="state_name"\n                            (onChange)="getDistrict(data.state.state_name)"\n                            formControlName="stateName"\n                            [canSearch]="true">\n                        </ionic-selectable>\n                    </ion-item>\n                    <p *ngIf="validateForm.get(\'stateName\').hasError(\'required\') && validateForm.get(\'stateName\').touched"  class="error-left relative">State is required!</p>\n                </div>\n                \n                <div class="csslecttype mt20">\n                    <ion-item>\n                        <ion-label class="pl15">District</ion-label>\n                        <ionic-selectable\n                        item-content \n                        [(ngModel)]="data.district"\n                        [items]="district_list"\n                        itemValueField="district_name"\n                        itemTextField="district_name"\n                        formControlName="districtName"\n                        (onChange)="getCity(data.state.state_name,data.district.district_name)"\n                        [canSearch]="true">\n                    </ionic-selectable>\n                </ion-item>\n                <p *ngIf="validateForm.get(\'districtName\').hasError(\'required\') && validateForm.get(\'districtName\').touched"  class="error-left relative">District is required!</p>\n            </div>\n            \n            \n            <div class="csslecttype mt20">\n                <ion-item>\n                    <ion-label class="pl15">City</ion-label>\n                    <ionic-selectable\n                    item-content \n                    [(ngModel)]="data.city"\n                    [items]="city_list"\n                    itemValueField="city"\n                    itemTextField="city"\n                    formControlName="city"\n                    [canSearch]="true">\n                </ionic-selectable>\n            </ion-item>\n            <p *ngIf="validateForm.get(\'city\').hasError(\'required\') && validateForm.get(\'city\').touched"  class="error-left relative">City is required!</p>\n        </div>\n        \n        <div class="square-box">\n            <p>Product Rating</p>\n            <ion-list radio-group class="radio-alignment" formControlName="product_rating" name="product_rating"  [(ngModel)]="data.product_rating">\n                <ion-item style="border-right: 1px solid #dedede">\n                    <ion-label>Very Good</ion-label>\n                    <ion-radio value="Very Good" ></ion-radio>\n                </ion-item>\n                <ion-item>\n                    <ion-label>Good</ion-label>\n                    <ion-radio value="Good"></ion-radio>\n                </ion-item>\n                <ion-item style="border-right: 1px solid #dedede">\n                    <ion-label>Average</ion-label>\n                    <ion-radio value="Average"></ion-radio>\n                </ion-item>\n                <ion-item>\n                    <ion-label>Poor</ion-label>\n                    <ion-radio value="Poor"></ion-radio>\n                </ion-item>\n            </ion-list>\n        </div>\n        \n        <p *ngIf="validateForm.get(\'product_rating\').hasError(\'required\') && validateForm.get(\'product_rating\').touched"  class="error-left relative">Product Rating is required!</p>\n        \n        <div class="square-box">\n            <p>Demonstration Response</p>\n            <ion-list radio-group class="radio-alignment" formControlName="demonstration_response" name="demonstration_response" [(ngModel)]="data.demonstration_response">\n                <ion-item style="border-right: 1px solid #dedede">\n                    <ion-label>Very Good</ion-label>\n                    <ion-radio value="Very Good" ></ion-radio>\n                </ion-item>\n                <ion-item>\n                    <ion-label>Good</ion-label>\n                    <ion-radio value="Good"></ion-radio>\n                </ion-item>\n                <ion-item style="border-right: 1px solid #dedede">\n                    <ion-label>Average</ion-label>\n                    <ion-radio value="Average"></ion-radio>\n                </ion-item>\n                <ion-item>\n                    <ion-label>Poor</ion-label>\n                    <ion-radio value="Poor"></ion-radio>\n                </ion-item>\n            </ion-list>\n        </div>\n        <p *ngIf="validateForm.get(\'demonstration_response\').hasError(\'required\') && validateForm.get(\'demonstration_response\').touched"  class="error-left relative">Demonstration Response is required!</p>\n        \n        <div class="square-box">\n            <p>Pearl Product</p>\n            <ion-list radio-group class="radio-alignment" formControlName="pearlProduct" name="pearlProduct" [(ngModel)]="data.pearlProduct">\n                <ion-item style="border-right: 1px solid #dedede">\n                    <ion-label>Selling</ion-label>\n                    <ion-radio value="Selling" ></ion-radio>\n                </ion-item>\n                <ion-item>\n                    <ion-label>Not Selling</ion-label>\n                    <ion-radio value="Not Selling"></ion-radio>\n                </ion-item>\n            </ion-list>\n        </div>\n        <p *ngIf="validateForm.get(\'pearlProduct\').hasError(\'required\') && validateForm.get(\'pearlProduct\').touched"  class="error-left relative">Pearl Product is required!</p>\n        \n        <div class="square-box">\n            <p>Order</p>\n            <ion-list radio-group class="radio-alignment" formControlName="order" name="order"  [(ngModel)]="data.order">\n                <ion-item style="border-right: 1px solid #dedede">\n                    <ion-label>Yes</ion-label>\n                    <ion-radio value="Yes" ></ion-radio>\n                </ion-item>\n                <ion-item>\n                    <ion-label>No</ion-label>\n                    <ion-radio value="No"></ion-radio>\n                </ion-item>\n            </ion-list>\n        </div>\n        <p *ngIf="validateForm.get(\'order\').hasError(\'required\') && validateForm.get(\'order\').touched"  class="error-left relative">Order is required!</p>\n        \n        <ion-item>\n            <ion-label floating><span>Distributor Firm Name</span></ion-label>\n            <ion-input type="text"formControlName="distributor_name" [(ngModel)]="data.distributor_name"></ion-input>\n        </ion-item>\n        \n        <ion-item>\n            <ion-label floating><span>Reference Distributor Firm Name</span></ion-label>\n            <ion-input type="text"formControlName="distributor_ref" [(ngModel)]="data.distributor_ref"></ion-input>\n        </ion-item>\n        \n        <ion-item>\n            <ion-label floating><span>Reference Distributor Mobile No</span></ion-label>\n            <ion-input type="tel" minlength="10" maxlength="10" formControlName="distributor_ref_mobile" [(ngModel)]="data.distributor_ref_mobile"></ion-input>\n        </ion-item>\n        \n        <ion-item>\n            <ion-label floating><span>Remark</span></ion-label>\n            <ion-textarea type="text" formControlName="remark" [(ngModel)]="data.remark"></ion-textarea>\n        </ion-item>\n        \n    </div>\n    \n</ion-list>\n<div >\n</div>\n</div>\n\n</form>\n<div class="h16"></div>\n</ion-content>\n\n<ion-footer padding>\n    <button ion-button block round class="h45" (click)="submit()" [disabled] = "loading == \'1\' && check_mobile == 1">Click To Save</button>\n</ion-footer>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/dealer-survey/dealer-survey.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__providers_enquiryservice_enquiryservice__["a" /* EnquiryserviceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["LoadingController"], __WEBPACK_IMPORTED_MODULE_3__providers_myservice_myservice__["a" /* MyserviceProvider */], __WEBPACK_IMPORTED_MODULE_4__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"]])
     ], DealerSurveyPage);
@@ -6915,7 +6800,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EnquiryPageModule", function() { return EnquiryPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__enquiry__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__enquiry__ = __webpack_require__(87);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7457,7 +7342,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LeaveListPageModule", function() { return LeaveListPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__leave_list__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__leave_list__ = __webpack_require__(167);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7492,10 +7377,48 @@ var LeaveListPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CpOrderCartPageModule", function() { return CpOrderCartPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__cp_order_cart__ = __webpack_require__(488);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var CpOrderCartPageModule = /** @class */ (function () {
+    function CpOrderCartPageModule() {
+    }
+    CpOrderCartPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__cp_order_cart__["a" /* CpOrderCartPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__cp_order_cart__["a" /* CpOrderCartPage */]),
+            ],
+        })
+    ], CpOrderCartPageModule);
+    return CpOrderCartPageModule;
+}());
+
+//# sourceMappingURL=cp-order-cart.module.js.map
+
+/***/ }),
+
+/***/ 529:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(529);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(530);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7525,7 +7448,7 @@ var LoginPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 529:
+/***/ 530:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7534,10 +7457,10 @@ var LoginPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_loginservice_loginservice__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__otpverify_otpverify__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__otpverify_otpverify__ = __webpack_require__(175);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tabs_tabs__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__signup_signup__ = __webpack_require__(535);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__select_registration_type_select_registration_type__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__signup_signup__ = __webpack_require__(536);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__select_registration_type_select_registration_type__ = __webpack_require__(177);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_location_accuracy__ = __webpack_require__(35);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7748,7 +7671,7 @@ var LoginPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 530:
+/***/ 531:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7820,7 +7743,7 @@ var WalletHistoryPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 531:
+/***/ 532:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7828,7 +7751,7 @@ var WalletHistoryPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__term_condition_term_condition__ = __webpack_require__(532);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__term_condition_term_condition__ = __webpack_require__(533);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7949,7 +7872,7 @@ var MyWalletPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 532:
+/***/ 533:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8000,15 +7923,15 @@ var TermConditionPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 533:
+/***/ 534:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plumber_profile_plumber_profile__ = __webpack_require__(534);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__enquiry_enquiry__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plumber_profile_plumber_profile__ = __webpack_require__(535);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__enquiry_enquiry__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__contactus_contactus__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__aboutus_aboutus__ = __webpack_require__(76);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8059,7 +7982,7 @@ var MenuPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 534:
+/***/ 535:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8131,7 +8054,7 @@ var PlumberProfilePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 535:
+/***/ 536:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8144,7 +8067,7 @@ var PlumberProfilePage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_forms__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_camera__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__otpverify_otpverify__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__otpverify_otpverify__ = __webpack_require__(175);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_loginservice_loginservice__ = __webpack_require__(120);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -8532,44 +8455,6 @@ var SignupPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 536:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MenuPageModule", function() { return MenuPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__menu__ = __webpack_require__(533);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var MenuPageModule = /** @class */ (function () {
-    function MenuPageModule() {
-    }
-    MenuPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__menu__["a" /* MenuPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__menu__["a" /* MenuPage */]),
-            ],
-        })
-    ], MenuPageModule);
-    return MenuPageModule;
-}());
-
-//# sourceMappingURL=menu.module.js.map
-
-/***/ }),
-
 /***/ 537:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -8578,7 +8463,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyWalletPageModule", function() { return MyWalletPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__my_wallet__ = __webpack_require__(531);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__my_wallet__ = __webpack_require__(532);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8699,7 +8584,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OfferCategoryPageModule", function() { return OfferCategoryPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__offer_category__ = __webpack_require__(398);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__offer_category__ = __webpack_require__(482);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8737,7 +8622,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OfferProductListPageModule", function() { return OfferProductListPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__offer_product_list__ = __webpack_require__(400);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__offer_product_list__ = __webpack_require__(484);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8775,7 +8660,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OfferSubCategoryPageModule", function() { return OfferSubCategoryPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__offer_sub_category__ = __webpack_require__(399);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__offer_sub_category__ = __webpack_require__(483);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8810,10 +8695,48 @@ var OfferSubCategoryPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MenuPageModule", function() { return MenuPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__menu__ = __webpack_require__(534);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var MenuPageModule = /** @class */ (function () {
+    function MenuPageModule() {
+    }
+    MenuPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__menu__["a" /* MenuPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__menu__["a" /* MenuPage */]),
+            ],
+        })
+    ], MenuPageModule);
+    return MenuPageModule;
+}());
+
+//# sourceMappingURL=menu.module.js.map
+
+/***/ }),
+
+/***/ 544:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrderTypeModalPageModule", function() { return OrderTypeModalPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__order_type_modal__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__order_type_modal__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_selectable__ = __webpack_require__(28);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -8843,44 +8766,6 @@ var OrderTypeModalPageModule = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=order-type-modal.module.js.map
-
-/***/ }),
-
-/***/ 544:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OtpverifyPageModule", function() { return OtpverifyPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__otpverify__ = __webpack_require__(174);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var OtpverifyPageModule = /** @class */ (function () {
-    function OtpverifyPageModule() {
-    }
-    OtpverifyPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__otpverify__["a" /* OtpverifyPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__otpverify__["a" /* OtpverifyPage */]),
-            ],
-        })
-    ], OtpverifyPageModule);
-    return OtpverifyPageModule;
-}());
-
-//# sourceMappingURL=otpverify.module.js.map
 
 /***/ }),
 
@@ -9060,10 +8945,10 @@ var OfferListPage = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OffersPageModule", function() { return OffersPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OtpverifyPageModule", function() { return OtpverifyPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__offers__ = __webpack_require__(959);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__otpverify__ = __webpack_require__(175);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9073,23 +8958,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var OffersPageModule = /** @class */ (function () {
-    function OffersPageModule() {
+var OtpverifyPageModule = /** @class */ (function () {
+    function OtpverifyPageModule() {
     }
-    OffersPageModule = __decorate([
+    OtpverifyPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__offers__["a" /* OffersPage */],
+                __WEBPACK_IMPORTED_MODULE_2__otpverify__["a" /* OtpverifyPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__offers__["a" /* OffersPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__otpverify__["a" /* OtpverifyPage */]),
             ],
         })
-    ], OffersPageModule);
-    return OffersPageModule;
+    ], OtpverifyPageModule);
+    return OtpverifyPageModule;
 }());
 
-//# sourceMappingURL=offers.module.js.map
+//# sourceMappingURL=otpverify.module.js.map
 
 /***/ }),
 
@@ -9100,7 +8985,7 @@ var OffersPageModule = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CatalougeProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__constant_constant__ = __webpack_require__(16);
@@ -9346,7 +9231,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlumberProfilePageModule", function() { return PlumberProfilePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plumber_profile__ = __webpack_require__(534);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__plumber_profile__ = __webpack_require__(535);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9470,48 +9355,10 @@ var PointLocationPage = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProfilePageModule", function() { return ProfilePageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile__ = __webpack_require__(960);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var ProfilePageModule = /** @class */ (function () {
-    function ProfilePageModule() {
-    }
-    ProfilePageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__profile__["a" /* ProfilePage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__profile__["a" /* ProfilePage */]),
-            ],
-        })
-    ], ProfilePageModule);
-    return ProfilePageModule;
-}());
-
-//# sourceMappingURL=profile.module.js.map
-
-/***/ }),
-
-/***/ 554:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductDetailsPageModule", function() { return ProductDetailsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__product_details__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__product_details__ = __webpack_require__(86);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9541,6 +9388,44 @@ var ProductDetailsPageModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ 554:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProfilePageModule", function() { return ProfilePageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile__ = __webpack_require__(959);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var ProfilePageModule = /** @class */ (function () {
+    function ProfilePageModule() {
+    }
+    ProfilePageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__profile__["a" /* ProfilePage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__profile__["a" /* ProfilePage */]),
+            ],
+        })
+    ], ProfilePageModule);
+    return ProfilePageModule;
+}());
+
+//# sourceMappingURL=profile.module.js.map
+
+/***/ }),
+
 /***/ 555:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -9549,7 +9434,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RetailerPageModule", function() { return RetailerPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__retailer__ = __webpack_require__(961);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__retailer__ = __webpack_require__(960);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9587,8 +9472,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CheckinDetailPageModule", function() { return CheckinDetailPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkin_detail__ = __webpack_require__(171);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ngx_moment__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkin_detail__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ngx_moment__ = __webpack_require__(121);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9629,7 +9514,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkin_list__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ngx_moment__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ngx_moment__ = __webpack_require__(121);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9669,7 +9554,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CustomerCheckinPageModule", function() { return CustomerCheckinPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__customer_checkin__ = __webpack_require__(499);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__customer_checkin__ = __webpack_require__(500);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9704,10 +9589,10 @@ var CustomerCheckinPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CustomerOrderPageModule", function() { return CustomerOrderPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DealerListPageModule", function() { return DealerListPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__customer_order__ = __webpack_require__(500);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dealer_list__ = __webpack_require__(88);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9717,23 +9602,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var CustomerOrderPageModule = /** @class */ (function () {
-    function CustomerOrderPageModule() {
+var DealerListPageModule = /** @class */ (function () {
+    function DealerListPageModule() {
     }
-    CustomerOrderPageModule = __decorate([
+    DealerListPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__customer_order__["a" /* CustomerOrderPage */],
+                __WEBPACK_IMPORTED_MODULE_2__dealer_list__["a" /* DealerListPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__customer_order__["a" /* CustomerOrderPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__dealer_list__["a" /* DealerListPage */]),
             ],
         })
-    ], CustomerOrderPageModule);
-    return CustomerOrderPageModule;
+    ], DealerListPageModule);
+    return DealerListPageModule;
 }());
 
-//# sourceMappingURL=customer-order.module.js.map
+//# sourceMappingURL=dealer-list.module.js.map
 
 /***/ }),
 
@@ -9744,21 +9629,21 @@ var CustomerOrderPageModule = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__catalouge_catalouge__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__catalouge_catalouge__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__aboutus_aboutus__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__products_products__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__products_products__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_catalouge_catalouge__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_geolocation__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_attendenceservice_attendenceservice__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_myservice_myservice__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__offer_category_offer_category__ = __webpack_require__(398);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_barcode_scanner__ = __webpack_require__(401);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__channel_partner_app_ledger_ledger__ = __webpack_require__(402);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__channel_partner_app_cp_order_list_cp_order_list__ = __webpack_require__(403);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__offer_category_offer_category__ = __webpack_require__(482);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_barcode_scanner__ = __webpack_require__(485);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__channel_partner_app_ledger_ledger__ = __webpack_require__(486);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__channel_partner_app_cp_order_list_cp_order_list__ = __webpack_require__(487);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__sales_app_checkin_list_checkin_list__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__channel_partner_app_cp_discount_cp_discount__ = __webpack_require__(506);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__channel_partner_app_cp_discount_cp_discount__ = __webpack_require__(507);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10038,10 +9923,10 @@ var HomePage = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DealerListPageModule", function() { return DealerListPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CustomerOrderPageModule", function() { return CustomerOrderPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dealer_list__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__customer_order__ = __webpack_require__(501);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10051,23 +9936,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var DealerListPageModule = /** @class */ (function () {
-    function DealerListPageModule() {
+var CustomerOrderPageModule = /** @class */ (function () {
+    function CustomerOrderPageModule() {
     }
-    DealerListPageModule = __decorate([
+    CustomerOrderPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__dealer_list__["a" /* DealerListPage */],
+                __WEBPACK_IMPORTED_MODULE_2__customer_order__["a" /* CustomerOrderPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__dealer_list__["a" /* DealerListPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__customer_order__["a" /* CustomerOrderPage */]),
             ],
         })
-    ], DealerListPageModule);
-    return DealerListPageModule;
+    ], CustomerOrderPageModule);
+    return CustomerOrderPageModule;
 }());
 
-//# sourceMappingURL=dealer-list.module.js.map
+//# sourceMappingURL=customer-order.module.js.map
 
 /***/ }),
 
@@ -10076,10 +9961,10 @@ var DealerListPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DirectDealerListPageModule", function() { return DirectDealerListPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OffersPageModule", function() { return OffersPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__direct_dealer_list__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__offers__ = __webpack_require__(961);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10089,23 +9974,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var DirectDealerListPageModule = /** @class */ (function () {
-    function DirectDealerListPageModule() {
+var OffersPageModule = /** @class */ (function () {
+    function OffersPageModule() {
     }
-    DirectDealerListPageModule = __decorate([
+    OffersPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__direct_dealer_list__["a" /* DirectDealerListPage */],
+                __WEBPACK_IMPORTED_MODULE_2__offers__["a" /* OffersPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__direct_dealer_list__["a" /* DirectDealerListPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__offers__["a" /* OffersPage */]),
             ],
         })
-    ], DirectDealerListPageModule);
-    return DirectDealerListPageModule;
+    ], OffersPageModule);
+    return OffersPageModule;
 }());
 
-//# sourceMappingURL=direct-dealer-list.module.js.map
+//# sourceMappingURL=offers.module.js.map
 
 /***/ }),
 
@@ -10190,10 +10075,11 @@ var DistributorListPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainDistributorListPageModule", function() { return MainDistributorListPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EndCheckinPageModule", function() { return EndCheckinPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__main_distributor_list__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__end_checkin__ = __webpack_require__(499);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ngx_moment__ = __webpack_require__(121);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10203,23 +10089,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var MainDistributorListPageModule = /** @class */ (function () {
-    function MainDistributorListPageModule() {
+
+var EndCheckinPageModule = /** @class */ (function () {
+    function EndCheckinPageModule() {
     }
-    MainDistributorListPageModule = __decorate([
+    EndCheckinPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__main_distributor_list__["a" /* MainDistributorListPage */],
+                __WEBPACK_IMPORTED_MODULE_2__end_checkin__["a" /* EndCheckinPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__main_distributor_list__["a" /* MainDistributorListPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__end_checkin__["a" /* EndCheckinPage */]),
+                __WEBPACK_IMPORTED_MODULE_3_ngx_moment__["a" /* MomentModule */]
             ],
         })
-    ], MainDistributorListPageModule);
-    return MainDistributorListPageModule;
+    ], EndCheckinPageModule);
+    return EndCheckinPageModule;
 }());
 
-//# sourceMappingURL=main-distributor-list.module.js.map
+//# sourceMappingURL=end-checkin.module.js.map
 
 /***/ }),
 
@@ -10266,10 +10154,48 @@ var SearchPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainDistributorListPageModule", function() { return MainDistributorListPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__main_distributor_list__ = __webpack_require__(115);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var MainDistributorListPageModule = /** @class */ (function () {
+    function MainDistributorListPageModule() {
+    }
+    MainDistributorListPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__main_distributor_list__["a" /* MainDistributorListPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__main_distributor_list__["a" /* MainDistributorListPage */]),
+            ],
+        })
+    ], MainDistributorListPageModule);
+    return MainDistributorListPageModule;
+}());
+
+//# sourceMappingURL=main-distributor-list.module.js.map
+
+/***/ }),
+
+/***/ 567:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectRegistrationTypePageModule", function() { return SelectRegistrationTypePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__select_registration_type__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__select_registration_type__ = __webpack_require__(177);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10299,7 +10225,7 @@ var SelectRegistrationTypePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 567:
+/***/ 568:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10307,7 +10233,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TargetListPageModule", function() { return TargetListPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__target_list__ = __webpack_require__(568);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__target_list__ = __webpack_require__(569);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10337,7 +10263,7 @@ var TargetListPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 568:
+/***/ 569:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10456,44 +10382,6 @@ var TargetListPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 569:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SubcategoryPageModule", function() { return SubcategoryPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subcategory__ = __webpack_require__(154);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var SubcategoryPageModule = /** @class */ (function () {
-    function SubcategoryPageModule() {
-    }
-    SubcategoryPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__subcategory__["a" /* SubcategoryPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__subcategory__["a" /* SubcategoryPage */]),
-            ],
-        })
-    ], SubcategoryPageModule);
-    return SubcategoryPageModule;
-}());
-
-//# sourceMappingURL=subcategory.module.js.map
-
-/***/ }),
-
 /***/ 57:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -10503,8 +10391,8 @@ var SubcategoryPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_checkin_add_checkin__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_myservice_myservice__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__end_checkin_end_checkin__ = __webpack_require__(498);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__checkin_detail_checkin_detail__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__end_checkin_end_checkin__ = __webpack_require__(499);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__checkin_detail_checkin_detail__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__dashboard_dashboard__ = __webpack_require__(58);
@@ -10529,12 +10417,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var CheckinListPage = /** @class */ (function () {
-    function CheckinListPage(navCtrl, navParams, service, loadingCtrl, events) {
+    function CheckinListPage(navCtrl, navParams, service, loadingCtrl, events, alertCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.service = service;
         this.loadingCtrl = loadingCtrl;
         this.events = events;
+        this.alertCtrl = alertCtrl;
         this.limit = 0;
         this.flag = '';
         this.url = '';
@@ -10580,6 +10469,14 @@ var CheckinListPage = /** @class */ (function () {
             _this.checkin_id = result['checkin_id'];
             _this.checkin_data = result['checkin_data'];
             console.log(_this.checkin_data);
+        }).catch(function (error) {
+            if (_this.service.errorCount === 0) {
+                _this.service.errorCount++;
+                _this.presentAlertInternet();
+                setTimeout(function () {
+                    _this.service.errorCount = 0;
+                }, 1000);
+            }
         });
     };
     CheckinListPage.prototype.checkin_list = function () {
@@ -10588,10 +10485,12 @@ var CheckinListPage = /** @class */ (function () {
             spinner: 'hide',
             content: "<img src=\"./assets/imgs/gif.svg\" class=\"h15\" />",
         });
+        loading.present();
         this.search.check_in_date = __WEBPACK_IMPORTED_MODULE_6_moment___default()(this.search.check_in_date).format('YYYY-MM-DD');
         console.log(this.search.check_in_date);
         this.service.addData({ 'date': this.search.check_in_date, 'limit': this.limit }, 'Checkin/checkin_list').then(function (result) {
             console.log(result);
+            loading.dismiss();
             _this.today_checkin = result['today_checkin'];
             _this.previous_checkin = result['previous_checkin'];
             if (_this.today_checkin.length == 0) {
@@ -10600,9 +10499,10 @@ var CheckinListPage = /** @class */ (function () {
             if (_this.previous_checkin == 0) {
                 _this.load_data = "1";
             }
+        }).catch(function (error) {
+            _this.presentAlertInternet();
             loading.dismiss();
         });
-        loading.present();
     };
     CheckinListPage.prototype.loadData = function (infiniteScroll) {
         var _this = this;
@@ -10665,15 +10565,24 @@ var CheckinListPage = /** @class */ (function () {
             }
         });
     };
+    CheckinListPage.prototype.presentAlertInternet = function () {
+        var alert = this.alertCtrl.create({
+            title: 'Network Issue!',
+            enableBackdropDismiss: false,
+            message: 'Please Check Your Internet Connection.',
+            cssClass: 'alert-modal',
+        });
+        alert.present();
+    };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Navbar"]),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Navbar"])
     ], CheckinListPage.prototype, "navBar", void 0);
     CheckinListPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-checkin-list',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/checkin-list/checkin-list.html"*/' <ion-header>    \n    <ion-navbar>\n        <ion-title>\n            <h1>Check In List</h1>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n    <div class="padding16 no-dtp" *ngIf="(!today_checkin.length) && load_data == \'1\'">\n        <p>No Check-Ins Today</p>\n    </div>\n    \n    <div class="csn-heading" *ngIf="today_checkin.length "><p>Today</p></div>\n    \n    <div class="checkinlist">\n        <a *ngFor="let val of today_checkin" (click)="val.description == \'\' ? end_visit():checkin_detail(val.checkin_id)">\n            <div class="csheader spbr" >\n                <div class="cs-left" style="width: 100%;">\n                    <p>Start : <span>{{val.visit_start | amLocal | amDateFormat: \'h:mm a\'}}</span></p>\n                    <p *ngIf="val.description != \'\'">End : <span>{{val.visit_end  | amLocal | amDateFormat: \'h:mm a\'}}</span></p>\n                </div>\n                <div class="cs-right" *ngIf="val.total_time != \'\'" style="width: 130px; text-align: right;">\n                    <p >Time : <span>{{val.total_time}} </span></p>\n                </div>\n            </div>\n            \n            <div *ngIf="val.dr_id != 0">\n                <div class="csmiddle" >\n                    <div class="csicon">{{val.dr_name.substring(0,1).toUpperCase()}}</div>\n                    <div class="csdesc pcvr" style="white-space: inherit;">\n                        <p style="width: 100%;"><i class="material-icons">apartment</i>{{val.dr_name | titlecase}}</p>\n                        <p style="width: 100%;"><i class="material-icons">person</i>{{val.name ? val.name : \'--\'}}</p>\n                        <p style="width: 100%;"><i class="material-icons">call</i>{{val.mobile_no ? val.mobile_no : \'--\'}}</p>\n                    </div>\n                </div>\n                <p class="create-by" *ngIf="val.creator"><strong>Created By:</strong>{{val.creator}}</p>\n            </div>\n            \n            \n            <div *ngIf="val.dr_id == 0">\n                <div class="csmiddle" >\n                    <div class="csicon">O</div>\n                    <div class="csheader spbr" >\n                        <div class="cs-left">\n                            <p>Start : <span>{{val.visit_start | amLocal | amDateFormat: \'h:mm a\'}}</span></p>\n                            <p *ngIf="val.visit_end != \'0000-00-00 00:00:00\'">End : <span>{{val.visit_end | amLocal | amDateFormat: \'h:mm a\'}}</span></p>\n                        </div>\n                        <div class="cs-right" *ngIf="val.remark != \'\'">\n                            <p >Time : <span>{{val.total_time}} min</span></p>\n                        </div>\n                    </div>\n                    <div class="csdesc pcvr no-white-space">\n                        <p style="width: 100%;"><i class="material-icons">apartment</i>{{val.other_name | titlecase}}</p>\n                        <p style="width: 100%;"><i class="material-icons">person</i>{{val.name ? val.name : \'--\'}}</p>\n                        <p style="width: 100%;"><i class="material-icons">call</i>{{val.mobile_no ? val.mobile_no : \'--\'}}</p>\n                    </div>\n                </div>\n                \n                <p class="create-by" *ngIf="val.creator"><strong>Created By:</strong>{{val.creator}}</p>\n            </div>\n        </a>\n    </div>\n    \n    <div class="csn-heading">\n        <p>Earlier</p>\n        <label class="chedate">\n            <input type="date" [max]="date" name="check_in_date" [(ngModel)]="search.check_in_date" (ngModelChange)="checkInType == \'cp-checkIn\' ? getCpCheckInData() : checkin_list(search.check_in_date)">\n            <i class="material-icons">date_range</i>\n        </label>\n    </div>\n    \n    <div class="padding16 no-dtp" *ngIf="!previous_checkin.length && search.check_in_date">\n        <p>No Previous Check-In\'s</p>\n    </div>\n    \n    <div class="checkinlist" *ngIf="previous_checkin.length">\n        <a *ngFor="let val of previous_checkin" (click)="checkin_detail(val.checkin_id)" >\n            <div class="csheader">\n                <div class="cs-left" style="width: 100%;">\n                    <p>Start : <span>{{val.visit_start | date:\'hh:mm a\'}}</span></p>\n                    <p *ngIf="val.visit_end != \'0000-00-00 00:00:00\'" style="margin-left: 10px !important;">End : <span>{{val.visit_end | date:\'hh:mm a\'}}</span></p>\n                </div>\n                <div class="cs-right flex-right" style="width: 130px;">\n                    <p style="width: 100%; text-align: right;"><span>{{val.activity_date | date: \'MMM d, y\'}}</span></p>\n                </div>\n            </div>\n            \n            <div *ngIf="val.dr_id != 0" >\n                <div class="csmiddle" >\n                    <div class="csicon">{{val.dr_name.substring(0,1).toUpperCase()}}</div>\n                    <div class="csdesc pcvr no-white-space">\n                        <p style="width: 100%;"><i class="material-icons">apartment</i>{{val.dr_name | titlecase}}</p>\n                        <p style="width: 100%;"><i class="material-icons">person</i>{{val.name ? val.name : \'--\'}}</p>\n                        <p style="width: 100%;"><i class="material-icons">call</i>{{val.mobile_no ? val.mobile_no : \'--\'}}</p>\n                    </div>\n                </div>\n                <p class="create-by" *ngIf="val.creator"><strong>Created By:</strong>{{val.creator}}</p>\n            </div>\n            \n            <div *ngIf="val.dr_id == 0">\n                <div class="csmiddle" *ngIf="val.dr_id == 0">\n                    <div class="csicon">O</div>\n                    <div class="csdesc pcvr">\n                        <h1></h1>\n                        <p style="width: 100%;"><i class="material-icons">apartment</i>{{val.other_name | titlecase}}</p>\n                        <p style="width: 100%;"><i class="material-icons">person</i>{{val.name ? val.name : \'--\'}}</p>\n                        <p style="width: 100%;"><i class="material-icons">call</i>{{val.mobile_no ? val.mobile_no : \'--\'}}</p>\n                    </div>\n                </div>\n                <p class="create-by" *ngIf="val.creator"><strong>Created By:</strong>{{val.creator}}</p>\n            </div>\n        </a>\n        \n        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)"  *ngIf="flag!=1">\n            <ion-infinite-scroll-content\n            loadingSpinner="bubbles"\n            loadingText="Loading more data...">\n        </ion-infinite-scroll-content>\n    </ion-infinite-scroll>\n</div>\n\n<div class="h80"></div>\n</ion-content>\n\n<div class="endcheck" *ngIf="checkInType != \'cp-checkIn\'">\n    <div class="wp100 mt40" *ngIf="val == 1 && checkin_data.other_name == \'\'">\n        <button color="theme" ion-button block round (click)="end_visit(checkin_id)">End Visit with {{checkin_data.dr_name}}</button>\n    </div>  \n    <div class="wp100 mt40" *ngIf="val == 1 && checkin_data.other_name != \'\'">\n        <button color="theme" ion-button block round (click)="end_visit(checkin_id)">End Visit with {{checkin_data.other_name}}</button>\n    </div> \n</div>\n\n<ion-fab right bottom *ngIf="val == 0 && checkInType != \'cp-checkIn\'">\n    <button ion-fab color="danger" (click)="addCheckin()"><ion-icon name="add"></ion-icon></button>\n</ion-fab>\n\n\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/checkin-list/checkin-list.html"*/,
+            selector: 'page-checkin-list',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/checkin-list/checkin-list.html"*/' <ion-header>    \n    <ion-navbar>\n        <ion-title>\n            <h1>Check In List</h1>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n    <div class="padding16 no-dtp" *ngIf="(!today_checkin.length) && load_data == \'1\'">\n        <p>No Check-Ins Today</p>\n    </div>\n    \n    <div class="csn-heading" *ngIf="today_checkin.length "><p>Today</p></div>\n    \n    <div class="checkinlist">\n        <a *ngFor="let val of today_checkin" (click)="val.description == \'\' ? end_visit():checkin_detail(val.checkin_id)">\n            <div class="csheader spbr" >\n                <div class="cs-left" style="width: 100%;">\n                    <p>Start : <span>{{val.visit_start  | amLocal | amDateFormat: \'h:mm a\'}}</span></p>\n                    <p *ngIf="val.description != \'\'">End : <span>{{val.visit_end | amLocal | amDateFormat: \'h:mm a\'}}</span></p>\n                </div>\n                <div class="cs-right" *ngIf="val.total_time != \'\'" style="width: 130px; text-align: right;">\n                    <p >Time : <span>{{val.total_time}} </span></p>\n                </div>\n            </div>\n            \n            <div *ngIf="val.dr_id != 0">\n                <div class="csmiddle" >\n                    <div class="csicon">{{val.dr_name.substring(0,1).toUpperCase()}}</div>\n                    <div class="csdesc pcvr" style="white-space: inherit;">\n                        <p style="width: 100%;"><i class="material-icons">apartment</i>{{val.dr_name | titlecase}}</p>\n                        <p style="width: 100%;"><i class="material-icons">person</i>{{val.name ? val.name : \'--\'}}</p>\n                        <p style="width: 100%;"><i class="material-icons">call</i>{{val.mobile_no ? val.mobile_no : \'--\'}}</p>\n                    </div>\n                </div>\n                <p class="create-by" *ngIf="val.creator"><strong>Created By:</strong>{{val.creator}}</p>\n            </div>\n            \n            \n            <div *ngIf="val.dr_id == 0">\n                <div class="csmiddle" >\n                    <div class="csicon">O</div>\n                    <div class="csheader spbr" >\n                        <div class="cs-left">\n                            <p>Start : <span>{{val.visit_start | amLocal | amDateFormat: \'h:mm a\'}}</span></p>\n                            <p *ngIf="val.visit_end != \'0000-00-00 00:00:00\'">End : <span>{{val.visit_end | amLocal | amDateFormat: \'h:mm a\'}}</span></p>\n                        </div>\n                        <div class="cs-right" *ngIf="val.remark != \'\'">\n                            <p >Time : <span>{{val.total_time}} min</span></p>\n                        </div>\n                    </div>\n                    <div class="csdesc pcvr no-white-space">\n                        <p style="width: 100%;"><i class="material-icons">apartment</i>{{val.other_name | titlecase}}</p>\n                        <p style="width: 100%;"><i class="material-icons">person</i>{{val.name ? val.name : \'--\'}}</p>\n                        <p style="width: 100%;"><i class="material-icons">call</i>{{val.mobile_no ? val.mobile_no : \'--\'}}</p>\n                    </div>\n                </div>\n                \n                <p class="create-by" *ngIf="val.creator"><strong>Created By:</strong>{{val.creator}}</p>\n            </div>\n        </a>\n    </div>\n    \n    <div class="csn-heading">\n        <p>Earlier</p>\n        <label class="chedate">\n            <input type="date" [max]="date" name="check_in_date" [(ngModel)]="search.check_in_date" (ngModelChange)="checkInType == \'cp-checkIn\' ? getCpCheckInData() : checkin_list(search.check_in_date)">\n            <i class="material-icons">date_range</i>\n        </label>\n    </div>\n    \n    <div class="padding16 no-dtp" *ngIf="!previous_checkin.length && search.check_in_date">\n        <p>No Previous Check-In\'s</p>\n    </div>\n    \n    <div class="checkinlist" *ngIf="previous_checkin.length">\n        <a *ngFor="let val of previous_checkin" (click)="checkin_detail(val.checkin_id)" >\n            <div class="csheader">\n                <div class="cs-left" style="width: 100%;">\n                    <p>Start : <span>{{val.visit_start | amLocal | amDateFormat: \'h:mm a\'}}</span></p>\n                    <p *ngIf="val.visit_end != \'0000-00-00 00:00:00\'" style="margin-left: 10px !important;">End : <span>{{val.visit_end | amLocal | amDateFormat: \'h:mm a\'}}</span></p>\n                </div>\n                <div class="cs-right flex-right" style="width: 130px;">\n                    <p style="width: 100%; text-align: right;"><span>{{val.activity_date | date: \'MMM d, y\'}}</span></p>\n                </div>\n            </div>\n            \n            <div *ngIf="val.dr_id != 0" >\n                <div class="csmiddle" >\n                    <div class="csicon">{{val.dr_name.substring(0,1).toUpperCase()}}</div>\n                    <div class="csdesc pcvr no-white-space">\n                        <p style="width: 100%;"><i class="material-icons">apartment</i>{{val.dr_name | titlecase}}</p>\n                        <p style="width: 100%;"><i class="material-icons">person</i>{{val.name ? val.name : \'--\'}}</p>\n                        <p style="width: 100%;"><i class="material-icons">call</i>{{val.mobile_no ? val.mobile_no : \'--\'}}</p>\n                    </div>\n                </div>\n                <p class="create-by" *ngIf="val.creator"><strong>Created By:</strong>{{val.creator}}</p>\n            </div>\n            \n            <div *ngIf="val.dr_id == 0">\n                <div class="csmiddle" *ngIf="val.dr_id == 0">\n                    <div class="csicon">O</div>\n                    <div class="csdesc pcvr">\n                        <h1></h1>\n                        <p style="width: 100%;"><i class="material-icons">apartment</i>{{val.other_name | titlecase}}</p>\n                        <p style="width: 100%;"><i class="material-icons">person</i>{{val.name ? val.name : \'--\'}}</p>\n                        <p style="width: 100%;"><i class="material-icons">call</i>{{val.mobile_no ? val.mobile_no : \'--\'}}</p>\n                    </div>\n                </div>\n                <p class="create-by" *ngIf="val.creator"><strong>Created By:</strong>{{val.creator}}</p>\n            </div>\n        </a>\n        \n        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)"  *ngIf="flag!=1">\n            <ion-infinite-scroll-content\n            loadingSpinner="bubbles"\n            loadingText="Loading more data...">\n        </ion-infinite-scroll-content>\n    </ion-infinite-scroll>\n</div>\n\n<div class="h80"></div>\n</ion-content>\n\n<div class="endcheck" *ngIf="checkInType != \'cp-checkIn\'">\n    <div class="wp100 mt40" *ngIf="val == 1 && checkin_data.other_name == \'\'">\n        <button color="theme" ion-button block round (click)="end_visit(checkin_id)">End Visit with {{checkin_data.dr_name}}</button>\n    </div>  \n    <div class="wp100 mt40" *ngIf="val == 1 && checkin_data.other_name != \'\'">\n        <button color="theme" ion-button block round (click)="end_visit(checkin_id)">End Visit with {{checkin_data.other_name}}</button>\n    </div> \n</div>\n\n<ion-fab right bottom *ngIf="val == 0 && checkInType != \'cp-checkIn\'">\n    <button ion-fab color="danger" (click)="addCheckin()"><ion-icon name="add"></ion-icon></button>\n</ion-fab>\n\n\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/sales-app/checkin-list/checkin-list.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_3__providers_myservice_myservice__["a" /* MyserviceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["LoadingController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_3__providers_myservice_myservice__["a" /* MyserviceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["LoadingController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"]])
     ], CheckinListPage);
     return CheckinListPage;
 }());
@@ -10690,7 +10599,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TermConditionPageModule", function() { return TermConditionPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__term_condition__ = __webpack_require__(532);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__term_condition__ = __webpack_require__(533);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10934,124 +10843,10 @@ var TravelAddPage = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WalletHistoryPageModule", function() { return WalletHistoryPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wallet_history__ = __webpack_require__(530);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var WalletHistoryPageModule = /** @class */ (function () {
-    function WalletHistoryPageModule() {
-    }
-    WalletHistoryPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__wallet_history__["a" /* WalletHistoryPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__wallet_history__["a" /* WalletHistoryPage */]),
-            ],
-        })
-    ], WalletHistoryPageModule);
-    return WalletHistoryPageModule;
-}());
-
-//# sourceMappingURL=wallet-history.module.js.map
-
-/***/ }),
-
-/***/ 574:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkPlanPageModule", function() { return WorkPlanPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__work_plan__ = __webpack_require__(962);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var WorkPlanPageModule = /** @class */ (function () {
-    function WorkPlanPageModule() {
-    }
-    WorkPlanPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__work_plan__["a" /* WorkPlanPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__work_plan__["a" /* WorkPlanPage */]),
-            ],
-        })
-    ], WorkPlanPageModule);
-    return WorkPlanPageModule;
-}());
-
-//# sourceMappingURL=work-plan.module.js.map
-
-/***/ }),
-
-/***/ 575:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkTypeModalPageModule", function() { return WorkTypeModalPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__work_type_modal__ = __webpack_require__(503);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var WorkTypeModalPageModule = /** @class */ (function () {
-    function WorkTypeModalPageModule() {
-    }
-    WorkTypeModalPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__work_type_modal__["a" /* WorkTypeModalPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__work_type_modal__["a" /* WorkTypeModalPage */]),
-            ],
-        })
-    ], WorkTypeModalPageModule);
-    return WorkTypeModalPageModule;
-}());
-
-//# sourceMappingURL=work-type-modal.module.js.map
-
-/***/ }),
-
-/***/ 576:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TravelListPageModule", function() { return TravelListPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__travel_list__ = __webpack_require__(577);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__travel_list__ = __webpack_require__(574);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11081,7 +10876,7 @@ var TravelListPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 577:
+/***/ 574:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11215,15 +11010,15 @@ var TravelListPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 578:
+/***/ 575:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AttendencePageModule", function() { return AttendencePageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DirectDealerListPageModule", function() { return DirectDealerListPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__attendence__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__direct_dealer_list__ = __webpack_require__(114);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11233,23 +11028,137 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var AttendencePageModule = /** @class */ (function () {
-    function AttendencePageModule() {
+var DirectDealerListPageModule = /** @class */ (function () {
+    function DirectDealerListPageModule() {
     }
-    AttendencePageModule = __decorate([
+    DirectDealerListPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__attendence__["a" /* AttendencePage */],
+                __WEBPACK_IMPORTED_MODULE_2__direct_dealer_list__["a" /* DirectDealerListPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__attendence__["a" /* AttendencePage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__direct_dealer_list__["a" /* DirectDealerListPage */]),
             ],
         })
-    ], AttendencePageModule);
-    return AttendencePageModule;
+    ], DirectDealerListPageModule);
+    return DirectDealerListPageModule;
 }());
 
-//# sourceMappingURL=attendence.module.js.map
+//# sourceMappingURL=direct-dealer-list.module.js.map
+
+/***/ }),
+
+/***/ 576:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkPlanPageModule", function() { return WorkPlanPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__work_plan__ = __webpack_require__(962);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var WorkPlanPageModule = /** @class */ (function () {
+    function WorkPlanPageModule() {
+    }
+    WorkPlanPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__work_plan__["a" /* WorkPlanPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__work_plan__["a" /* WorkPlanPage */]),
+            ],
+        })
+    ], WorkPlanPageModule);
+    return WorkPlanPageModule;
+}());
+
+//# sourceMappingURL=work-plan.module.js.map
+
+/***/ }),
+
+/***/ 577:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkTypeModalPageModule", function() { return WorkTypeModalPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__work_type_modal__ = __webpack_require__(504);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var WorkTypeModalPageModule = /** @class */ (function () {
+    function WorkTypeModalPageModule() {
+    }
+    WorkTypeModalPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__work_type_modal__["a" /* WorkTypeModalPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__work_type_modal__["a" /* WorkTypeModalPage */]),
+            ],
+        })
+    ], WorkTypeModalPageModule);
+    return WorkTypeModalPageModule;
+}());
+
+//# sourceMappingURL=work-type-modal.module.js.map
+
+/***/ }),
+
+/***/ 578:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WalletHistoryPageModule", function() { return WalletHistoryPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wallet_history__ = __webpack_require__(531);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var WalletHistoryPageModule = /** @class */ (function () {
+    function WalletHistoryPageModule() {
+    }
+    WalletHistoryPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__wallet_history__["a" /* WalletHistoryPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__wallet_history__["a" /* WalletHistoryPage */]),
+            ],
+        })
+    ], WalletHistoryPageModule);
+    return WalletHistoryPageModule;
+}());
+
+//# sourceMappingURL=wallet-history.module.js.map
 
 /***/ }),
 
@@ -11258,11 +11167,10 @@ var AttendencePageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CartDetailPageModule", function() { return CartDetailPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SubcategoryPageModule", function() { return SubcategoryPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__cart_detail__ = __webpack_require__(505);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_selectable__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subcategory__ = __webpack_require__(168);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11272,25 +11180,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-
-var CartDetailPageModule = /** @class */ (function () {
-    function CartDetailPageModule() {
+var SubcategoryPageModule = /** @class */ (function () {
+    function SubcategoryPageModule() {
     }
-    CartDetailPageModule = __decorate([
+    SubcategoryPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__cart_detail__["a" /* CartDetailPage */],
+                __WEBPACK_IMPORTED_MODULE_2__subcategory__["a" /* SubcategoryPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__cart_detail__["a" /* CartDetailPage */]),
-                __WEBPACK_IMPORTED_MODULE_3_ionic_selectable__["b" /* IonicSelectableModule */]
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__subcategory__["a" /* SubcategoryPage */]),
             ],
         })
-    ], CartDetailPageModule);
-    return CartDetailPageModule;
+    ], SubcategoryPageModule);
+    return SubcategoryPageModule;
 }());
 
-//# sourceMappingURL=cart-detail.module.js.map
+//# sourceMappingURL=subcategory.module.js.map
 
 /***/ }),
 
@@ -11312,13 +11218,13 @@ var CartDetailPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_location_accuracy__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__sales_app_main_distributor_list_main_distributor_list__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_push__ = __webpack_require__(502);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_push__ = __webpack_require__(503);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_myservice_myservice__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__order_list_order_list__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__providers_geolocationservice_geolocationservice__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__sales_app_add_checkin_add_checkin__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_constant_constant__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__work_type_modal_work_type_modal__ = __webpack_require__(503);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__work_type_modal_work_type_modal__ = __webpack_require__(504);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11379,7 +11285,6 @@ var DashboardPage = /** @class */ (function () {
         this.total_direct_dealer = [];
         this.total_primary_order = [];
         this.total_secondary_order = [];
-        this.last_attendence();
         var time = new Date();
         this.currentTime = __WEBPACK_IMPORTED_MODULE_9_moment___default()().format("HH:mm:ss");
         this.storage.get('token').then(function (token) {
@@ -11428,6 +11333,7 @@ var DashboardPage = /** @class */ (function () {
     DashboardPage.prototype.ionViewDidEnter = function () {
         this.location();
         this.events.publish('current_page', 'Dashboard');
+        this.last_attendence();
     };
     DashboardPage.prototype.ionViewDidLeave = function () {
         this.events.publish('current_page', '');
@@ -11555,31 +11461,27 @@ var DashboardPage = /** @class */ (function () {
             spinner: 'hide',
             content: "<img src=\"./assets/imgs/gif.svg\" class=\"h15\" />",
         });
+        loading.present();
         this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(function () {
-            var options = { maximumAge: 10000, timeout: 15000, enableHighAccuracy: true };
+            var options = { maximumAge: 10000, timeout: 15000, enableHighAccuracy: false };
             _this.geolocation.getCurrentPosition(options).then(function (resp) {
                 var lat = resp.coords.latitude;
                 var lng = resp.coords.longitude;
                 _this.attendence_serv.stop_attend({ 'lat': lat, 'lng': lng, 'attend_id': _this.last_attendence_data.attend_id }).then(function (result) {
                     console.log(result);
-                    if (result == 'success') {
-                        _this.last_attendence();
-                        _this.presentToast1();
-                    }
                     loading.dismiss();
+                    _this.last_attendence();
+                    _this.presentToast1();
                 }).catch(function (error) {
                     loading.dismiss();
                 });
             }).catch(function (error) {
                 console.log('Error getting location', error);
-                _this.attendence_serv.stop_attend({}).then(function (result) {
+                _this.attendence_serv.stop_attend({ 'attend_id': _this.last_attendence_data.attend_id }).then(function (result) {
                     console.log(result);
-                    if (result['msg'] == 'success') {
-                        // this.track.stopTracking();
-                        _this.last_attendence();
-                        _this.presentToast1();
-                    }
                     loading.dismiss();
+                    _this.last_attendence();
+                    _this.presentToast1();
                 }).catch(function (error) {
                     loading.dismiss();
                 });
@@ -11588,7 +11490,6 @@ var DashboardPage = /** @class */ (function () {
             console.log('Error requesting location permissions', error);
             loading.dismiss();
         });
-        loading.present();
     };
     DashboardPage.prototype.presentAlert = function () {
         var _this = this;
@@ -11811,10 +11712,89 @@ var DashboardPage = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AttendencePageModule", function() { return AttendencePageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__attendence__ = __webpack_require__(176);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var AttendencePageModule = /** @class */ (function () {
+    function AttendencePageModule() {
+    }
+    AttendencePageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__attendence__["a" /* AttendencePage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__attendence__["a" /* AttendencePage */]),
+            ],
+        })
+    ], AttendencePageModule);
+    return AttendencePageModule;
+}());
+
+//# sourceMappingURL=attendence.module.js.map
+
+/***/ }),
+
+/***/ 581:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CartDetailPageModule", function() { return CartDetailPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__cart_detail__ = __webpack_require__(506);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_selectable__ = __webpack_require__(28);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+var CartDetailPageModule = /** @class */ (function () {
+    function CartDetailPageModule() {
+    }
+    CartDetailPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__cart_detail__["a" /* CartDetailPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__cart_detail__["a" /* CartDetailPage */]),
+                __WEBPACK_IMPORTED_MODULE_3_ionic_selectable__["b" /* IonicSelectableModule */]
+            ],
+        })
+    ], CartDetailPageModule);
+    return CartDetailPageModule;
+}());
+
+//# sourceMappingURL=cart-detail.module.js.map
+
+/***/ }),
+
+/***/ 582:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddCpOrderPageModule", function() { return AddCpOrderPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_cp_order__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_cp_order__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_select_searchable__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_select_searchable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ionic_select_searchable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_selectable__ = __webpack_require__(28);
@@ -11851,7 +11831,45 @@ var AddCpOrderPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 581:
+/***/ 583:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardPageModule", function() { return DashboardPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dashboard__ = __webpack_require__(58);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var DashboardPageModule = /** @class */ (function () {
+    function DashboardPageModule() {
+    }
+    DashboardPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__dashboard__["a" /* DashboardPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__dashboard__["a" /* DashboardPage */]),
+            ],
+        })
+    ], DashboardPageModule);
+    return DashboardPageModule;
+}());
+
+//# sourceMappingURL=dashboard.module.js.map
+
+/***/ }),
+
+/***/ 584:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11892,7 +11910,7 @@ var DealerSurveyPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 582:
+/***/ 585:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11930,7 +11948,7 @@ var OrderDetailPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 583:
+/***/ 586:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11968,7 +11986,7 @@ var OrderListPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 584:
+/***/ 587:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11976,7 +11994,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductsPageModule", function() { return ProductsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__products__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__products__ = __webpack_require__(84);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12006,7 +12024,7 @@ var ProductsPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 585:
+/***/ 588:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12047,7 +12065,7 @@ var AddCheckinPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 586:
+/***/ 589:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12055,7 +12073,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddDistributionPageModule", function() { return AddDistributionPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_distribution__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_distribution__ = __webpack_require__(173);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_selectable__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_select_searchable__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_select_searchable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ionic_select_searchable__);
@@ -12092,7 +12110,7 @@ var AddDistributionPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 587:
+/***/ 590:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12100,7 +12118,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddLeadsPageModule", function() { return AddLeadsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_leads__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_leads__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_selectable__ = __webpack_require__(28);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -12133,7 +12151,7 @@ var AddLeadsPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 588:
+/***/ 591:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12141,7 +12159,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditNetworkPageModule", function() { return EditNetworkPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_network__ = __webpack_require__(501);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_network__ = __webpack_require__(502);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_selectable__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_select_searchable__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_select_searchable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ionic_select_searchable__);
@@ -12178,45 +12196,7 @@ var EditNetworkPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 589:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EndCheckinPageModule", function() { return EndCheckinPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__end_checkin__ = __webpack_require__(498);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var EndCheckinPageModule = /** @class */ (function () {
-    function EndCheckinPageModule() {
-    }
-    EndCheckinPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__end_checkin__["a" /* EndCheckinPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__end_checkin__["a" /* EndCheckinPage */]),
-            ],
-        })
-    ], EndCheckinPageModule);
-    return EndCheckinPageModule;
-}());
-
-//# sourceMappingURL=end-checkin.module.js.map
-
-/***/ }),
-
-/***/ 590:
+/***/ 592:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12224,7 +12204,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SignupPageModule", function() { return SignupPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__signup__ = __webpack_require__(535);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__signup__ = __webpack_require__(536);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_selectable__ = __webpack_require__(28);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -12257,45 +12237,7 @@ var SignupPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 591:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardPageModule", function() { return DashboardPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dashboard__ = __webpack_require__(58);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var DashboardPageModule = /** @class */ (function () {
-    function DashboardPageModule() {
-    }
-    DashboardPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__dashboard__["a" /* DashboardPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(__WEBPACK_IMPORTED_MODULE_2__dashboard__["a" /* DashboardPage */]),
-            ],
-        })
-    ], DashboardPageModule);
-    return DashboardPageModule;
-}());
-
-//# sourceMappingURL=dashboard.module.js.map
-
-/***/ }),
-
-/***/ 592:
+/***/ 593:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12336,7 +12278,7 @@ var AddDealerPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 593:
+/***/ 594:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12527,7 +12469,7 @@ var AttendenceserviceProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__channel_partner_app_add_cp_order_add_cp_order__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__channel_partner_app_add_cp_order_add_cp_order__ = __webpack_require__(170);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12797,7 +12739,7 @@ var OrderDetailPage = /** @class */ (function () {
     };
     OrderDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-order-detail',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/order-detail/order-detail.html"*/'\'<ion-header class="catalogue-header">\n	<ion-navbar>\n		<ion-title>#ORD-{{userDetail.order_id}}</ion-title>\n		<!-- <ion-buttons end class="login-btn">\n			<button ion-button>\n				<img class="w30" src="assets/icons/profil-ic-2.svg" alt="">\n			</button>\n		</ion-buttons> -->\n		<!-- <ion-buttons end class="login-btn" (click)="presentPopover($event)">\n			<button ion-button>\n				<img class="w4 h16" src="assets/icons/more-option-ic.svg" alt="">\n			</button>\n		</ion-buttons> -->\n	</ion-navbar>\n</ion-header>\n\n<ion-content>\n	\n	<div class="prlist sticky">\n		<div class="box light-red-bg relative" style="margin-bottom: 0px !important;">\n			\n			<div class="relative">\n				<h1 class="font14 mb10 semibold">{{userDetail.company_name | titlecase}}</h1>\n				<div class="cs-status" *ngIf="userDetail.order_status != \'\'" [ngClass]="{\'pending\': userDetail.order_status == \'Pending\', \'reject\': userDetail.order_status == \'Reject\', \'approved\': userDetail.order_status == \'Approved\' }">\n					{{userDetail.order_status}}\n				</div>\n			</div>\n			\n			<div class="heading border-none">\n				<div class="dist-name dflex">\n					<div class="first-leter w50">{{tag}}</div>\n					<div class="name-number">\n						<div class="text-with-ic dflex mb0">\n							<i class="material-icons text-relat-icon">person</i>\n							<p>{{userDetail.name | titlecase}}</p>\n						</div>\n						\n						<div class="text-with-ic dflex mb0" *ngIf="userDetail.mobile">\n							<i class="material-icons text-relat-icon">call</i>\n							<p>{{userDetail.mobile}}</p>\n						</div>\n						\n						<div class="text-with-ic dflex mb0" *ngIf="!userDetail.mobile">\n							<i class="material-icons text-relat-icon">call</i>\n							<p>N A</p>\n						</div>\n						\n					</div>\n				</div>\n			</div>\n			\n			<!-- <div class="detail pb15">\n				<p class="mt10"><strong>Created By</strong></p>\n				<p class="f13"></p>\n				<div class="cs-table-list" style="margin: 3px -10px;">\n				</div>\n			</div> -->\n			\n			\n			<!-- <div class="detail pb15" *ngIf="userDetail.distributor_name != null">\n				<p class="mt10"><strong>Distributor Name</strong></p>\n				<p class="f13">{{userDetail.distributor_name | titlecase}}</p>\n				<div class="cs-table-list" style="margin: 3px -10px;">\n				</div>\n			</div> -->\n			\n			<div class="oneinfo padding0">\n				<div class="figure" [ngClass]="userDetail.order_status != \'\' ? \'wp100\' : \'\'" style="background:rgba(255,0,0,0.1)" *ngIf="userDetail.order_creator">\n					<p>Created By</p>\n					<p>{{userDetail.order_creator | titlecase}}</p>\n				</div>\n				<div class="figure" style="background:rgba(255,0,0,0.1)" *ngIf="userDetail.distributor_name != null">\n					<p>Distributor Name</p>\n					<p>{{userDetail.distributor_name | titlecase}}</p>\n				</div>\n				<div class="figure" style="background:rgba(255,0,0,0.1)">\n					<p>Date Created</p>\n					<p>{{userDetail.order_date_created | date:\'MMM d, y\'}}</p>\n				</div>\n				\n				<div class="figure" style="background:rgba(255,0,0,0.1)">\n					<p>Order Value</p>\n					<p>&#8377; {{userDetail.order_total}}</p>\n				</div>\n			</div>\n			\n			<div class="detail pt8">\n				<p><strong>ADDRESS</strong></p>\n				<p class="f13">{{userDetail.district | titlecase}},{{userDetail.state | titlecase}} {{userDetail.pincode}}</p>\n				<div class="cs-table-list">\n				</div>\n			</div>\n			\n			\n			\n			<div class="detail pt8" *ngIf="userDetail.reason_reject != \'\'">\n				<p><strong>Reason of Reject</strong></p>\n				<p class="f13">{{userDetail.reason_reject}}</p>\n				<div class="cs-table-list">\n				</div>\n			</div>\n			\n			\n			<div class="detail pt8" *ngIf="userDetail.remark != \'\'">\n				<p><strong>Remark</strong></p>\n				<p class="f13">{{userDetail.remark}}</p>\n				<div class="cs-table-list">\n				</div>\n			</div>\n		</div>\n	</div>\n	\n	<div class="heading-text ml16">\n		<p></p> 		\n	</div>\n	\n	<div class="list">\n		\n		<div class="box complete" *ngFor="let order of orderDetail;let i = index;" padding>\n			\n			<div class="data-table padding0">\n				<p class="cs-info">\n					<span>PRODUCT INFORMATION</span>\n					{{order.product_name}}, {{order.brand}}<span *ngIf="order.color">,</span> {{order.color}}<span *ngIf="order.category">,</span> {{order.category}}<span *ngIf="order.sub_category">,</span> {{order.sub_category}}<span *ngIf="order.cat_no">,</span> {{order.cat_no}}\n				</p>\n				<table>\n					\n					<tr>\n						<th>Quantity</th>\n						<td>\n							<div class="edit-data" ngClass="{{order.edit_true ? \'\' : \'active\' }}">\n								<input type="number" string-to-number (input)="userDetail.delivery_from == \'Pearl\' ?  calculateAmount(order.qty,i) : calculateAmount1(order.qty,i)" [readonly]="active[i]?.qty != \'1\'"  name="qty" [(ngModel)]="order.qty" readonly>\n\n								<a class="edit-value edits" *ngIf="order_type != \'Direct\' && (userDetail.order_status == \'Pending\' && userDetail.delivery_from == \'Pearl\') || (orderDate == currentDate && userDetail.delivery_from != \'Pearl\') &&  order.edit_true" (click)="edit_order(i,order.id,order.category,userDetail.dr_id,userDetail.type,order.cat_no)">\n									<i class="material-icons create" >create</i>\n								</a>\n\n								<a class="edit-value saves" *ngIf="!order.edit_true">\n									<i class="material-icons create" (click)="update_order(i,order.order_id,order.id)">save</i>\n								</a>\n							</div>\n						</td>\n					</tr>\n					<tr>\n						<th>Price</th>\n						<td>&#8377; {{order.price}}</td>\n					</tr>\n					<tr>\n						<th>Discount ({{order.discount_percent}}%)</th>\n						<td>&#8377; {{order.discount_amount}}</td>\n					</tr>\n					<!-- <tr>\n						<th>Discounted Amount</th>\n						<td>&#8377; {{order.discounted_amount}}</td>\n					</tr> -->\n					<tr *ngIf="order.gst_amount != \'0\'">\n						<th>GST ({{order.gst_percent}}%)</th>\n						<td>&#8377; {{order.gst_amount}}</td>\n					</tr>\n					<tr>\n						<th>Total Amount</th>\n						<td>{{order.amount}}</td>\n					</tr>\n					<tr *ngIf="(order_type != \'Direct\' && userDetail.order_status == \'Pending\' && userDetail.delivery_from == \'Pearl\') || (orderDate == currentDate && userDetail.delivery_from != \'Pearl\') ">\n						<th>Action</th>\n						<td><a class="del-btn" (click)="delete_item(i,order.order_id,order.id)"><i class="material-icons create" >delete_sweep</i>Delete</a></td>\n					</tr>\n				</table>\n			</div>\n			\n			<!-- *ngIf= "(userDetail.delivery_from==\'Pearl\' ? \'1 == 1\' : orderDate == currentDate) &&  order.edit_true"  -->\n			\n			<!--  -->\n			<div class="oneinfo pr0 pl0 pb0" style="display: none;">\n				<div class="figure" [ngClass]="{ \'active\' : active[i]?.qty == \'1\'}">\n					<p>Quantity</p>\n					<!-- <p>{{order.qty}}</p> -->\n					<input type="number" string-to-number (input)="userDetail.delivery_from == \'Pearl\' ?  calculateAmount(order.qty,i) : calculateAmount1(order.qty,i)" [readonly]="active[i]?.qty != \'1\'"  name="qty" [(ngModel)]="order.qty" readonly>\n					<a class="edit-value" *ngIf="(userDetail.order_status == \'Pending\') || (userDetail.order_gst == 0 && userDetail.order_discount == 0)" (click)="edit_order(i,order.id,order.category,userDetail.dr_id,userDetail.type,order.cat_no)">\n						<i class="material-icons create" >create</i>\n					</a>\n					<a class="edit-value" *ngIf="active[i]?.qty == \'1\' && ((userDetail.order_status == \'Pending\') || (userDetail.order_gst == 0 && userDetail.order_discount == 0))">\n						<i class="material-icons save" (click)="update_order(i,order.order_id,order.id)">save</i>\n					</a>\n				</div>\n				\n				<div class="figure">\n					<p>Price</p>\n					<p>&#8377; {{order.price}}</p>\n					<a class="edit-value1" *ngIf= "(userDetail.order_status == \'Pending\') || (userDetail.order_gst == 0 && userDetail.order_discount == 0)" (click)="delete_item(i,order.order_id,order.id)">\n						<i class="material-icons">delete</i>\n					</a>\n				</div>\n			</div>\n			<div class="oneinfo pt0 pr0 pl0 pb0"  style="display: none;">\n				<div class="figure" *ngIf="userDetail.delivery_from == \'Pearl\'">\n					<p>GST</p>\n					<p>&#8377; {{order.gst_amount}}</p>\n				</div>\n				\n				<div class="figure">\n					<p>Discount</p>\n					<p>&#8377; {{order.discount_amount}}</p>\n				</div>\n			</div>\n			<div class="oneinfo pt0 pr0 pl0 "  style="display: none;">\n				<div class="figure wp100">\n					<p>Total Amount</p>\n					<p>&#8377; {{order.amount}}</p>\n				</div>\n			</div>\n			\n			\n		</div>\n		\n		\n		\n	</div>\n	<div class="h60"></div>\n</ion-content>\n\n<div class="endcheck" *ngIf="(order_type != \'Direct\') &&  (userDetail.order_status == \'Pending\' && userDetail.delivery_from == \'Pearl\') || (orderDate == currentDate && userDetail.delivery_from != \'Pearl\') ">\n	<a (click)="add_new_item(userDetail.order_id,userDetail.dr_id)">Add Items</a>\n</div>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/order-detail/order-detail.html"*/,
+            selector: 'page-order-detail',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/order-detail/order-detail.html"*/'\'<ion-header class="catalogue-header">\n	<ion-navbar>\n		<ion-title>#ORD-{{userDetail.order_id}}</ion-title>\n		<!-- <ion-buttons end class="login-btn">\n			<button ion-button>\n				<img class="w30" src="assets/icons/profil-ic-2.svg" alt="">\n			</button>\n		</ion-buttons>\n		<ion-buttons end class="login-btn" (click)="presentPopover($event)">\n			<button ion-button>\n				<img class="w4 h16" src="assets/icons/more-option-ic.svg" alt="">\n			</button>\n		</ion-buttons> -->\n	</ion-navbar>\n</ion-header>\n\n<ion-content>\n	\n	<div class="prlist sticky">\n		<div class="box light-red-bg relative" style="margin-bottom: 0px !important;">\n			\n			<div class="relative">\n				<h1 class="font14 mb10 semibold">{{userDetail.company_name | titlecase}}</h1>\n				<div class="cs-status" *ngIf="userDetail.order_status != \'\'" [ngClass]="{\'pending\': userDetail.order_status == \'Pending\', \'reject\': userDetail.order_status == \'Reject\', \'approved\': userDetail.order_status == \'Approved\' }">\n					{{userDetail.order_status}}\n				</div>\n			</div>\n			\n			<div class="heading border-none">\n				<div class="dist-name dflex">\n					<div class="first-leter w50">{{tag}}</div>\n					<div class="name-number">\n						<div class="text-with-ic dflex mb0">\n							<i class="material-icons text-relat-icon">person</i>\n							<p>{{userDetail.name | titlecase}}</p>\n						</div>\n						\n						<div class="text-with-ic dflex mb0" *ngIf="userDetail.mobile">\n							<i class="material-icons text-relat-icon">call</i>\n							<p>{{userDetail.mobile}}</p>\n						</div>\n						\n						<div class="text-with-ic dflex mb0" *ngIf="!userDetail.mobile">\n							<i class="material-icons text-relat-icon">call</i>\n							<p>N A</p>\n						</div>\n						\n					</div>\n				</div>\n			</div>\n			\n			<!-- <div class="detail pb15">\n				<p class="mt10"><strong>Created By</strong></p>\n				<p class="f13"></p>\n				<div class="cs-table-list" style="margin: 3px -10px;">\n				</div>\n			</div> -->\n			\n			\n			<!-- <div class="detail pb15" *ngIf="userDetail.distributor_name != null">\n				<p class="mt10"><strong>Distributor Name</strong></p>\n				<p class="f13">{{userDetail.distributor_name | titlecase}}</p>\n				<div class="cs-table-list" style="margin: 3px -10px;">\n				</div>\n			</div> -->\n			\n			<div class="oneinfo padding0">\n				<div class="figure" [ngClass]="userDetail.order_status != \'\' ? \'wp100\' : \'\'" style="background:rgba(255,0,0,0.1)" *ngIf="userDetail.order_creator">\n					<p>Created By</p>\n					<p>{{userDetail.order_creator | titlecase}}</p>\n				</div>\n				<div class="figure" style="background:rgba(255,0,0,0.1)" *ngIf="userDetail.distributor_name != null">\n					<p>Distributor Name</p>\n					<p>{{userDetail.distributor_name | titlecase}}</p>\n				</div>\n				<div class="figure" style="background:rgba(255,0,0,0.1)">\n					<p>Date Created</p>\n					<p>{{userDetail.order_date_created | date:\'MMM d, y\'}}</p>\n				</div>\n				\n				<div class="figure" style="background:rgba(255,0,0,0.1)">\n					<p>Order Value</p>\n					<p>&#8377; {{userDetail.order_total}}</p>\n				</div>\n			</div>\n			\n			<div class="detail pt8">\n				<p><strong>ADDRESS</strong></p>\n				<p class="f13">{{userDetail.district | titlecase}},{{userDetail.state | titlecase}} {{userDetail.pincode}}</p>\n				<div class="cs-table-list">\n				</div>\n			</div>\n			\n			\n			\n			<div class="detail pt8" *ngIf="userDetail.reason_reject != \'\'">\n				<p><strong>Reason of Reject</strong></p>\n				<p class="f13">{{userDetail.reason_reject}}</p>\n				<div class="cs-table-list">\n				</div>\n			</div>\n			\n			\n			<div class="detail pt8" *ngIf="userDetail.remark != \'\'">\n				<p><strong>Remark</strong></p>\n				<p class="f13">{{userDetail.remark}}</p>\n				<div class="cs-table-list">\n				</div>\n			</div>\n		</div>\n	</div>\n	\n	<div class="heading-text ml16">\n		<p></p> 		\n	</div>\n	\n	<div class="list">\n		\n		<div class="box complete" *ngFor="let order of orderDetail;let i = index;" padding>\n			\n			<div class="data-table padding0">\n				<p class="cs-info">\n					<span>PRODUCT INFORMATION</span>\n					{{order.product_name}}, {{order.brand}}<span *ngIf="order.color">,</span> {{order.color}}<span *ngIf="order.category">,</span> {{order.category}}<span *ngIf="order.sub_category">,</span> {{order.sub_category}}<span *ngIf="order.cat_no">,</span> {{order.cat_no}}\n				</p>\n				<table>\n					\n					<tr>\n						<th>Quantity</th>\n						<td>\n							<div class="edit-data" ngClass="{{order.edit_true ? \'\' : \'active\' }}">\n								<input type="number" string-to-number (input)="userDetail.delivery_from == \'Pearl\' ?  calculateAmount(order.qty,i) : calculateAmount1(order.qty,i)" [readonly]="active[i]?.qty != \'1\'"  name="qty" [(ngModel)]="order.qty" readonly>\n\n								<a class="edit-value edits" *ngIf="order_type != \'Direct\' && (userDetail.order_status == \'Pending\' && userDetail.delivery_from == \'Pearl\') || (orderDate == currentDate && userDetail.delivery_from != \'Pearl\') &&  order.edit_true" (click)="edit_order(i,order.id,order.category,userDetail.dr_id,userDetail.type,order.cat_no)">\n									<i class="material-icons create" >create</i>\n								</a>\n\n								<a class="edit-value saves" *ngIf="!order.edit_true">\n									<i class="material-icons create" (click)="update_order(i,order.order_id,order.id)">save</i>\n								</a>\n							</div>\n						</td>\n					</tr>\n					<tr>\n						<th>Price</th>\n						<td>&#8377; {{order.price}}</td>\n					</tr>\n					<tr>\n						<th>Discount ({{order.discount_percent}}%)</th>\n						<td>&#8377; {{order.discount_amount}}</td>\n					</tr>\n					<!-- <tr>\n						<th>Discounted Amount</th>\n						<td>&#8377; {{order.discounted_amount}}</td>\n					</tr> -->\n					<tr *ngIf="order.gst_amount != \'0\'">\n						<th>GST ({{order.gst_percent}}%)</th>\n						<td>&#8377; {{order.gst_amount}}</td>\n					</tr>\n					<tr>\n						<th>Total Amount</th>\n						<td>{{order.amount}}</td>\n					</tr>\n					<tr *ngIf="(order_type != \'Direct\' && userDetail.order_status == \'Pending\' && userDetail.delivery_from == \'Pearl\') || (orderDate == currentDate && userDetail.delivery_from != \'Pearl\') ">\n						<th>Action</th>\n						<td><a class="del-btn" (click)="delete_item(i,order.order_id,order.id)"><i class="material-icons create" >delete_sweep</i>Delete</a></td>\n					</tr>\n				</table>\n			</div>\n			\n			<!-- *ngIf= "(userDetail.delivery_from==\'Pearl\' ? \'1 == 1\' : orderDate == currentDate) &&  order.edit_true"  -->\n			\n			<!--  -->\n			<div class="oneinfo pr0 pl0 pb0" style="display: none;">\n				<div class="figure" [ngClass]="{ \'active\' : active[i]?.qty == \'1\'}">\n					<p>Quantity</p>\n					<!-- <p>{{order.qty}}</p> -->\n					<input type="number" string-to-number (input)="userDetail.delivery_from == \'Pearl\' ?  calculateAmount(order.qty,i) : calculateAmount1(order.qty,i)" [readonly]="active[i]?.qty != \'1\'"  name="qty" [(ngModel)]="order.qty" readonly>\n					<a class="edit-value" *ngIf="(userDetail.order_status == \'Pending\') || (userDetail.order_gst == 0 && userDetail.order_discount == 0)" (click)="edit_order(i,order.id,order.category,userDetail.dr_id,userDetail.type,order.cat_no)">\n						<i class="material-icons create" >create</i>\n					</a>\n					<a class="edit-value" *ngIf="active[i]?.qty == \'1\' && ((userDetail.order_status == \'Pending\') || (userDetail.order_gst == 0 && userDetail.order_discount == 0))">\n						<i class="material-icons save" (click)="update_order(i,order.order_id,order.id)">save</i>\n					</a>\n				</div>\n				\n				<div class="figure">\n					<p>Price</p>\n					<p>&#8377; {{order.price}}</p>\n					<a class="edit-value1" *ngIf= "(userDetail.order_status == \'Pending\') || (userDetail.order_gst == 0 && userDetail.order_discount == 0)" (click)="delete_item(i,order.order_id,order.id)">\n						<i class="material-icons">delete</i>\n					</a>\n				</div>\n			</div>\n			<div class="oneinfo pt0 pr0 pl0 pb0"  style="display: none;">\n				<div class="figure" *ngIf="userDetail.delivery_from == \'Pearl\'">\n					<p>GST</p>\n					<p>&#8377; {{order.gst_amount}}</p>\n				</div>\n				\n				<div class="figure">\n					<p>Discount</p>\n					<p>&#8377; {{order.discount_amount}}</p>\n				</div>\n			</div>\n			<div class="oneinfo pt0 pr0 pl0 "  style="display: none;">\n				<div class="figure wp100">\n					<p>Total Amount</p>\n					<p>&#8377; {{order.amount}}</p>\n				</div>\n			</div>\n			\n			\n		</div>\n		\n		\n		\n	</div>\n	<div class="h60"></div>\n</ion-content>\n\n<div class="endcheck" *ngIf="(order_type != \'Direct\') &&  (userDetail.order_status == \'Pending\' && userDetail.delivery_from == \'Pearl\') || (orderDate == currentDate && userDetail.delivery_from != \'Pearl\') ">\n	<a (click)="add_new_item(userDetail.order_id,userDetail.dr_id)">Add Items</a>\n</div>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/order-detail/order-detail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["LoadingController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__["a" /* MyserviceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
     ], OrderDetailPage);
@@ -12818,7 +12760,7 @@ var OrderDetailPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__order_list_order_list__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__cart_detail_cart_detail__ = __webpack_require__(505);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__cart_detail_cart_detail__ = __webpack_require__(506);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12946,6 +12888,8 @@ var AddOrderPage = /** @class */ (function () {
         //   console.log(this.data);
         // });
         console.log(this.navParams.get('user_data'));
+        console.log(this.navParams.get('user_data2'));
+        console.log(this.navParams.get('data'));
         console.log(this.navParams.get('brand_assign'));
         if (this.navParams.get('user_data')) {
             this.user_info = this.navParams.get('user_detail');
@@ -12969,6 +12913,7 @@ var AddOrderPage = /** @class */ (function () {
                     console.log(result);
                     _this.autocompleteItems = result;
                     console.log(_this.autocompleteItems);
+                }).catch(function (error) {
                 });
             }
             if (this.data.type == 3) {
@@ -13002,6 +12947,7 @@ var AddOrderPage = /** @class */ (function () {
                     console.log(result);
                     _this.autocompleteItems = result;
                     console.log(_this.autocompleteItems);
+                }).catch(function (error) {
                 });
             }
             if (this.data.type == 3) {
@@ -13048,6 +12994,7 @@ var AddOrderPage = /** @class */ (function () {
                     console.log(result);
                     _this.autocompleteItems = result;
                     console.log(_this.autocompleteItems);
+                }).catch(function (error) {
                 });
             }
             if (this.data.type == 3) {
@@ -13146,30 +13093,31 @@ var AddOrderPage = /** @class */ (function () {
                 _this.data.distributor_id = _this.distributor_list[0];
             }
             console.log(_this.data.distributor_id);
+        }).catch(function (error) {
         });
     };
     AddOrderPage.prototype.portChange = function (event) {
         var _this = this;
-        console.log(event);
         this.value.product_name = '';
         this.data.brand = '';
         this.data.color = '';
         this.value.category = '';
         this.value.sub_category = '';
-        // this.data={};
-        // this.show=false;
         this.lodingPersent();
         console.log('port:', event.value);
         console.log(this.data.dr_id);
         this.show1 = "1";
         console.log(this.brand_info);
         console.log(this.brand_assign);
+        console.log(this.data.cat_no);
+        console.log(this.data.cat_no.cat_no);
         if (this.brand_assign.length > 0 && this.data.type != 3) {
             console.log("Len > 0");
             this.temp_obj = event.value;
             this.user_type = this.data.type;
             this.service.addData({ 'cat_no': event.value.cat_no, 'category': event.value.category, 'dr_id': this.data.dr_id, 'type': this.data.type, 'product_id': event.value.id, 'brand': this.brand_assign }, "product/cat_product_list1").then(function (result) {
                 console.log(result);
+                _this.loading.dismiss();
                 if (result) {
                     _this.edit_dealer_type = result['dealer_type'];
                     _this.brandList = result['brand'];
@@ -13195,17 +13143,18 @@ var AddOrderPage = /** @class */ (function () {
                     console.log(_this.value1);
                 }
                 _this.pdiv = true;
-                _this.loading.dismiss();
                 _this.showdiv();
-                // this.show=false;
+            }).catch(function (error) {
+                console.log(error);
+                _this.loading.dismiss();
             });
         }
         if (this.brand_assign == 0 && this.data.type != 3) {
-            console.log("Len == 0");
             this.temp_obj = event.value;
             this.user_type = this.data.type;
             this.service.addData({ 'cat_no': event.value.cat_no, 'category': event.value.category, 'dr_id': this.data.dr_id, 'type': this.data.type, 'product_id': event.value.id }, "product/cat_product_list").then(function (result) {
                 console.log(result);
+                _this.loading.dismiss();
                 if (result) {
                     _this.brandList = result['brand'];
                     console.log(_this.brandList);
@@ -13229,9 +13178,10 @@ var AddOrderPage = /** @class */ (function () {
                     console.log(_this.value1);
                 }
                 _this.pdiv = true;
-                _this.loading.dismiss();
                 _this.showdiv();
-                // this.show=false;
+            }).catch(function (error) {
+                console.log(error);
+                _this.loading.dismiss();
             });
         }
         if (this.data.type == 3) {
@@ -13240,6 +13190,7 @@ var AddOrderPage = /** @class */ (function () {
             this.user_type = this.data.type;
             this.service.addData({ 'cat_no': event.value.cat_no, 'category': event.value.category, 'dr_id': this.data.dr_id, 'type': this.data.type, 'product_id': event.value.id, 'distributor_id': this.data.distributor_id.id }, "product/cat_product_list").then(function (result) {
                 console.log(result);
+                _this.loading.dismiss();
                 if (result) {
                     _this.brandList = result['brand'];
                     console.log(_this.brandList);
@@ -13261,10 +13212,13 @@ var AddOrderPage = /** @class */ (function () {
                     _this.value.amount = 0;
                     _this.value1 = result['data1'][0];
                     console.log(_this.value1);
+                    console.log(_this.value);
                 }
                 _this.pdiv = true;
-                _this.loading.dismiss();
                 _this.showdiv();
+            }).catch(function (error) {
+                console.log(error);
+                _this.loading.dismiss();
             });
         }
     };
@@ -13289,7 +13243,7 @@ var AddOrderPage = /** @class */ (function () {
             this.storage.set('order_details', '');
             this.data = {};
             this.order_item_array = [];
-            this.globalVar = '';
+            this.globalVar = 0;
         }
     };
     AddOrderPage.prototype.showdiv = function () {
@@ -13327,6 +13281,14 @@ var AddOrderPage = /** @class */ (function () {
         });
         alert.present();
     };
+    AddOrderPage.prototype.presentAlert4 = function () {
+        var alert = this.alertCtrl.create({
+            title: 'Alert',
+            subTitle: 'Enter Correct Discount',
+            buttons: ['Ok']
+        });
+        alert.present();
+    };
     AddOrderPage.prototype.addToCart = function () {
         var _this = this;
         console.log(this.data);
@@ -13335,9 +13297,11 @@ var AddOrderPage = /** @class */ (function () {
         if (this.value.cp_net_price > this.value.dealer_rate) {
             this.presentAlert3();
         }
+        else if (this.value.dealer_discount > 100) {
+            this.presentAlert4();
+        }
         else {
             if (!this.data.brand) {
-                console.log('test');
                 if (this.colorList.length > 1 || this.brandList.length > 1) {
                     console.log('error');
                     this.presentAlert1();
@@ -13549,11 +13513,16 @@ var AddOrderPage = /** @class */ (function () {
         var _this = this;
         console.log(this.tmp_array);
         console.log(this.order_item_array);
+        if (this.globalVar == '' || this.globalVar == null || this.globalVar == NaN)
+            this.globalVar = 0;
         if (this.order_item_array) {
             var _loop_1 = function (index) {
                 var isIndex = this_1.order_item_array.findIndex(function (row) { return row.pro_id == _this.tmp_array[index].pro_id && row.brand == _this.tmp_array[index].brand && row.color == _this.tmp_array[index].color; });
+                console.log(isIndex);
+                console.log(this_1.globalVar);
                 if (isIndex === -1) {
-                    this_1.globalVar = this_1.globalVar + 1;
+                    console.log(this_1.globalVar);
+                    this_1.globalVar = parseInt(this_1.globalVar) + parseInt('1');
                     this_1.order_item_array = this_1.order_item_array.concat(this_1.tmp_array[index]);
                 }
                 else {
@@ -13603,6 +13572,8 @@ var AddOrderPage = /** @class */ (function () {
             console.log(result);
             _this.categoryList = result;
             _this.loading.dismiss();
+        }).catch(function (error) {
+            _this.loading.dismiss();
         });
     };
     AddOrderPage.prototype.ngOnInit = function () {
@@ -13624,6 +13595,7 @@ var AddOrderPage = /** @class */ (function () {
                     }
                 }
             }
+        }).catch(function (error) {
         });
     };
     AddOrderPage.prototype.ionViewWillEnter = function () {
@@ -13650,13 +13622,14 @@ var AddOrderPage = /** @class */ (function () {
         });
         this.storage.get('order_item_length').then(function (order_item_length) {
             console.log(order_item_length);
-            if (typeof (order_item_length) !== 'undefined' && order_item_length) {
-                _this.globalVar = order_item_length;
-            }
+            _this.globalVar = order_item_length;
         });
         this.storage.get('order_details').then(function (order_details) {
             console.log(order_details);
+            // if(order_details)
+            // {
             _this.user_type = order_details.type;
+            // }
             if (typeof (order_details) !== 'undefined' && order_details) {
                 _this.data = order_details;
                 console.log(_this.data);
@@ -13669,11 +13642,13 @@ var AddOrderPage = /** @class */ (function () {
                             console.log(result);
                             _this.autocompleteItems = result;
                             console.log(_this.autocompleteItems);
+                        }).catch(function (error) {
                         });
                     }
                     if (_this.brand_info == '') {
                         _this.updateSearch();
                     }
+                }).catch(function (error) {
                 });
             }
             console.log(_this.data);
@@ -13705,6 +13680,8 @@ var AddOrderPage = /** @class */ (function () {
             });
             toast.present();
             _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__order_list_order_list__["a" /* OrderListPage */]);
+        }).catch(function (error) {
+            _this.loading.dismiss();
         });
     };
     AddOrderPage.prototype.orderPlaceDealer = function () {
@@ -13725,6 +13702,8 @@ var AddOrderPage = /** @class */ (function () {
                 toast.present();
                 _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__order_list_order_list__["a" /* OrderListPage */], { 'order_type': _this.order_for });
             }
+        }).catch(function (error) {
+            _this.loading.dismiss();
         });
     };
     AddOrderPage.prototype.addOrderItem = function () {
@@ -13744,6 +13723,7 @@ var AddOrderPage = /** @class */ (function () {
                 toast.present();
                 _this.navCtrl.pop();
             }
+        }).catch(function (error) {
         });
     };
     AddOrderPage.prototype.removeInCartConfirmation = function (index) {
@@ -13815,63 +13795,45 @@ var AddOrderPage = /** @class */ (function () {
         console.log(this.value);
         this.gstAmt = 0;
         this.value.gstAmt = 0;
-        // if(this.value.dealer_discount)
-        // {
-        //   this.discount_amount = ((this.value.net_price*this.value.dealer_discount)/100)*this.value.qty;
-        // }
-        // else
-        // {
-        //   this.discount_amount = 0;
-        // }
-        // if(this.value.qty)
-        // {
-        //   this.ord_subTotal = this.value.net_price * this.value.qty;
-        //   this.value.amount = this.ord_subTotal - this.discount_amount;
-        // }
-        // else
-        // {
-        //   this.ord_subTotal = 0;
-        //   this.value.amount = this.ord_subTotal - this.discount_amount;
-        // }
-        // console.log(this.value);
-        if (dealer_discount && qty) {
-            if (this.value.gstType == 'With GST' && this.user_type == '3') {
-                this.discount_percent = dealer_discount;
-                this.gst_percent = 0;
-                this.discounted_amt = ((this.value.net_price * dealer_discount) / 100) * qty;
-                this.discounted_amt = this.discounted_amt.toFixed(2);
-                this.after_discount_amt = this.discounted_amt;
-                this.data.order_discount = this.discounted_amt;
-                this.value.amount = qty * this.value.net_price - qty * ((this.value.net_price * dealer_discount) / 100);
-                this.gstAmt = (this.value.amount * this.value.gst.gst) / (parseInt('100') + parseInt(this.value.gst.gst));
-                this.value.gstAmt = parseFloat(this.gstAmt).toFixed(2);
-                this.value.amount = parseFloat(this.value.amount).toFixed(2);
-            }
-            else if (this.value.gstType == 'Extra GST' && this.user_type == '3') {
-                this.discount_percent = dealer_discount;
-                this.gst_percent = 0;
-                this.discounted_amt = ((this.value.net_price * dealer_discount) / 100) * qty;
-                this.discounted_amt = this.discounted_amt.toFixed(2);
-                this.after_discount_amt = this.discounted_amt;
-                this.data.order_discount = this.discounted_amt;
-                this.value.amount = qty * this.value.net_price - qty * ((this.value.net_price * dealer_discount) / 100);
-                this.gstAmt = (this.value.amount * this.value.gst.gst) / 100;
-                this.value.gstAmt = parseFloat(this.gstAmt).toFixed(2);
-                this.value.amount = parseFloat(this.value.amount) + parseFloat(this.value.gstAmt);
-                this.value.amount = parseFloat(this.value.amount).toFixed(2);
-            }
-            else {
-                this.discount_percent = dealer_discount;
-                this.gst_percent = 0;
-                this.discounted_amt = ((this.value.net_price * dealer_discount) / 100) * qty;
-                this.discounted_amt = this.discounted_amt.toFixed(2);
-                this.after_discount_amt = this.discounted_amt;
-                this.data.order_discount = this.discounted_amt;
-                this.value.amount = qty * this.value.net_price - qty * ((this.value.net_price * dealer_discount) / 100);
-                this.value.amount = parseFloat(this.value.amount).toFixed(2);
-            }
-            this.subTotal = qty * this.value.net_price;
+        if (dealer_discount == undefined) {
+            dealer_discount = 0;
         }
+        if (this.value.gstType == 'With GST' && this.user_type == '3') {
+            this.discount_percent = dealer_discount;
+            this.gst_percent = 0;
+            this.discounted_amt = ((this.value.net_price * dealer_discount) / 100) * qty;
+            this.discounted_amt = this.discounted_amt.toFixed(2);
+            this.after_discount_amt = this.discounted_amt;
+            this.data.order_discount = this.discounted_amt;
+            this.value.amount = qty * this.value.net_price - qty * ((this.value.net_price * dealer_discount) / 100);
+            this.gstAmt = (this.value.amount * this.value.gst.gst) / (parseInt('100') + parseInt(this.value.gst.gst));
+            this.value.gstAmt = parseFloat(this.gstAmt).toFixed(2);
+            this.value.amount = parseFloat(this.value.amount).toFixed(2);
+        }
+        else if (this.value.gstType == 'Extra GST' && this.user_type == '3') {
+            this.discount_percent = dealer_discount;
+            this.gst_percent = 0;
+            this.discounted_amt = ((this.value.net_price * dealer_discount) / 100) * qty;
+            this.discounted_amt = this.discounted_amt.toFixed(2);
+            this.after_discount_amt = this.discounted_amt;
+            this.data.order_discount = this.discounted_amt;
+            this.value.amount = qty * this.value.net_price - qty * ((this.value.net_price * dealer_discount) / 100);
+            this.gstAmt = (this.value.amount * this.value.gst.gst) / 100;
+            this.value.gstAmt = parseFloat(this.gstAmt).toFixed(2);
+            this.value.amount = parseFloat(this.value.amount) + parseFloat(this.value.gstAmt);
+            this.value.amount = parseFloat(this.value.amount).toFixed(2);
+        }
+        else {
+            this.discount_percent = dealer_discount;
+            this.gst_percent = 0;
+            this.discounted_amt = ((this.value.net_price * dealer_discount) / 100) * qty;
+            this.discounted_amt = this.discounted_amt.toFixed(2);
+            this.after_discount_amt = this.discounted_amt;
+            this.data.order_discount = this.discounted_amt;
+            this.value.amount = qty * this.value.net_price - qty * ((this.value.net_price * dealer_discount) / 100);
+            this.value.amount = parseFloat(this.value.amount).toFixed(2);
+        }
+        this.subTotal = qty * this.value.net_price;
     };
     AddOrderPage.prototype.calculateAmount2 = function (qty, dealer_rate) {
         if (dealer_rate && this.value.qty) {
@@ -13899,8 +13861,11 @@ var AddOrderPage = /** @class */ (function () {
         if (start === void 0) { start = 0; }
         this.service.addData({}, "product/product_code").then(function (result) {
             console.log(result);
-            _this.autocompleteItems = result;
-            _this.temp_product_array = _this.autocompleteItems;
+            if (result) {
+                _this.autocompleteItems = result;
+                _this.temp_product_array = _this.autocompleteItems;
+            }
+        }).catch(function (error) {
         });
     };
     AddOrderPage.prototype.searchPorts = function (event) {
@@ -13915,6 +13880,7 @@ var AddOrderPage = /** @class */ (function () {
                 _this.autocompleteItems.push(_this.temp_product_array);
                 // Get ports from a storage and stop searching.
                 event.component.endSearch();
+            }).catch(function (error) {
             });
         }
     };
@@ -13940,6 +13906,7 @@ var AddOrderPage = /** @class */ (function () {
             }
             _this.start_limit = _this.end_limit;
             _this.end_limit = parseInt(_this.start_limit) + parseInt(_this.end_limit);
+        }).catch(function (error) {
         });
         // this.updateSearch(this.next);
     };
@@ -13952,6 +13919,8 @@ var AddOrderPage = /** @class */ (function () {
             if (result) {
                 _this.distributor_List = result;
             }
+            _this.loading.dismiss();
+        }).catch(function (error) {
             _this.loading.dismiss();
         });
     };
@@ -13982,7 +13951,7 @@ var AddOrderPage = /** @class */ (function () {
     ], AddOrderPage.prototype, "nav", void 0);
     AddOrderPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-add-order',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/add-order/add-order.html"*/'<ion-header>\n	<ion-navbar>\n		<ion-title>\n			<h1 *ngIf="user_data1 == \'\'">Add Order</h1>\n			<h1 *ngIf="user_data1 != \'\'">Add Order Item</h1>\n			\n		</ion-title>\n		\n		<div class="cart" (click)="go_to_cart()" *ngIf="globalVar ">\n			<span>{{globalVar}}</span>\n			<i class="material-icons">shopping_cart</i>\n		</div>\n		\n	</ion-navbar>\n</ion-header>\n\n\n<ion-content>\n	\n	<div class="prlist sticky">\n		<div class="box light-red-bg relative">\n			\n			<div class="relative">\n				<h1 class="font14 mb10 semibold">{{data.company_name | titlecase}}</h1>\n			</div>\n			\n			\n			\n			<div class="heading border-none pb0">\n				<div class="dist-name dflex mb0">\n					<div class="first-leter w50">H</div>\n					<div class="name-number">\n						<p style="margin-top: 10px !important;">{{data.name | titlecase}}</p>\n						\n						<div class="text-with-ic dflex mb0">\n							<i class="material-icons text-relat-icon">call</i>\n							<p>+91-{{data.mobile}}</p>\n						</div>\n					</div>\n				</div>\n			</div>\n			\n			\n			\n			\n		</div>\n	</div>\n	\n	<div class="edit">\n		\n		<div class="csslecttype" *ngIf="data.type == 3">\n			<ion-item>\n				<ion-label>Select Distributor</ion-label>\n				<ionic-selectable item-content\n				[(ngModel)]="data.distributor_id"\n				(ngModelChange) ="onDistributorChangeHandler()"\n				[items]="distributor_list"\n				itemValueField="id"\n				itemTextField="company_name"\n				name="company_name"\n				value="id"\n				[canSearch]="true">\n			</ionic-selectable>\n		</ion-item>\n	</div>\n	\n	\n	<div class="csslecttype" *ngIf="data.distributor_id && data.type == 3">\n		<ion-item>\n			<ion-label>Product Code</ion-label>\n			<select-searchable\n			item-content\n			[(ngModel)]="data.cat_no"\n			[items]="autocompleteItems"\n			itemValueField="cat_no"\n			itemTextField="cat_no"\n			name="cat_no"\n			value="cat_no"\n			[canSearch]="true"\n			[hasVirtualScroll]="true"\n			(onChange)="portChange($event)"\n			>\n		</select-searchable>\n	</ion-item>\n</div>\n\n<div class="csslecttype" *ngIf="data.type != 3">\n	<ion-item>\n		<ion-label>Product Code</ion-label>\n		<select-searchable\n		item-content\n		[(ngModel)]="data.cat_no"\n		[items]="autocompleteItems"\n		itemValueField="cat_no"\n		itemTextField="cat_no"\n		name="cat_no"\n		value="cat_no"\n		[canSearch]="true"\n		[hasVirtualScroll]="true"\n		(onChange)="portChange($event)"\n		>\n	</select-searchable>\n</ion-item>\n</div>\n\n\n<!--\n	<div class="csslecttype">\n		<ion-item>\n			<ion-label>Product Code</ion-label>\n			<ionic-selectable\n			item-content\n			[(ngModel)]="data.cat_no"\n			[items]="autocompleteItems"\n			itemValueField="cat_no"\n			itemTextField="cat_no"\n			name="cat_no"\n			value="cat_no"\n			[canSearch]="true"\n			[hasVirtualScroll]="true"\n			(onChange)="portChange($event)"\n			(onSearch)="searchPorts($event)"\n			>\n		</ionic-selectable>\n	</ion-item>\n</div> -->\n\n<ion-list>\n	<!-- <ion-item *ngIf=" brandList.length > 1" class="cs-select mt16">\n		<ion-label>Brand</ion-label>\n		<ion-select placeholder="Select Brand" (ionChange)="brandSelected(data.brand)" name="brand"  [(ngModel)]="data.brand">\n			<ion-option *ngFor="let data of brandList"  value="{{data.brand_name}}">{{data.brand_name}}</ion-option>\n		</ion-select>\n	</ion-item> -->\n	\n	\n	<div class="cs-box-radio  mt16" *ngIf=" brandList.length > 1" >\n		<ion-list radio-group (ionChange)="brandSelected(data.brand)" name="brand"  [(ngModel)]="data.brand">\n			<ion-item *ngFor="let data of brandList">\n				<ion-label>{{data.brand_name}}</ion-label>\n				<ion-radio value="{{data.brand_name}}"></ion-radio>\n			</ion-item>\n		</ion-list>\n	</div>\n	\n	\n	<ion-item *ngIf="colorList.length > 1" class="cs-select mt16">\n		<ion-label>Color</ion-label>\n		<ion-select placeholder="Select Color" name="color" (ionChange)="colorSelected(data.color);" [(ngModel)]="data.color">\n			<ion-option *ngFor="let data of colorList" value="{{data.color_name}}">{{data.color_name}}</ion-option>\n		</ion-select>\n	</ion-item>\n</ion-list>\n\n\n\n\n\n<!-- <div class="pt16 pb16" *ngIf="show1 == \'1\'">\n	<div class="cs-figure">\n		<p *ngIf="value.product_name"><span>Product Name :</span> {{value.product_name}}</p>\n		<p *ngIf="brandList.length == 1"><span>BRAND :</span>  {{data.brand}}</p>\n		<p *ngIf="colorList.length == 1"> <span>COLOR :</span> {{data.color}}</p>\n	</div>\n</div> -->\n\n\n</div>\n\n\n<div class="pr-info mt16" *ngIf="data.cat_no == \'\'">\n	<div class="header">CATEGORY INFORMATION</div>\n	<div class="badges">\n		<ul>\n			<li [ngClass]="{\'active\':data.active == true}" *ngFor="let data of categoryList">({{data.appOrderFlag}}).  {{data.category}}</li>\n		</ul>\n	</div>\n</div>\n\n<div class="pr-info mt16" >\n	<div class="header">Product Information</div>\n	\n	<div class="dummycnt" *ngIf="data.cat_no == \'\'">\n		To Add New Item Into Cart, Select Item Product Code.\n	</div>\n	\n	\n	\n	<div class="data-table" *ngIf="(value) && (order_qty == \'1\') && (colorList.length == 1 && brandList.length == 1) && show == true" >\n		<table>\n			<tr>\n				<th>Name</th>\n				<td>{{value.product_name | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="brandList.length == 1">\n				<th>Brand</th>\n				<td>{{data.brand | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="colorList.length == 1">\n				<th>Color</th>\n				<td>{{data.color | titlecase}}</td>\n			</tr>\n			\n			<tr>\n				<th>Category</th>\n				<td>{{value.category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.sub_category">\n				<th>Sub Category</th>\n				<td>{{value.sub_category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.secondary_packing">\n				<th>Small Packing</th>\n				<td>{{value.secondary_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="value.master_packing">\n				<th>Master Packing</th>\n				<td>{{value.master_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="user_type == \'3\'">\n				<td colspan="2">\n					<div class="cs-box-radio table-btn-transparent">\n						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">\n							<ion-list-header>\n								<ion-label>GST</ion-label>\n							</ion-list-header>\n							<ion-item>\n								<ion-label>GST Paid</ion-label>\n								<ion-radio value="With GST" checked></ion-radio>\n							</ion-item>\n							\n							<ion-item>\n								<ion-label>GST Extra</ion-label>\n								<ion-radio value="Extra GST"></ion-radio>\n							</ion-item>\n						</ion-list>\n					</div>\n				</td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	\n	<div class="data-table" *ngIf="(value) && (order_qty == \'1\') && (brandList.length == 1 && colorList.length == 0) && show == true" >\n		<table>\n			<tr>\n				<th>Name</th>\n				<td>{{value.product_name | titlecase}}</td>\n			</tr>\n			<tr *ngIf="brandList.length == 1">\n				<th>Brand</th>\n				<td>{{data.brand | titlecase}}</td>\n			</tr>\n			\n			\n			<tr *ngIf="colorList.length == 1">\n				<th>Color</th>\n				<td>{{data.color | titlecase}}</td>\n			</tr>\n			<tr>\n				<th>Category</th>\n				<td>{{value.category | titlecase}}</td>\n			</tr>\n			<tr *ngIf="value.sub_category">\n				<th>Sub Category</th>\n				<td>{{value.sub_category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.secondary_packing">\n				<th>Small Packing</th>\n				<td>{{value.secondary_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="value.master_packing">\n				<th>Master Packing</th>\n				<td>{{value.master_packing }}</td>\n			</tr>\n			\n			<tr *ngIf="user_type == \'3\'">\n				<td colspan="2">\n					<div class="cs-box-radio table-btn-transparent">\n						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">\n							<ion-list-header>\n								<ion-label>GST</ion-label>\n							</ion-list-header>\n							<ion-item>\n								<ion-label>GST Paid</ion-label>\n								<ion-radio value="With GST" checked></ion-radio>\n							</ion-item>\n							\n							<ion-item>\n								<ion-label>GST Extra</ion-label>\n								<ion-radio value="Extra GST"></ion-radio>\n							</ion-item>\n						</ion-list>\n					</div>\n				</td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	<div class="data-table" *ngIf="(value) && (order_qty == \'1\') && (brandList.length == 1 && color == 1) && show == true" >\n		<table>\n			<tr>\n				<th>Name</th>\n				<td>{{value.product_name | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="brandList.length == 1">\n				<th>Brand</th>\n				<td>{{data.brand | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="colorList.length == 1">\n				<th>Color</th>\n				<td>{{data.color | titlecase}}</td>\n			</tr>\n			\n			<tr>\n				<th>Category</th>\n				<td>{{value.category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.sub_category">\n				<th>Sub Category</th>\n				<td>{{value.sub_category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.secondary_packing">\n				<th>Small Packing</th>\n				<td>{{value.secondary_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="value.master_packing">\n				<th>Master Packing</th>\n				<td>{{value.master_packing }}</td>\n			</tr>\n			\n			<tr *ngIf="user_type == \'3\'">\n				<td colspan="2">\n					<div class="cs-box-radio table-btn-transparent">\n						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">\n							<ion-list-header>\n								<ion-label>GST</ion-label>\n							</ion-list-header>\n							<ion-item>\n								<ion-label>GST Paid</ion-label>\n								<ion-radio value="With GST" checked></ion-radio>\n							</ion-item>\n							\n							<ion-item>\n								<ion-label>GST Extra</ion-label>\n								<ion-radio value="Extra GST"></ion-radio>\n							</ion-item>\n						</ion-list>\n					</div>\n				</td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	<div class="data-table" *ngIf="(value) && (order_qty == \'1\') && (brandList.length > 1 && brand == 1 && colorList.length == 0) && show == true" >\n		<table>\n			<tr>\n				<th>Name</th>\n				<td>{{value.product_name | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="brandList.length > 1">\n				<th>Brand</th>\n				<td>{{data.brand | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="colorList.length == 1">\n				<th>Color</th>\n				<td>{{data.color | titlecase}}</td>\n			</tr>\n			\n			<tr>\n				<th>Category</th>\n				<td>{{value.category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.sub_category">\n				<th>Sub Category</th>\n				<td>{{value.sub_category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.secondary_packing">\n				<th>Small Packing</th>\n				<td>{{value.secondary_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="value.master_packing">\n				<th>Master Packing</th>\n				<td>{{value.master_packing }}</td>\n			</tr>\n			\n			<tr *ngIf="user_type == \'3\'">\n				<td colspan="2">\n					<div class="cs-box-radio table-btn-transparent">\n						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">\n							<ion-list-header>\n								<ion-label>GST</ion-label>\n							</ion-list-header>\n							<ion-item>\n								<ion-label>GST Paid</ion-label>\n								<ion-radio value="With GST" checked></ion-radio>\n							</ion-item>\n							\n							<ion-item>\n								<ion-label>GST Extra</ion-label>\n								<ion-radio value="Extra GST"></ion-radio>\n							</ion-item>\n						</ion-list>\n					</div>\n				</td>\n			</tr>\n		</table>\n	</div>\n	\n	<div class="data-table" *ngIf="(value) && (brand == \'1\' && color == \'1\') && show == true">\n		<table>\n			<tr>\n				<th>Name</th>\n				<td>{{value.product_name | titlecase}}</td>\n			</tr>\n			\n			<tr>\n				<th>Category</th>\n				<td>{{value.category | titlecase}}</td>\n			</tr>\n			<tr *ngIf="value.sub_category">\n				<th>Sub Category</th>\n				<td>{{value.sub_category | titlecase}}</td>\n			</tr>\n			<tr *ngIf="data.brand">\n				<th>Brand</th>\n				<td>{{data.brand | titlecase}}</td>\n			</tr>\n			<tr *ngIf="data.color">\n				<th>Color</th>\n				<td>{{data.color | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.secondary_packing">\n				<th>Small Packing</th>\n				<td>{{value.secondary_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="value.master_packing">\n				<th>Master Packing</th>\n				<td>{{value.master_packing }}</td>\n			</tr>\n			\n			<tr *ngIf="user_type == \'3\'">\n				<td colspan="2">\n					<div class="cs-box-radio table-btn-transparent">\n						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">\n							<ion-list-header>\n								<ion-label>GST</ion-label>\n							</ion-list-header>\n							<ion-item>\n								<ion-label>GST Paid</ion-label>\n								<ion-radio value="With GST" checked></ion-radio>\n							</ion-item>\n							\n							<ion-item>\n								<ion-label>GST Extra</ion-label>\n								<ion-radio value="Extra GST"></ion-radio>\n							</ion-item>\n						</ion-list>\n					</div>\n				</td>\n			</tr>\n		</table>\n	</div>\n	\n	<div class="data-table" *ngIf="show == true && edit_dealer_type == \'3\'">\n		<table>\n			<tr>\n				<th>Name</th>\n				<td>{{value.product_name | titlecase}}</td>\n			</tr>\n			\n			<tr>\n				<th>Category</th>\n				<td>{{value.category | titlecase}}</td>\n			</tr>\n			<tr *ngIf="value.sub_category">\n				<th>Sub Category</th>\n				<td>{{value.sub_category | titlecase}}</td>\n			</tr>\n			<tr *ngIf="data.brand">\n				<th>Brand</th>\n				<td>{{data.brand | titlecase}}</td>\n			</tr>\n			<tr *ngIf="data.color">\n				<th>Color</th>\n				<td>{{data.color | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.secondary_packing">\n				<th>Small Packing</th>\n				<td>{{value.secondary_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="value.master_packing">\n				<th>Master Packing {{value.gstType}}</th>\n				<td>{{value.master_packing }}</td>\n			</tr>\n			\n			<tr *ngIf="user_type == \'3\'">\n				<td colspan="2">\n					<div class="cs-box-radio table-btn-transparent">\n						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">\n							<ion-list-header>\n								<ion-label>GST</ion-label>\n							</ion-list-header>\n							<ion-item>\n								<ion-label>GST Paid</ion-label>\n								<ion-radio value="With GST" checked></ion-radio>\n							</ion-item>\n							\n							<ion-item>\n								<ion-label>GST Extra</ion-label>\n								<ion-radio value="Extra GST"></ion-radio>\n							</ion-item>\n						</ion-list>\n					</div>\n				</td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	<div class="qt-table pt0" *ngIf="order_qty == \'1\' && (colorList.length == 0 && brandList.length == 1) && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n\n				<td *ngIf="value1 != undefined">{{value1.gst}} %</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	<div class="qt-table pt0" *ngIf="order_qty == \'1\' && (colorList.length == 1 && brandList.length == 1) && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n				\n				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	<div class="qt-table pt0" *ngIf="(colorList.length >1 && brandList.length > 1) && (color == \'1\' && brand == \'1\') && order_qty == \'0\' && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n				\n				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n	<div class="qt-table pt0" *ngIf="(colorList.length == 1 && brandList.length > 1) && (brand == \'1\') && order_qty == \'0\' && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n				\n				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100"(input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n	<div class="qt-table pt0" *ngIf="(colorList.length > 1 && brandList.length == 1) && (color == \'1\') && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n				\n				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n	<div class="qt-table pt0" *ngIf="(colorList.length == 0 && brandList.length > 1) && (brand == \'1\') && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst.(%)</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n				\n				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	<div class="qt-table pt0" *ngIf="(value) && (brand == \'1\' && color == \'1\') && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst.(%)</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="number" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n				\n				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n</div>\n\n\n\n<!-- <div class="edit">\n	<ion-list>\n		\n		<form #f="ngForm" (ngSubmit)="f.valid && addToCart()" autocomplete="off">\n			<div >\n				\n				<div class="box payment" *ngIf="show==true" style="position: relative;">\n					<div class="heading">\n						\n					</div>\n					<div class="description">\n						<p><strong>Category  :</strong>{{value.category}}</p>\n						<p><strong>Sub Category  :</strong>{{value.sub_category}}</p>\n						<div>\n							<div class="dflex">\n								<div class="wp50 mr8">\n									<ion-item>\n										<ion-label floating><span>QTY</span></ion-label>\n										<ion-input (input)="value1 != undefined ? calculateAmount(value.qty) : calculateAmount1(value.qty)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" [ngClass]="{\'is-invalid\':f.submitted && qty?.invalid}" required></ion-input>\n									</ion-item>\n									<div *ngIf="f.submitted && qty?.invalid || qty?.touched && qty?.invalid">\n										<p class="error-left">Qty Required!</p>\n									</div>\n								</div>\n								<div class="wp50 ml8 mr8 cs-floating">\n									<p>Rate</p>\n									<div class="view-t">{{value.price}}</div>\n								</div>\n							</div>\n							<div class="dflex">\n								<div class="wp50 ml8 mr8 cs-floating" *ngIf="value1 != undefined">\n									<p>Discount</p>\n									<div class="view-t">{{value1.discount}}</div>\n								</div>\n								<div class="wp50 ml8 mr8 cs-floating" *ngIf="value1 != undefined">\n									<p>GST</p>\n									<div class="view-t">{{value1.gst}}</div>\n								</div>\n								\n								<div class="wp50 ml8 cs-floating">\n									<p>Amount</p>\n									<div class="view-t">{{value.amount}}</div>\n								</div>\n							</div>\n							\n							<button ion-button color="secondary" style="position: absolute; right: -10px; bottom: -20px;">\n								<ion-icon name=\'add-circle\' ></ion-icon>\n							</button>\n						</div>\n					</div>\n				</div>\n			</div>\n		</form>\n		<div *ngFor="let list of tmp_array ; let i=index" >\n			<div class="box payment">\n				<div class="heading">\n					<p class="code">{{list.product_name}}</p>\n				</div>\n				<div class="description">\n					<p class="font14 pt10"><strong>Brand :</strong>{{list.brand}}</p>\n					<p class="font14 pt10" *ngIf="data.color"><strong>Color :</strong>{{list.color}}</p>\n					\n					<p class="font14 pt10"><strong>Category :</strong>{{list.category}}</p>\n					<p class="font14 pt10"><strong>Sub Category :</strong>{{list.sub_category}}</p>\n					\n				</div>\n			</div>\n			<div class="table" style="margin: 0px -15px;">\n				<table>\n					<tr>\n						<th class="w40">QTY</th>\n						<th class="w50">Price</th>\n						<th class="w70" *ngIf="value1 != undefined">Discount</th>\n						<th class="w60" *ngIf="value1 != undefined">GST</th>\n						<th>Amount</th>\n						<th class="w40">&nbsp;</th>\n					</tr>\n					<tr>\n						<td>{{list.qty}}</td>\n						<td>{{list.price}}</td>\n						<td *ngIf="value1 != undefined">{{list.discount}}</td>\n						<td *ngIf="value1 != undefined">{{list.gst}}</td>\n						<td>{{list.amount}}</td>\n						<td>\n							\n							<a (click)="removeInCartConfirmation(i)"><i class="material-icons" style="color: #ff0000;">delete_sweep</i></a>\n						</td>\n					</tr>\n				</table>\n			</div>\n		</div>\n	</ion-list>\n	\n	\n	\n	\n	\n</div> -->\n\n</ion-content>\n<!--\n	<ion-footer class="ad-cart" *ngIf="globalVar != \'\'" (click)="go_to_cart()">\n		<div class="cs-left">\n			<p>\n				<span>{{globalVar}}</span>\n				<i class="material-icons">shopping_cart</i>\n			</p>\n		</div>\n		<div class="cs-right">\n			<p>ORDER VALUE <span>&#x20B9; {{data.order_total |number:\'1.2-2\'}}</span></p>\n		</div>\n	</ion-footer> -->\n	\n	<!-- <div class="endcheck">\n		\n		<a *ngIf="value1 != undefined && user_data1 == \'\' && tmp_array.length!=0" (click)="orderPlace()">Place Order</a>\n		<a *ngIf="value1 == undefined && user_data1 == \'\' && tmp_array.length!=0"  (click)="orderPlaceDealer()">Place Order</a>\n		<a *ngIf="user_data1 != \'\' && tmp_array.length!=0"  (click)="addOrderItem()">Add Item</a>\n	</div> -->\n	'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/add-order/add-order.html"*/,
+            selector: 'page-add-order',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/add-order/add-order.html"*/'<ion-header>\n	<ion-navbar>\n		<ion-title>\n			<h1 *ngIf="user_data1 == \'\'">Add Order</h1>\n			<h1 *ngIf="user_data1 != \'\'">Add Order Item</h1>\n			\n		</ion-title>\n		\n		<div class="cart" (click)="go_to_cart()" *ngIf="globalVar ">\n			<span>{{globalVar}}</span>\n			<i class="material-icons">shopping_cart</i>\n		</div>\n		\n	</ion-navbar>\n</ion-header>\n\n\n<ion-content>\n	\n	<div class="prlist sticky">\n		<div class="box light-red-bg relative">\n			\n			<div class="relative">\n				<h1 class="font14 mb10 semibold">{{data.company_name | titlecase}}</h1>\n			</div>\n			\n			\n			\n			<div class="heading border-none pb0">\n				<div class="dist-name dflex mb0">\n					<div class="first-leter w50">H</div>\n					<div class="name-number">\n						<p style="margin-top: 10px !important;">{{data.name | titlecase}}</p>\n						\n						<div class="text-with-ic dflex mb0">\n							<i class="material-icons text-relat-icon">call</i>\n							<p>+91-{{data.mobile}}</p>\n						</div>\n					</div>\n				</div>\n			</div>\n			\n			\n			\n			\n		</div>\n	</div>\n	\n	<div class="edit">\n		\n		<div class="csslecttype" *ngIf="data.type == 3">\n			<ion-item>\n				<ion-label>Select Distributor</ion-label>\n				<ionic-selectable item-content\n				[(ngModel)]="data.distributor_id"\n				(ngModelChange) ="onDistributorChangeHandler()"\n				[items]="distributor_list"\n				itemValueField="id"\n				itemTextField="company_name"\n				name="company_name"\n				value="id"\n				[canSearch]="true">\n			</ionic-selectable>\n		</ion-item>\n	</div>\n	\n	\n	<div class="csslecttype" *ngIf="data.distributor_id && data.type == 3">\n		<ion-item>\n			<ion-label>Product Code</ion-label>\n			<select-searchable\n			item-content\n			[(ngModel)]="data.cat_no"\n			[items]="autocompleteItems"\n			itemValueField="cat_no"\n			itemTextField="cat_no"\n			name="cat_no"\n			value="cat_no"\n			[canSearch]="true"\n			[hasVirtualScroll]="true"\n			(onChange)="portChange($event)"\n			>\n		</select-searchable>\n	</ion-item>\n</div>\n\n<div class="csslecttype" *ngIf="data.type != 3">\n	<ion-item>\n		<ion-label>Product Code</ion-label>\n		<select-searchable\n		item-content\n		[(ngModel)]="data.cat_no"\n		[items]="autocompleteItems"\n		itemValueField="cat_no"\n		itemTextField="cat_no"\n		name="cat_no"\n		value="cat_no"\n		[canSearch]="true"\n		[hasVirtualScroll]="true"\n		(onChange)="portChange($event)"\n		>\n	</select-searchable>\n</ion-item>\n</div>\n\n\n<!--\n	<div class="csslecttype">\n		<ion-item>\n			<ion-label>Product Code</ion-label>\n			<ionic-selectable\n			item-content\n			[(ngModel)]="data.cat_no"\n			[items]="autocompleteItems"\n			itemValueField="cat_no"\n			itemTextField="cat_no"\n			name="cat_no"\n			value="cat_no"\n			[canSearch]="true"\n			[hasVirtualScroll]="true"\n			(onChange)="portChange($event)"\n			(onSearch)="searchPorts($event)"\n			>\n		</ionic-selectable>\n	</ion-item>\n</div> -->\n\n<ion-list>\n	<!-- <ion-item *ngIf=" brandList.length > 1" class="cs-select mt16">\n		<ion-label>Brand</ion-label>\n		<ion-select placeholder="Select Brand" (ionChange)="brandSelected(data.brand)" name="brand"  [(ngModel)]="data.brand">\n			<ion-option *ngFor="let data of brandList"  value="{{data.brand_name}}">{{data.brand_name}}</ion-option>\n		</ion-select>\n	</ion-item> -->\n	\n	\n	<div class="cs-box-radio  mt16" *ngIf=" brandList.length > 1" >\n		<ion-list radio-group (ionChange)="brandSelected(data.brand)" name="brand"  [(ngModel)]="data.brand">\n			<ion-item *ngFor="let data of brandList">\n				<ion-label>{{data.brand_name}}</ion-label>\n				<ion-radio value="{{data.brand_name}}"></ion-radio>\n			</ion-item>\n		</ion-list>\n	</div>\n	\n	\n	<ion-item *ngIf="colorList.length > 1" class="cs-select mt16">\n		<ion-label>Color</ion-label>\n		<ion-select placeholder="Select Color" name="color" (ionChange)="colorSelected(data.color);" [(ngModel)]="data.color">\n			<ion-option *ngFor="let data of colorList" value="{{data.color_name}}">{{data.color_name}}</ion-option>\n		</ion-select>\n	</ion-item>\n</ion-list>\n\n\n\n\n\n<!-- <div class="pt16 pb16" *ngIf="show1 == \'1\'">\n	<div class="cs-figure">\n		<p *ngIf="value.product_name"><span>Product Name :</span> {{value.product_name}}</p>\n		<p *ngIf="brandList.length == 1"><span>BRAND :</span>  {{data.brand}}</p>\n		<p *ngIf="colorList.length == 1"> <span>COLOR :</span> {{data.color}}</p>\n	</div>\n</div> -->\n\n\n</div>\n\n\n<div class="pr-info mt16" *ngIf="data.cat_no == \'\'">\n	<div class="header">CATEGORY INFORMATION</div>\n	<div class="badges">\n		<ul>\n			<li [ngClass]="{\'active\':data.active == true}" *ngFor="let data of categoryList">({{data.appOrderFlag}}).  {{data.category}}</li>\n		</ul>\n	</div>\n</div>\n\n<div class="pr-info mt16" >\n	<div class="header">Product Information</div>\n	\n	<div class="dummycnt" *ngIf="data.cat_no == \'\'">\n		To Add New Item Into Cart, Select Item Product Code.\n	</div>\n	\n	\n	\n	<!-- <div class="data-table" *ngIf="(value) && (order_qty == \'1\') && (colorList.length == 1 && brandList.length == 1) && show == true" >\n		<table>\n			<tr>\n				<th>Name 1</th>\n				<td>{{value.product_name | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="brandList.length == 1">\n				<th>Brand</th>\n				<td>{{data.brand | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="colorList.length == 1">\n				<th>Color</th>\n				<td>{{data.color | titlecase}}</td>\n			</tr>\n			\n			<tr>\n				<th>Category</th>\n				<td>{{value.category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.sub_category">\n				<th>Sub Category</th>\n				<td>{{value.sub_category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.secondary_packing">\n				<th>Small Packing</th>\n				<td>{{value.secondary_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="value.master_packing">\n				<th>Master Packing</th>\n				<td>{{value.master_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="user_type == \'3\'">\n				<td colspan="2">\n					<div class="cs-box-radio table-btn-transparent">\n						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">\n							<ion-list-header>\n								<ion-label>GST</ion-label>\n							</ion-list-header>\n							<ion-item>\n								<ion-label>GST Paid</ion-label>\n								<ion-radio value="With GST" checked></ion-radio>\n							</ion-item>\n							\n							<ion-item>\n								<ion-label>GST Extra</ion-label>\n								<ion-radio value="Extra GST"></ion-radio>\n							</ion-item>\n						</ion-list>\n					</div>\n				</td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	\n	<div class="data-table" *ngIf="(value) && (order_qty == \'1\') && (brandList.length == 1 && colorList.length == 0) && show == true" >\n		<table>\n			<tr>\n				<th>Name 2</th>\n				<td>{{value.product_name | titlecase}}</td>\n			</tr>\n			<tr *ngIf="brandList.length == 1">\n				<th>Brand</th>\n				<td>{{data.brand | titlecase}}</td>\n			</tr>\n			\n			\n			<tr *ngIf="colorList.length == 1">\n				<th>Color</th>\n				<td>{{data.color | titlecase}}</td>\n			</tr>\n			<tr>\n				<th>Category</th>\n				<td>{{value.category | titlecase}}</td>\n			</tr>\n			<tr *ngIf="value.sub_category">\n				<th>Sub Category</th>\n				<td>{{value.sub_category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.secondary_packing">\n				<th>Small Packing</th>\n				<td>{{value.secondary_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="value.master_packing">\n				<th>Master Packing</th>\n				<td>{{value.master_packing }}</td>\n			</tr>\n			\n			<tr *ngIf="user_type == \'3\'">\n				<td colspan="2">\n					<div class="cs-box-radio table-btn-transparent">\n						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">\n							<ion-list-header>\n								<ion-label>GST</ion-label>\n							</ion-list-header>\n							<ion-item>\n								<ion-label>GST Paid</ion-label>\n								<ion-radio value="With GST" checked></ion-radio>\n							</ion-item>\n							\n							<ion-item>\n								<ion-label>GST Extra</ion-label>\n								<ion-radio value="Extra GST"></ion-radio>\n							</ion-item>\n						</ion-list>\n					</div>\n				</td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	<div class="data-table" *ngIf="(value) && (order_qty == \'1\') && (brandList.length == 1 && color == 1) && show == true" >\n		<table>\n			<tr>\n				<th>Name 3</th>\n				<td>{{value.product_name | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="brandList.length == 1">\n				<th>Brand</th>\n				<td>{{data.brand | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="colorList.length == 1">\n				<th>Color</th>\n				<td>{{data.color | titlecase}}</td>\n			</tr>\n			\n			<tr>\n				<th>Category</th>\n				<td>{{value.category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.sub_category">\n				<th>Sub Category</th>\n				<td>{{value.sub_category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.secondary_packing">\n				<th>Small Packing</th>\n				<td>{{value.secondary_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="value.master_packing">\n				<th>Master Packing</th>\n				<td>{{value.master_packing }}</td>\n			</tr>\n			\n			<tr *ngIf="user_type == \'3\'">\n				<td colspan="2">\n					<div class="cs-box-radio table-btn-transparent">\n						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">\n							<ion-list-header>\n								<ion-label>GST</ion-label>\n							</ion-list-header>\n							<ion-item>\n								<ion-label>GST Paid</ion-label>\n								<ion-radio value="With GST" checked></ion-radio>\n							</ion-item>\n							\n							<ion-item>\n								<ion-label>GST Extra</ion-label>\n								<ion-radio value="Extra GST"></ion-radio>\n							</ion-item>\n						</ion-list>\n					</div>\n				</td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	<div class="data-table" *ngIf="(value) && (order_qty == \'1\') && (brandList.length > 1 && brand == 1 && colorList.length == 0) && show == true" >\n		<table>\n			<tr>\n				<th>Name 4</th>\n				<td>{{value.product_name | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="brandList.length > 1">\n				<th>Brand</th>\n				<td>{{data.brand | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="colorList.length == 1">\n				<th>Color</th>\n				<td>{{data.color | titlecase}}</td>\n			</tr>\n			\n			<tr>\n				<th>Category</th>\n				<td>{{value.category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.sub_category">\n				<th>Sub Category</th>\n				<td>{{value.sub_category | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.secondary_packing">\n				<th>Small Packing</th>\n				<td>{{value.secondary_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="value.master_packing">\n				<th>Master Packing</th>\n				<td>{{value.master_packing }}</td>\n			</tr>\n			\n			<tr *ngIf="user_type == \'3\'">\n				<td colspan="2">\n					<div class="cs-box-radio table-btn-transparent">\n						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">\n							<ion-list-header>\n								<ion-label>GST</ion-label>\n							</ion-list-header>\n							<ion-item>\n								<ion-label>GST Paid</ion-label>\n								<ion-radio value="With GST" checked></ion-radio>\n							</ion-item>\n							\n							<ion-item>\n								<ion-label>GST Extra</ion-label>\n								<ion-radio value="Extra GST"></ion-radio>\n							</ion-item>\n						</ion-list>\n					</div>\n				</td>\n			</tr>\n		</table>\n	</div>\n	\n	<div class="data-table" *ngIf="(value) && (brand == \'1\' && color == \'1\') && show == true">\n		<table>\n			<tr>\n				<th>Name 5</th>\n				<td>{{value.product_name | titlecase}}</td>\n			</tr>\n			\n			<tr>\n				<th>Category</th>\n				<td>{{value.category | titlecase}}</td>\n			</tr>\n			<tr *ngIf="value.sub_category">\n				<th>Sub Category</th>\n				<td>{{value.sub_category | titlecase}}</td>\n			</tr>\n			<tr *ngIf="data.brand">\n				<th>Brand</th>\n				<td>{{data.brand | titlecase}}</td>\n			</tr>\n			<tr *ngIf="data.color">\n				<th>Color</th>\n				<td>{{data.color | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.secondary_packing">\n				<th>Small Packing</th>\n				<td>{{value.secondary_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="value.master_packing">\n				<th>Master Packing</th>\n				<td>{{value.master_packing }}</td>\n			</tr>\n			\n			<tr *ngIf="user_type == \'3\'">\n				<td colspan="2">\n					<div class="cs-box-radio table-btn-transparent">\n						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">\n							<ion-list-header>\n								<ion-label>GST</ion-label>\n							</ion-list-header>\n							<ion-item>\n								<ion-label>GST Paid</ion-label>\n								<ion-radio value="With GST" checked></ion-radio>\n							</ion-item>\n							\n							<ion-item>\n								<ion-label>GST Extra</ion-label>\n								<ion-radio value="Extra GST"></ion-radio>\n							</ion-item>\n						</ion-list>\n					</div>\n				</td>\n			</tr>\n		</table>\n	</div> -->\n	\n	<div class="data-table" *ngIf="show == true">\n		<table>\n			<tr>\n				<th>Name</th>\n				<td>{{value.product_name | titlecase}}</td>\n			</tr>\n			\n			<tr>\n				<th>Category</th>\n				<td>{{value.category | titlecase}}</td>\n			</tr>\n			<tr *ngIf="value.sub_category">\n				<th>Sub Category</th>\n				<td>{{value.sub_category | titlecase}}</td>\n			</tr>\n			<tr *ngIf="data.brand">\n				<th>Brand</th>\n				<td>{{data.brand | titlecase}}</td>\n			</tr>\n			<tr *ngIf="data.color">\n				<th>Color</th>\n				<td>{{data.color | titlecase}}</td>\n			</tr>\n			\n			<tr *ngIf="value.secondary_packing">\n				<th>Small Packing</th>\n				<td>{{value.secondary_packing}}</td>\n			</tr>\n			\n			<tr *ngIf="value.master_packing">\n				<th>Master Packing {{value.gstType}}</th>\n				<td>{{value.master_packing }}</td>\n			</tr>\n			\n			<tr *ngIf="user_type == \'3\'">\n				<td colspan="2">\n					<div class="cs-box-radio table-btn-transparent">\n						<ion-list radio-group class="cs-ion-radio" name="gstType" [(ngModel)]="gstObj.gstType" (ionChange)="selectSecondaryGstType(gstObj.gstType);calculateAmount1(this.value.qty,this.value.dealer_discount);calculateAmount2(this.value.qty,this.value.dealer_rate)">\n							<ion-list-header>\n								<ion-label>GST</ion-label>\n							</ion-list-header>\n							<ion-item>\n								<ion-label>GST Paid</ion-label>\n								<ion-radio value="With GST" checked></ion-radio>\n							</ion-item>\n							\n							<ion-item>\n								<ion-label>GST Extra</ion-label>\n								<ion-radio value="Extra GST"></ion-radio>\n							</ion-item>\n						</ion-list>\n					</div>\n				</td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	<!-- <div class="qt-table pt0" *ngIf="order_qty == \'1\' && (colorList.length == 0 && brandList.length == 1) && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP 1</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="tel" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required min="0" minlength="2" maxlength="2"></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n\n				<td *ngIf="value1 != undefined">{{value1.gst}} %</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 && value.gstAmt != \'NaN\' ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount != \'NaN\' ? value.amount : \'0\'}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	<div class="qt-table pt0" *ngIf="order_qty == \'1\' && (colorList.length == 1 && brandList.length == 1) && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP 2</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="tel" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required  min="0" minlength="2" maxlength="2"></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n				\n				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 && value.gstAmt != \'NaN\' ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount != \'NaN\' ? value.amount : \'0\'}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n	\n	<div class="qt-table pt0" *ngIf="(colorList.length >1 && brandList.length > 1) && (color == \'1\' && brand == \'1\') && order_qty == \'0\' && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP 3</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="tel" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required  min="0" minlength="2" maxlength="2"></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n				\n				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 && value.gstAmt != \'NaN\' ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount != \'NaN\' ? value.amount : \'0\'}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n	<div class="qt-table pt0" *ngIf="(colorList.length == 1 && brandList.length > 1) && (brand == \'1\') && order_qty == \'0\' && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP 4</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="tel" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required min="0" minlength="2" maxlength="2"></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n				\n				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 && value.gstAmt != \'NaN\' ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100"(input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount != \'NaN\' ? value.amount : \'0\'}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n	<div class="qt-table pt0" *ngIf="(colorList.length > 1 && brandList.length == 1) && (color == \'1\') && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP 5</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="tel" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required min="0" minlength="2" maxlength="2"></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n				\n				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 && value.gstAmt != \'NaN\' ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount != \'NaN\' ? value.amount : \'0\'}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n	<div class="qt-table pt0" *ngIf="(colorList.length == 0 && brandList.length > 1) && (brand == \'1\') && show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP 6</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst.(%)</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="tel" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required min="0" minlength="2" maxlength="2"></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n				\n				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 && value.gstAmt != \'NaN\' ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount != \'NaN\' ? value.amount : \'0\'}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div> -->\n	\n	\n	<div class="qt-table pt0" *ngIf="show == true">\n		<table>\n			<tr>\n				<th *ngIf="user_type != \'3\'">Rate</th>\n				<th *ngIf="user_type == \'3\'">MRP</th>\n				<th *ngIf="value1 != undefined " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price == \'0\' " class="w62">Dis.(%)</th>\n				<th *ngIf="user_type == \'3\' && value.cp_net_price != \'0\' " class="w62">Rate</th>\n				<th class="w62">Gst.(%)</th>\n				<th class="w45 text-center">Qty</th>\n				<th>Amount</th>\n				<th class="w40">&nbsp;</th>\n			</tr>\n			<tr>\n				<td *ngIf="value.net_price == 0">&#x20B9; {{value.price}}</td>\n				<td *ngIf="value.net_price != 0">&#x20B9; {{value.net_price}}</td>\n				<td *ngIf="value1 != undefined ">{{value1.discount}}</td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price == \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount1(value.qty,value.dealer_discount)" type="tel" name="dealer_discount" #dealer_discount="ngModel" [(ngModel)]="value.dealer_discount" required></td>\n				<td *ngIf="user_type == \'3\' && value.cp_net_price != \'0\'" class="pl5 pr5"><input class="wp100" (input)="calculateAmount2(value.qty,value.dealer_rate)" type="number" name="dealer_rate" #dealer_rate="ngModel" [(ngModel)]="value.dealer_rate" required></td>\n				\n				<td *ngIf="value1 != undefined">{{value1.gst}}%</td>\n\n				<td  *ngIf="user_type == \'3\'">{{value.gstAmt != 0 && value.gstAmt != \'NaN\' ? value.gstAmt : \'\'}} ({{value.gst.gst}}%)</td>\n\n				<td class="pl5 pr5"><input class="wp100" (input)="value1 != undefined ? calculateAmount(value.qty) : value.cp_net_price != \'0\' ? calculateAmount2(value.qty,value.dealer_rate) : calculateAmount1(value.qty,value.dealer_discount)" type="number" name="qty" #qty="ngModel" [(ngModel)]="value.qty" required></td>\n				<td>&#x20B9; {{value.amount != \'NaN\' ? value.amount : \'0\'}}</td>\n				<td class="pl5 pr5" ><button class="w30 pl0 pr0" (click)="addToCart()"><i class="material-icons">add</i></button></td>\n			</tr>\n		</table>\n	</div>\n	\n</div>\n</ion-content>'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/add-order/add-order.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["LoadingController"],
@@ -13999,14 +13968,14 @@ var AddOrderPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 638:
+/***/ 639:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrivalserviceProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__constant_constant__ = __webpack_require__(16);
@@ -14094,51 +14063,6 @@ var ArrivalserviceProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 639:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RetailerDetailPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-/**
- * Generated class for the RetailerDetailPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var RetailerDetailPage = /** @class */ (function () {
-    function RetailerDetailPage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-    }
-    RetailerDetailPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad RetailerDetailPage');
-    };
-    RetailerDetailPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-retailer-detail',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/retailer-detail/retailer-detail.html"*/'<ion-header>\n	<ion-navbar>\n		<ion-title>\n			<h1>Retailer Detail</h1>\n		</ion-title>\n	</ion-navbar>\n</ion-header>\n\n<ion-content>\n	<div class="info pb0" padding>\n		<div class="name-tag">C</div>\n		<div class="description">\n			<div class="name-number">\n				<h2>Company Name</h2>\n				<p>Aman Kumar, <span>2545789665</span></p>\n			</div>\n			<ul>\n				<li style="padding-top: 0px !important;">\n					<h2>Email</h2>\n					<p>adrina@gmail.com</p>\n				</li>\n				<li>\n					<h2>contact person</h2>\n					<div class="dflex"> <i class="material-icons">settings_phone</i><p>Aman Kumar, <span>2545789665</span></p> </div>\n					<div class="dflex"> <i class="material-icons">settings_phone</i><p>Aman Kumar, <span>2545789665</span></p> </div>\n					<div class="dflex"> <i class="material-icons">settings_phone</i><p>Aman Kumar, <span>2545789665</span></p> </div>\n					<div class="dflex"> <i class="material-icons">settings_phone</i><p>Aman Kumar, <span>2545789665</span></p> </div>\n				</li>\n				<li>\n					<h2>Interested Type</h2>\n					<p>Confirmed</p>\n				</li>\n				<li>\n					<h2>D O B</h2>\n					<p>19/5/1995</p> \n				</li>\n				<li class="dflex">\n					<h2>User Name - </h2>\n					<p> Aman Kumar</p> \n				</li>\n				<li class="dflex" style="padding-top: 0px !important;">\n					<h2>Password - </h2>\n					<p> 654465@$%gjfuyg</p> \n				</li>\n				<li>\n					<h2>Address</h2>\n					<p>12/7, bhgagat singh marg, faridabad,  haryana (121001) 12/7, bhgagat singh marg, faridabad,  haryana (121001) 12/7, bhgagat singh marg, faridabad,  haryana (121001) 12/7, bhgagat singh marg, faridabad,  haryana (121001) </p>\n				</li>\n			</ul>\n		</div>\n	</div>\n</ion-content>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/retailer-detail/retailer-detail.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]])
-    ], RetailerDetailPage);
-    return RetailerDetailPage;
-}());
-
-//# sourceMappingURL=retailer-detail.js.map
-
-/***/ }),
-
 /***/ 64:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -14149,7 +14073,7 @@ var RetailerDetailPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_order_add_order__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__order_detail_order_detail__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_myservice_myservice__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__order_type_modal_order_type_modal__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__order_type_modal_order_type_modal__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__dashboard_dashboard__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -14412,9 +14336,54 @@ var OrderListPage = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RetailerDetailPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**
+ * Generated class for the RetailerDetailPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var RetailerDetailPage = /** @class */ (function () {
+    function RetailerDetailPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    RetailerDetailPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad RetailerDetailPage');
+    };
+    RetailerDetailPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-retailer-detail',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/retailer-detail/retailer-detail.html"*/'<ion-header>\n	<ion-navbar>\n		<ion-title>\n			<h1>Retailer Detail</h1>\n		</ion-title>\n	</ion-navbar>\n</ion-header>\n\n<ion-content>\n	<div class="info pb0" padding>\n		<div class="name-tag">C</div>\n		<div class="description">\n			<div class="name-number">\n				<h2>Company Name</h2>\n				<p>Aman Kumar, <span>2545789665</span></p>\n			</div>\n			<ul>\n				<li style="padding-top: 0px !important;">\n					<h2>Email</h2>\n					<p>adrina@gmail.com</p>\n				</li>\n				<li>\n					<h2>contact person</h2>\n					<div class="dflex"> <i class="material-icons">settings_phone</i><p>Aman Kumar, <span>2545789665</span></p> </div>\n					<div class="dflex"> <i class="material-icons">settings_phone</i><p>Aman Kumar, <span>2545789665</span></p> </div>\n					<div class="dflex"> <i class="material-icons">settings_phone</i><p>Aman Kumar, <span>2545789665</span></p> </div>\n					<div class="dflex"> <i class="material-icons">settings_phone</i><p>Aman Kumar, <span>2545789665</span></p> </div>\n				</li>\n				<li>\n					<h2>Interested Type</h2>\n					<p>Confirmed</p>\n				</li>\n				<li>\n					<h2>D O B</h2>\n					<p>19/5/1995</p> \n				</li>\n				<li class="dflex">\n					<h2>User Name - </h2>\n					<p> Aman Kumar</p> \n				</li>\n				<li class="dflex" style="padding-top: 0px !important;">\n					<h2>Password - </h2>\n					<p> 654465@$%gjfuyg</p> \n				</li>\n				<li>\n					<h2>Address</h2>\n					<p>12/7, bhgagat singh marg, faridabad,  haryana (121001) 12/7, bhgagat singh marg, faridabad,  haryana (121001) 12/7, bhgagat singh marg, faridabad,  haryana (121001) 12/7, bhgagat singh marg, faridabad,  haryana (121001) </p>\n				</li>\n			</ul>\n		</div>\n	</div>\n</ion-content>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/retailer-detail/retailer-detail.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]])
+    ], RetailerDetailPage);
+    return RetailerDetailPage;
+}());
+
+//# sourceMappingURL=retailer-detail.js.map
+
+/***/ }),
+
+/***/ 641:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(641);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(645);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(642);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(646);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -14422,7 +14391,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 645:
+/***/ 646:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14439,14 +14408,14 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_geolocation__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_background_geolocation__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_location_accuracy__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_app_version__ = __webpack_require__(635);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_social_sharing__ = __webpack_require__(393);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_status_bar__ = __webpack_require__(633);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_splash_screen__ = __webpack_require__(634);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_catalouge_catalouge_module__ = __webpack_require__(507);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_products_products_module__ = __webpack_require__(584);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_app_version__ = __webpack_require__(636);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_social_sharing__ = __webpack_require__(477);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_status_bar__ = __webpack_require__(634);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_splash_screen__ = __webpack_require__(635);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_catalouge_catalouge_module__ = __webpack_require__(508);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_products_products_module__ = __webpack_require__(587);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_new_arrivals_new_arrivals_module__ = __webpack_require__(985);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_product_details_product_details_module__ = __webpack_require__(554);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_product_details_product_details_module__ = __webpack_require__(553);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_contactus_contactus_module__ = __webpack_require__(512);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_enquiry_enquiry_module__ = __webpack_require__(516);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_aboutus_aboutus_module__ = __webpack_require__(255);
@@ -14457,88 +14426,88 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__providers_catalouge_catalouge__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__angular_http__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__ionic_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_subcategory_subcategory_module__ = __webpack_require__(569);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__providers_arrivalservice_arrivalservice__ = __webpack_require__(638);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_subcategory_subcategory_module__ = __webpack_require__(579);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__providers_arrivalservice_arrivalservice__ = __webpack_require__(639);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__providers_enquiryservice_enquiryservice__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__providers_aboutservice_aboutservice__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__providers_searchservice_searchservice__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_brand_brand_module__ = __webpack_require__(391);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_login_login_module__ = __webpack_require__(528);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__pages_otpverify_otpverify_module__ = __webpack_require__(544);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__providers_productdetailservice_productdetailservice__ = __webpack_require__(397);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__providers_aboutservice_aboutservice__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__providers_searchservice_searchservice__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_brand_brand_module__ = __webpack_require__(475);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_login_login_module__ = __webpack_require__(529);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__pages_otpverify_otpverify_module__ = __webpack_require__(549);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__providers_productdetailservice_productdetailservice__ = __webpack_require__(481);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__providers_loginservice_loginservice__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__pages_leads_list_leads_list_module__ = __webpack_require__(526);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_leads_detail_leads_detail_module__ = __webpack_require__(524);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__pages_retailer_retailer_module__ = __webpack_require__(555);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__providers_myservice_myservice__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__pages_add_order_add_order_module__ = __webpack_require__(593);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__pages_add_order_add_order_module__ = __webpack_require__(594);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__providers_filter_filter__ = __webpack_require__(987);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_followup_followup_module__ = __webpack_require__(519);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__pages_order_list_order_list_module__ = __webpack_require__(583);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__pages_order_list_order_list_module__ = __webpack_require__(586);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__pages_sales_app_distributor_list_distributor_list_module__ = __webpack_require__(563);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_48_ionic_selectable__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__pages_sales_app_distributor_detail_distributor_detail_module__ = __webpack_require__(562);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__pages_order_detail_order_detail_module__ = __webpack_require__(582);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__pages_signup_signup_module__ = __webpack_require__(590);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__pages_select_registration_type_select_registration_type_module__ = __webpack_require__(566);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__pages_attendence_attendence_module__ = __webpack_require__(578);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__pages_order_detail_order_detail_module__ = __webpack_require__(585);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__pages_signup_signup_module__ = __webpack_require__(592);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__pages_select_registration_type_select_registration_type_module__ = __webpack_require__(567);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__pages_attendence_attendence_module__ = __webpack_require__(580);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__providers_followupservice_followupservice__ = __webpack_require__(521);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__providers_attendenceservice_attendenceservice__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__pages_sales_app_add_leads_add_leads_module__ = __webpack_require__(587);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__pages_sales_app_add_leads_add_leads_module__ = __webpack_require__(590);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_57__pages_sales_app_checkin_list_checkin_list_module__ = __webpack_require__(557);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__pages_sales_app_add_checkin_add_checkin_module__ = __webpack_require__(585);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__pages_sales_app_add_dealer_add_dealer_module__ = __webpack_require__(592);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__pages_sales_app_end_checkin_end_checkin_module__ = __webpack_require__(589);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_61__pages_sales_app_dealer_list_dealer_list_module__ = __webpack_require__(560);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__pages_sales_app_direct_dealer_list_direct_dealer_list_module__ = __webpack_require__(561);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__pages_sales_app_add_checkin_add_checkin_module__ = __webpack_require__(588);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__pages_sales_app_add_dealer_add_dealer_module__ = __webpack_require__(593);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__pages_sales_app_end_checkin_end_checkin_module__ = __webpack_require__(564);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_61__pages_sales_app_dealer_list_dealer_list_module__ = __webpack_require__(559);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__pages_sales_app_direct_dealer_list_direct_dealer_list_module__ = __webpack_require__(575);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_63__providers_geolocationservice_geolocationservice__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_64__pages_dashboard_dashboard_module__ = __webpack_require__(591);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_64__pages_dashboard_dashboard_module__ = __webpack_require__(583);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_65__pages_point_location_point_location_module__ = __webpack_require__(551);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_66__pages_sales_app_checkin_detail_checkin_detail_module__ = __webpack_require__(556);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_67__pages_profile_profile_module__ = __webpack_require__(553);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_67__pages_profile_profile_module__ = __webpack_require__(554);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_68__pages_sales_app_customer_checkin_customer_checkin_module__ = __webpack_require__(558);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_69__pages_sales_app_main_distributor_list_main_distributor_list_module__ = __webpack_require__(564);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_70__ionic_native_push__ = __webpack_require__(502);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_71__pages_order_type_modal_order_type_modal_module__ = __webpack_require__(543);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_69__pages_sales_app_main_distributor_list_main_distributor_list_module__ = __webpack_require__(566);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_70__ionic_native_push__ = __webpack_require__(503);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_71__pages_order_type_modal_order_type_modal_module__ = __webpack_require__(544);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_72__pages_order_detail_order_detail__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_73__pages_sales_app_customer_order_customer_order_module__ = __webpack_require__(559);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_74__pages_cart_detail_cart_detail_module__ = __webpack_require__(579);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_75__pages_plumber_app_offers_offers_module__ = __webpack_require__(549);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_73__pages_sales_app_customer_order_customer_order_module__ = __webpack_require__(560);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_74__pages_cart_detail_cart_detail_module__ = __webpack_require__(581);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_75__pages_plumber_app_offers_offers_module__ = __webpack_require__(561);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_76__pages_plumber_app_offer_detail_offer_detail_module__ = __webpack_require__(545);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_77__pages_plumber_app_offer_list_offer_list_module__ = __webpack_require__(547);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_78_ionic_select_searchable__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_78_ionic_select_searchable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_78_ionic_select_searchable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_79__pages_sales_app_add_distribution_add_distribution_module__ = __webpack_require__(586);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_80__pages_sales_app_edit_network_edit_network_module__ = __webpack_require__(588);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_81__pages_target_list_target_list_module__ = __webpack_require__(567);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_79__pages_sales_app_add_distribution_add_distribution_module__ = __webpack_require__(589);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_80__pages_sales_app_edit_network_edit_network_module__ = __webpack_require__(591);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_81__pages_target_list_target_list_module__ = __webpack_require__(568);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_82__pages_filterpopup_filterpopup_module__ = __webpack_require__(518);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_83__pages_add_leave_add_leave_module__ = __webpack_require__(257);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_84__pages_leave_list_leave_list_module__ = __webpack_require__(527);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_85__pages_travel_add_travel_add_module__ = __webpack_require__(571);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_86__pages_travel_list_travel_list_module__ = __webpack_require__(576);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_87__pages_work_type_modal_work_type_modal_module__ = __webpack_require__(575);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_86__pages_travel_list_travel_list_module__ = __webpack_require__(573);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_87__pages_work_type_modal_work_type_modal_module__ = __webpack_require__(577);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_88__pages_offer_category_offer_category_module__ = __webpack_require__(540);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_89__pages_offer_sub_category_offer_sub_category_module__ = __webpack_require__(542);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_90__pages_offer_product_list_offer_product_list_module__ = __webpack_require__(541);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_91__ionic_native_camera__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_92__ionic_native_barcode_scanner__ = __webpack_require__(401);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_92__ionic_native_barcode_scanner__ = __webpack_require__(485);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_93__pages_my_wallet_my_wallet_module__ = __webpack_require__(537);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_94__pages_wallet_history_wallet_history_module__ = __webpack_require__(573);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_94__pages_wallet_history_wallet_history_module__ = __webpack_require__(578);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_95__pages_term_condition_term_condition_module__ = __webpack_require__(570);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_96__pages_dealer_survey_dealer_survey_module__ = __webpack_require__(581);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_96__pages_dealer_survey_dealer_survey_module__ = __webpack_require__(584);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_97__pages_dealer_survey_list_dealer_survey_list_module__ = __webpack_require__(513);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_98__pages_plumber_profile_plumber_profile_module__ = __webpack_require__(550);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_99__pages_menu_menu_module__ = __webpack_require__(536);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_100__ionic_native_network__ = __webpack_require__(636);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_99__pages_menu_menu_module__ = __webpack_require__(543);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_100__ionic_native_network__ = __webpack_require__(637);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_101__pages_gst_calculator_gst_calculator_module__ = __webpack_require__(522);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_102__pages_channel_partner_app_add_cp_order_add_cp_order_module__ = __webpack_require__(580);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_102__pages_channel_partner_app_add_cp_order_add_cp_order_module__ = __webpack_require__(582);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_103__pages_channel_partner_app_ledger_ledger_module__ = __webpack_require__(511);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_104__pages_channel_partner_app_cp_order_cart_cp_order_cart_module__ = __webpack_require__(509);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_104__pages_channel_partner_app_cp_order_cart_cp_order_cart_module__ = __webpack_require__(528);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_105__pages_channel_partner_app_cp_order_list_cp_order_list_module__ = __webpack_require__(510);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_106__pages_channel_partner_app_cp_discount_cp_discount_module__ = __webpack_require__(508);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_107__ionic_native_file_transfer__ = __webpack_require__(504);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_108__pages_work_plan_work_plan_module__ = __webpack_require__(574);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_109_ngx_moment__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_106__pages_channel_partner_app_cp_discount_cp_discount_module__ = __webpack_require__(509);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_107__ionic_native_file_transfer__ = __webpack_require__(505);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_108__pages_work_plan_work_plan_module__ = __webpack_require__(576);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_109_ngx_moment__ = __webpack_require__(121);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -14681,7 +14650,6 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/brand/brand.module#BrandPageModule', name: 'BrandPage', segment: 'brand', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/catalouge/catalouge.module#CatalougePageModule', name: 'CatalougePage', segment: 'catalouge', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/channel-partner-app/cp-discount/cp-discount.module#CpDiscountPageModule', name: 'CpDiscountPage', segment: 'cp-discount', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/channel-partner-app/cp-order-cart/cp-order-cart.module#CpOrderCartPageModule', name: 'CpOrderCartPage', segment: 'cp-order-cart', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/channel-partner-app/cp-order-list/cp-order-list.module#CpOrderListPageModule', name: 'CpOrderListPage', segment: 'cp-order-list', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/channel-partner-app/ledger/ledger.module#LedgerPageModule', name: 'LedgerPage', segment: 'ledger', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/contactus/contactus.module#ContactusPageModule', name: 'ContactusPage', segment: 'contactus', priority: 'low', defaultHistory: [] },
@@ -14692,50 +14660,53 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/followup/followup.module#FollowupPageModule', name: 'FollowupPage', segment: 'followup', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/gst-calculator/gst-calculator.module#GstCalculatorPageModule', name: 'GstCalculatorPage', segment: 'gst-calculator', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/leads-detail/leads-detail.module#LeadsDetailPageModule', name: 'LeadsDetailPage', segment: 'leads-detail', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/leads-list/leads-list.module#LeadsListPageModule', name: 'LeadsListPage', segment: 'leads-list', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/leave-detail/leave-detail.module#LeaveDetailPageModule', name: 'LeaveDetailPage', segment: 'leave-detail', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/leads-list/leads-list.module#LeadsListPageModule', name: 'LeadsListPage', segment: 'leads-list', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/leave-list/leave-list.module#LeaveListPageModule', name: 'LeaveListPage', segment: 'leave-list', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/channel-partner-app/cp-order-cart/cp-order-cart.module#CpOrderCartPageModule', name: 'CpOrderCartPage', segment: 'cp-order-cart', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/menu/menu.module#MenuPageModule', name: 'MenuPage', segment: 'menu', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/my-wallet/my-wallet.module#MyWalletPageModule', name: 'MyWalletPage', segment: 'my-wallet', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/network/network.module#NetworkPageModule', name: 'NetworkPage', segment: 'network', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/offer-category/offer-category.module#OfferCategoryPageModule', name: 'OfferCategoryPage', segment: 'offer-category', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/offer-product-detail/offer-product-detail.module#OfferProductDetailPageModule', name: 'OfferProductDetailPage', segment: 'offer-product-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/offer-product-list/offer-product-list.module#OfferProductListPageModule', name: 'OfferProductListPage', segment: 'offer-product-list', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/offer-sub-category/offer-sub-category.module#OfferSubCategoryPageModule', name: 'OfferSubCategoryPage', segment: 'offer-sub-category', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/menu/menu.module#MenuPageModule', name: 'MenuPage', segment: 'menu', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/order-type-modal/order-type-modal.module#OrderTypeModalPageModule', name: 'OrderTypeModalPage', segment: 'order-type-modal', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/otpverify/otpverify.module#OtpverifyPageModule', name: 'OtpverifyPage', segment: 'otpverify', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/plumber-app/offer-detail/offer-detail.module#OfferDetailPageModule', name: 'OfferDetailPage', segment: 'offer-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/plumber-app/offer-list/offer-list.module#OfferListPageModule', name: 'OfferListPage', segment: 'offer-list', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/plumber-app/offers/offers.module#OffersPageModule', name: 'OffersPage', segment: 'offers', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/otpverify/otpverify.module#OtpverifyPageModule', name: 'OtpverifyPage', segment: 'otpverify', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/plumber-profile/plumber-profile.module#PlumberProfilePageModule', name: 'PlumberProfilePage', segment: 'plumber-profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/point-location/point-location.module#PointLocationPageModule', name: 'PointLocationPage', segment: 'point-location', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/product-details/product-details.module#ProductDetailsPageModule', name: 'ProductDetailsPage', segment: 'product-details', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/retailer-detail/retailer-detail.module#RetailerDetailPageModule', name: 'RetailerDetailPage', segment: 'retailer-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/retailer/retailer.module#RetailerPageModule', name: 'RetailerPage', segment: 'retailer', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sales-app/checkin-detail/checkin-detail.module#CheckinDetailPageModule', name: 'CheckinDetailPage', segment: 'checkin-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sales-app/checkin-list/checkin-list.module#CheckinListPageModule', name: 'CheckinListPage', segment: 'checkin-list', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sales-app/customer-checkin/customer-checkin.module#CustomerCheckinPageModule', name: 'CustomerCheckinPage', segment: 'customer-checkin', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/sales-app/customer-order/customer-order.module#CustomerOrderPageModule', name: 'CustomerOrderPage', segment: 'customer-order', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sales-app/dealer-list/dealer-list.module#DealerListPageModule', name: 'DealerListPage', segment: 'dealer-list', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/sales-app/direct-dealer-list/direct-dealer-list.module#DirectDealerListPageModule', name: 'DirectDealerListPage', segment: 'direct-dealer-list', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/sales-app/customer-order/customer-order.module#CustomerOrderPageModule', name: 'CustomerOrderPage', segment: 'customer-order', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/plumber-app/offers/offers.module#OffersPageModule', name: 'OffersPage', segment: 'offers', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sales-app/distributor-detail/distributor-detail.module#DistributorDetailPageModule', name: 'DistributorDetailPage', segment: 'distributor-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sales-app/distributor-list/distributor-list.module#DistributorListPageModule', name: 'DistributorListPage', segment: 'distributor-list', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/sales-app/main-distributor-list/main-distributor-list.module#MainDistributorListPageModule', name: 'MainDistributorListPage', segment: 'main-distributor-list', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/sales-app/end-checkin/end-checkin.module#EndCheckinPageModule', name: 'EndCheckinPage', segment: 'end-checkin', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/search/search.module#SearchPageModule', name: 'SearchPage', segment: 'search', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/sales-app/main-distributor-list/main-distributor-list.module#MainDistributorListPageModule', name: 'MainDistributorListPage', segment: 'main-distributor-list', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/select-registration-type/select-registration-type.module#SelectRegistrationTypePageModule', name: 'SelectRegistrationTypePage', segment: 'select-registration-type', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/target-list/target-list.module#TargetListPageModule', name: 'TargetListPage', segment: 'target-list', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/subcategory/subcategory.module#SubcategoryPageModule', name: 'SubcategoryPage', segment: 'subcategory', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/term-condition/term-condition.module#TermConditionPageModule', name: 'TermConditionPage', segment: 'term-condition', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/travel-add/travel-add.module#TravelAddPageModule', name: 'TravelAddPage', segment: 'travel-add', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/wallet-history/wallet-history.module#WalletHistoryPageModule', name: 'WalletHistoryPage', segment: 'wallet-history', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/travel-list/travel-list.module#TravelListPageModule', name: 'TravelListPage', segment: 'travel-list', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/sales-app/direct-dealer-list/direct-dealer-list.module#DirectDealerListPageModule', name: 'DirectDealerListPage', segment: 'direct-dealer-list', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/work-plan/work-plan.module#WorkPlanPageModule', name: 'WorkPlanPage', segment: 'work-plan', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/work-type-modal/work-type-modal.module#WorkTypeModalPageModule', name: 'WorkTypeModalPage', segment: 'work-type-modal', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/retailer-detail/retailer-detail.module#RetailerDetailPageModule', name: 'RetailerDetailPage', segment: 'retailer-detail', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/travel-list/travel-list.module#TravelListPageModule', name: 'TravelListPage', segment: 'travel-list', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/wallet-history/wallet-history.module#WalletHistoryPageModule', name: 'WalletHistoryPage', segment: 'wallet-history', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/subcategory/subcategory.module#SubcategoryPageModule', name: 'SubcategoryPage', segment: 'subcategory', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/attendence/attendence.module#AttendencePageModule', name: 'AttendencePage', segment: 'attendence', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/cart-detail/cart-detail.module#CartDetailPageModule', name: 'CartDetailPage', segment: 'cart-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/channel-partner-app/add-cp-order/add-cp-order.module#AddCpOrderPageModule', name: 'AddCpOrderPage', segment: 'add-cp-order', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/dashboard/dashboard.module#DashboardPageModule', name: 'DashboardPage', segment: 'dashboard', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/dealer-survey/dealer-survey.module#DealerSurveyPageModule', name: 'DealerSurveyPage', segment: 'dealer-survey', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/order-detail/order-detail.module#OrderDetailPageModule', name: 'OrderDetailPage', segment: 'order-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/order-list/order-list.module#OrderListPageModule', name: 'OrderListPage', segment: 'order-list', priority: 'low', defaultHistory: [] },
@@ -14744,9 +14715,7 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/sales-app/add-distribution/add-distribution.module#AddDistributionPageModule', name: 'AddDistributionPage', segment: 'add-distribution', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sales-app/add-leads/add-leads.module#AddLeadsPageModule', name: 'AddLeadsPage', segment: 'add-leads', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sales-app/edit-network/edit-network.module#EditNetworkPageModule', name: 'EditNetworkPage', segment: 'edit-network', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/sales-app/end-checkin/end-checkin.module#EndCheckinPageModule', name: 'EndCheckinPage', segment: 'end-checkin', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/dashboard/dashboard.module#DashboardPageModule', name: 'DashboardPage', segment: 'dashboard', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sales-app/add-dealer/add-dealer.module#AddDealerPageModule', name: 'AddDealerPage', segment: 'add-dealer', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/add-order/add-order.module#AddOrderPageModule', name: 'AddOrderPage', segment: 'add-order', priority: 'low', defaultHistory: [] }
                     ]
@@ -14878,9 +14847,9 @@ var AppModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_myservice_myservice__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__customer_checkin_customer_checkin__ = __webpack_require__(499);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__customer_order_customer_order__ = __webpack_require__(500);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__edit_network_edit_network__ = __webpack_require__(501);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__customer_checkin_customer_checkin__ = __webpack_require__(500);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__customer_order_customer_order__ = __webpack_require__(501);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__edit_network_edit_network__ = __webpack_require__(502);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__add_dealer_add_dealer__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_constant_constant__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15014,7 +14983,7 @@ var DistributorDetailPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 667:
+/***/ 668:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -15297,7 +15266,7 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 667;
+webpackContext.id = 668;
 
 /***/ }),
 
@@ -15310,6 +15279,9 @@ webpackContext.id = 667;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constant_constant__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_operators__ = __webpack_require__(391);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_operators__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -15323,17 +15295,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-/*
-  Generated class for the MyserviceProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+
 var MyserviceProvider = /** @class */ (function () {
-    function MyserviceProvider(http, constant, storage) {
+    function MyserviceProvider(http, constant, storage, alertCtrl) {
         this.http = http;
         this.constant = constant;
         this.storage = storage;
+        this.alertCtrl = alertCtrl;
+        this.errorCount = 0;
         console.log('Hello MyserviceProvider Provider');
     }
     MyserviceProvider.prototype.get_data = function () {
@@ -15382,7 +15352,7 @@ var MyserviceProvider = /** @class */ (function () {
                 var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
                 header.append('Authorization', 'Bearer ' + token);
                 header.append('Content-Type', 'application/json');
-                _this.http.post(_this.constant.server_url + url, JSON.stringify(value), { headers: header }).map(function (res) { return res.json(); })
+                _this.http.post(_this.constant.server_url + url, JSON.stringify(value), { headers: header }).pipe(Object(__WEBPACK_IMPORTED_MODULE_5_rxjs_operators__["timeout"])(20000)).map(function (res) { return res.json(); })
                     .subscribe(function (res) {
                     console.log(res);
                     resolve(res);
@@ -15401,7 +15371,7 @@ var MyserviceProvider = /** @class */ (function () {
     };
     MyserviceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__constant_constant__["a" /* ConstantProvider */], __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__constant_constant__["a" /* ConstantProvider */], __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["AlertController"]])
     ], MyserviceProvider);
     return MyserviceProvider;
 }());
@@ -15417,7 +15387,7 @@ var MyserviceProvider = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AboutusPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_aboutservice_aboutservice__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_aboutservice_aboutservice__ = __webpack_require__(153);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -15473,7 +15443,7 @@ var AboutusPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 77:
+/***/ 84:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15481,10 +15451,10 @@ var AboutusPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_catalouge_catalouge__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_searchservice_searchservice__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_searchservice_searchservice__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_constant_constant__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__search_search__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__product_details_product_details__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__product_details_product_details__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_myservice_myservice__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_storage__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15806,15 +15776,15 @@ var ProductsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 78:
+/***/ 85:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CatalougePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subcategory_subcategory__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__products_products__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subcategory_subcategory__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__products_products__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_catalouge_catalouge__ = __webpack_require__(55);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15919,17 +15889,17 @@ var CatalougePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 79:
+/***/ 86:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProductDetailsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_social_sharing__ = __webpack_require__(393);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_social_sharing__ = __webpack_require__(477);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_constant_constant__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_productdetailservice_productdetailservice__ = __webpack_require__(397);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__enquiry_enquiry__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_productdetailservice_productdetailservice__ = __webpack_require__(481);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__enquiry_enquiry__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__search_search__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -16080,7 +16050,7 @@ var ProductDetailsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 80:
+/***/ 87:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16334,7 +16304,7 @@ var DealerListPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_home__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__contactus_contactus__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__enquiry_enquiry__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__enquiry_enquiry__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__sales_app_distributor_list_distributor_list__ = __webpack_require__(119);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__order_list_order_list__ = __webpack_require__(64);
@@ -16342,17 +16312,17 @@ var DealerListPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_myservice_myservice__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__search_search__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__aboutus_aboutus__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__attendence_attendence__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__attendence_attendence__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__sales_app_checkin_list_checkin_list__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__sales_app_dealer_list_dealer_list__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__sales_app_direct_dealer_list_direct_dealer_list__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__dashboard_dashboard__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__sales_app_main_distributor_list_main_distributor_list__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__catalouge_catalouge__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__wallet_history_wallet_history__ = __webpack_require__(530);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__my_wallet_my_wallet__ = __webpack_require__(531);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__catalouge_catalouge__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__wallet_history_wallet_history__ = __webpack_require__(531);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__my_wallet_my_wallet__ = __webpack_require__(532);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__menu_menu__ = __webpack_require__(533);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__menu_menu__ = __webpack_require__(534);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -16538,7 +16508,7 @@ var FilterpopupPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__leads_detail_leads_detail__ = __webpack_require__(525);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__sales_app_add_leads_add_leads__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__sales_app_add_leads_add_leads__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_myservice_myservice__ = __webpack_require__(7);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -16586,56 +16556,6 @@ var LeadsListPage = /** @class */ (function () {
 /***/ }),
 
 /***/ 959:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OffersPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__offer_list_offer_list__ = __webpack_require__(548);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-/**
- * Generated class for the OffersPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var OffersPage = /** @class */ (function () {
-    function OffersPage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-    }
-    OffersPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad OffersPage');
-    };
-    OffersPage.prototype.goOnOfferListPage = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__offer_list_offer_list__["a" /* OfferListPage */]);
-    };
-    OffersPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-offers',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/plumber-app/offers/offers.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>offer-list</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <button (click)=goOnOfferListPage()>sunil</button>\n\n</ion-content>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/plumber-app/offers/offers.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]])
-    ], OffersPage);
-    return OffersPage;
-}());
-
-//# sourceMappingURL=offers.js.map
-
-/***/ }),
-
-/***/ 960:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16698,14 +16618,14 @@ var ProfilePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 961:
+/***/ 960:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RetailerPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__retailer_detail_retailer_detail__ = __webpack_require__(639);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__retailer_detail_retailer_detail__ = __webpack_require__(640);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_myservice_myservice__ = __webpack_require__(7);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -16765,6 +16685,56 @@ var RetailerPage = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=retailer.js.map
+
+/***/ }),
+
+/***/ 961:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OffersPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__offer_list_offer_list__ = __webpack_require__(548);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the OffersPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var OffersPage = /** @class */ (function () {
+    function OffersPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    OffersPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad OffersPage');
+    };
+    OffersPage.prototype.goOnOfferListPage = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__offer_list_offer_list__["a" /* OfferListPage */]);
+    };
+    OffersPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-offers',template:/*ion-inline-start:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/plumber-app/offers/offers.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>offer-list</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <button (click)=goOnOfferListPage()>sunil</button>\n\n</ion-content>\n'/*ion-inline-end:"/Users/vikasbehl/Downloads/Sailesh_sir/PearlIos/Pearl_IOS_app/src/pages/plumber-app/offers/offers.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]])
+    ], OffersPage);
+    return OffersPage;
+}());
+
+//# sourceMappingURL=offers.js.map
 
 /***/ }),
 
@@ -16874,12 +16844,12 @@ var WorkPlanPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(633);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(634);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_app_version__ = __webpack_require__(635);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(634);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(635);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_app_version__ = __webpack_require__(636);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_contactus_contactus__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_enquiry_enquiry__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_enquiry_enquiry__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_aboutus_aboutus__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_search_search__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_constant_constant__ = __webpack_require__(16);
@@ -16888,8 +16858,8 @@ var WorkPlanPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_sales_app_distributor_list_distributor_list__ = __webpack_require__(119);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__providers_myservice_myservice__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_order_list_order_list__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_select_registration_type_select_registration_type__ = __webpack_require__(176);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_attendence_attendence__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_select_registration_type_select_registration_type__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_attendence_attendence__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_sales_app_checkin_list_checkin_list__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_sales_app_dealer_list_dealer_list__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_sales_app_direct_dealer_list_direct_dealer_list__ = __webpack_require__(114);
@@ -16898,15 +16868,15 @@ var WorkPlanPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ionic_native_location_accuracy__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_tabs_tabs__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__providers_attendenceservice_attendenceservice__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_catalouge_catalouge__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_catalouge_catalouge__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_sales_app_main_distributor_list_main_distributor_list__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_28_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_target_list_target_list__ = __webpack_require__(568);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_leave_list_leave_list__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_travel_list_travel_list__ = __webpack_require__(577);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_target_list_target_list__ = __webpack_require__(569);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_leave_list_leave_list__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_travel_list_travel_list__ = __webpack_require__(574);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_dealer_survey_list_dealer_survey_list__ = __webpack_require__(514);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__ionic_native_network__ = __webpack_require__(636);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__ionic_native_network__ = __webpack_require__(637);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_network_network__ = __webpack_require__(539);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_gst_calculator_gst_calculator__ = __webpack_require__(523);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -17109,25 +17079,30 @@ var MyApp = /** @class */ (function () {
                 return;
             }
             var nav = app.getActiveNav();
-            var activeView = nav.getActive().name;
-            if (activeView == 'LoginPage' || activeView == 'HomePage' || activeView == 'DashboardPage' || activeView == 'SelectRegistrationTypePage') {
-                if (_this.constant.backButton == 0) {
-                    _this.constant.backButton = 1;
-                    var toast = _this.toastCtrl.create({
-                        message: 'Press again to exit!',
-                        duration: 2000
-                    });
-                    toast.present();
-                    setTimeout(function () {
-                        _this.constant.backButton = 0;
-                    }, 2500);
+            if (nav.getActive() != undefined) {
+                var activeView = nav.getActive().name;
+                if (activeView == 'LoginPage' || activeView == 'HomePage' || activeView == 'DashboardPage' || activeView == 'SelectRegistrationTypePage') {
+                    if (_this.constant.backButton == 0) {
+                        _this.constant.backButton = 1;
+                        var toast = _this.toastCtrl.create({
+                            message: 'Press again to exit!',
+                            duration: 2000
+                        });
+                        toast.present();
+                        setTimeout(function () {
+                            _this.constant.backButton = 0;
+                        }, 2500);
+                    }
+                    else {
+                        _this.platform.exitApp();
+                    }
                 }
                 else {
-                    _this.platform.exitApp();
+                    nav.pop();
                 }
             }
             else {
-                nav.pop();
+                _this.platform.exitApp();
             }
         });
     }
@@ -17144,7 +17119,7 @@ var MyApp = /** @class */ (function () {
                 _this.versionNumber = version;
                 console.log(_this.versionNumber);
             });
-            _this.serve.addData({}, 'Login/app_version').then(function (result) {
+            _this.serve.addData({}, 'Login/ios_app_version').then(function (result) {
                 console.log(result);
                 _this.v_num = result['version'];
                 if (_this.v_num != _this.versionNumber) {
@@ -17154,18 +17129,11 @@ var MyApp = /** @class */ (function () {
                         buttons: [
                             {
                                 text: 'Cancel',
-                                handler: function () {
-                                    setTimeout(function () {
-                                    }, 500);
-                                    _this.platform.exitApp();
-                                }
                             },
                             {
                                 text: 'Update Now',
                                 handler: function () {
-                                    setTimeout(function () {
-                                    }, 500);
-                                    window.open("https://play.google.com/store/apps/details?id=com.abacusdesk.pearls");
+                                    window.open("https://apps.apple.com/in/app/pearl-precision/id1472354588");
                                 }
                             }
                         ]
@@ -17349,6 +17317,17 @@ var MyApp = /** @class */ (function () {
                         console.log('HomePage signUp');
                     }
                 }
+            }).catch(function (error) {
+                console.log("ERROR" + error);
+                console.log(error);
+                console.log(typeof (error));
+                if (error.url == null && error.status == 0 && _this.serve.errorCount === 0) {
+                    _this.serve.errorCount++;
+                    _this.presentAlertInternet();
+                    setTimeout(function () {
+                        _this.serve.errorCount = 0;
+                    }, 1000);
+                }
             });
         }
         if (this.user_logged_in) {
@@ -17366,6 +17345,7 @@ var MyApp = /** @class */ (function () {
                 { title: 'Travel Plan', name: 'TravelListPage', component: __WEBPACK_IMPORTED_MODULE_31__pages_travel_list_travel_list__["a" /* TravelListPage */], index: 23, icon: 'train', show: true },
                 { title: 'Calculator', name: 'GstCalculatorPage', component: __WEBPACK_IMPORTED_MODULE_35__pages_gst_calculator_gst_calculator__["a" /* GstCalculatorPage */], index: 23, icon: 'gradient', show: true },
                 { title: 'Dealer Survey', name: 'DealerSurveyList', component: __WEBPACK_IMPORTED_MODULE_32__pages_dealer_survey_list_dealer_survey_list__["a" /* DealerSurveyListPage */], index: 24, icon: 'group', show: true },
+                // { title: 'Work Plan', name: 'WorkPlan', component: WorkPlanPage,index: 24, icon: 'work', show: true},
                 { title: 'Channel Partner', name: 'Distributor', component: __WEBPACK_IMPORTED_MODULE_27__pages_sales_app_main_distributor_list_main_distributor_list__["a" /* MainDistributorListPage */], index: 15, icon: 'group', show: true },
                 { title: 'Direct Dealer', name: 'Direct Dealer', component: __WEBPACK_IMPORTED_MODULE_20__pages_sales_app_direct_dealer_list_direct_dealer_list__["a" /* DirectDealerListPage */], index: 13, icon: 'person_pin', show: true },
                 { title: 'Dealer', name: 'Dealer', component: __WEBPACK_IMPORTED_MODULE_19__pages_sales_app_dealer_list_dealer_list__["a" /* DealerListPage */], index: 12, icon: 'person', show: true },
@@ -17442,6 +17422,10 @@ var MyApp = /** @class */ (function () {
         this.storage.set('token_info', '');
         this.storage.set('state_name', '');
         this.storage.set('user_type', '');
+        this.storage.set('order_item_array', '');
+        this.storage.set('order_item_length', '');
+        this.storage.set('order_details', '');
+        this.storage.set('order_item_length', '');
         this.user_logged_in = false;
         this.userLoggedRole = '';
         this.userLoggedDisplayName = '';
@@ -17480,6 +17464,15 @@ var MyApp = /** @class */ (function () {
                 }
             }, 3000);
         });
+    };
+    MyApp.prototype.presentAlertInternet = function () {
+        var alert = this.alertCtrl.create({
+            title: 'Network Issue!',
+            enableBackdropDismiss: false,
+            message: 'Please Check Your Internet Connection.',
+            cssClass: 'alert-modal',
+        });
+        alert.present();
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Nav"]),
@@ -17540,9 +17533,9 @@ var NewArrivalsPageModule = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewArrivalsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__product_details_product_details__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__product_details_product_details__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_arrivalservice_arrivalservice__ = __webpack_require__(638);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_arrivalservice_arrivalservice__ = __webpack_require__(639);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(29);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -17715,5 +17708,5 @@ var FilterProvider = /** @class */ (function () {
 
 /***/ })
 
-},[640]);
+},[641]);
 //# sourceMappingURL=main.js.map
